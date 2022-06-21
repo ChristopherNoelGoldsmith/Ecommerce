@@ -1,0 +1,9 @@
+@use "../../../sass/mixins.scss";
+
+.cart {
+	@include mixins.flex-row;
+	background: rgba($color: orange, $alpha: 0.9);
+	.details {
+		@include mixins.flex-column;
+	}
+}

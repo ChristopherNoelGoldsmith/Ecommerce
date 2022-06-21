@@ -1,17 +1,12 @@
-import MegatronList from "../UI/ListItem";
-
-const createList = () => {
-  //function mapping jason data to an li useing the megatronList component
-};
+//import MegatronList from "../UI/ListItem";
+import styles from "./Megatron.module.scss";
 
 const Megatron = (props) => {
-  const listItems = <li>"placeholder"</li>; //createList form json
-
-  return (
-    <section>
-      <ul>{listItems}</ul>
-    </section>
-  );
+	return (
+		<section className={`${styles["megatron"]}`}>
+			<div className={`${styles["image-container"]}`}></div>
+		</section>
+	);
 };
 
 export default Megatron;

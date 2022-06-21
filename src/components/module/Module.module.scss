@@ -1,0 +1,13 @@
+@use "../../sass/mixins.scss";
+
+.module {
+	@include mixins.flex-column;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: rgba($color: black, $alpha: 0.3);
+	z-index: 100;
+	section {
+		z-index: 1000;
+	}
+}

@@ -1,0 +1,7 @@
+@use "../../sass/mixins.scss";
+.card {
+	padding: 1rem;
+	background: mixins.$card-bg;
+	margin: 1%;
+	border-radius: 5px;
+}

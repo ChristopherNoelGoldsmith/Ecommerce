@@ -1,22 +1,31 @@
+import styles from "./FeaturedProducts.module.scss";
 import ProductListItem from "./ProductListItem";
-import data from "../../assets/mhaCards.json";
+import { useSelector } from "react-redux";
 
-const createFeaturedProductList = () => {
-  //return featured productList with ListItem components and Json
-  return data.map((card) => {
-    console.log(card);
-    return <ProductListItem productPrice={card.name} />;
-  });
+//placeholder
+const createFeaturedProductList = (products) => {
+	return products.map((cards, index) => {
+		if (index > 4) return;
+		return (
+			<ProductListItem
+				productName={cards.name}
+				key={cards.asset}
+				src={cards.ultra_url_path}
+				productPrice={"10.00"}
+			/>
+		);
+	});
 };
 
 const FeaturedProducts = (props) => {
-  const featuredProductList = createFeaturedProductList();
+	const data = useSelector((store) => store.product);
+	const featuredProductList = createFeaturedProductList(data.data);
 
-  return (
-    <section>
-      <ul>{featuredProductList}</ul>
-    </section>
-  );
+	return (
+		<section className={`${styles["featured-product"]}`}>
+			<ul>{featuredProductList}</ul>
+		</section>
+	);
 };
 
 export default FeaturedProducts;

@@ -1,20 +1,26 @@
 @use "../sass/mixins.scss";
 
 nav {
-  @include mixins.flex-row;
-  background: rgba($color: #000000, $alpha: 0.7);
-  width: 100vw;
-  padding: 2vh 1vw;
-  section {
-    @include mixins.flex-row;
-    width: inherit;
-    justify-content: space-between;
-    ul {
-      @include mixins.flex-row;
-      list-style: none;
-      li {
-        margin: 0 2vw;
-      }
-    }
-  }
+	@include mixins.flex-row;
+	background: rgba($color: #000000, $alpha: 0.7);
+	width: 100vw;
+	padding: 2vh 1vw;
+	section {
+		@include mixins.flex-row;
+		width: inherit;
+		justify-content: space-between;
+		ul {
+			@include mixins.flex-row;
+			list-style: none;
+			li {
+				margin: 0 2vw;
+
+				button.cart::after {
+					content: "test";
+					position: absolute;
+					background: white;
+				}
+			}
+		}
+	}
 }

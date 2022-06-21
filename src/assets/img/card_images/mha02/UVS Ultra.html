@@ -1,0 +1,408 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>UVS Ultra</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="UVSUltra the ultimate UVS search database" />
+		<meta name="keywords" content="UVSUltra, UVS, search, database, ccg, engine, ultimate, fighting, system" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="alternate" type="application/rss+xml" title="UVSUltra News" href="news.rss"/>
+		<link rel="stylesheet" href="css/bootstrap3/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/style.css?1.2" type="text/css" />
+		<link rel="stylesheet" href="css/colorbox.css" type="text/css" />
+		<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.min.css" type="text/css" />
+		<link rel="stylesheet" href="css/jquery.cluetip.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="js/skins/simple/style.css" />
+		<link rel="stylesheet" type="text/css" href="js/sets/default/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/messenger.css" />
+		<link rel="stylesheet" type="text/css" href="css/messenger-theme-flat.css" />
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
+		<script type="text/javascript" src="js/jquery.cluetip.min.js"></script>
+		<script type="text/javascript" src="js/jquery.markitup.js"></script>
+		<script type="text/javascript" src="js/sets/default/set.js"></script>
+		<script type="text/javascript" src="js/function.js?1.1"></script>
+		<script type="text/javascript" src="js/highcharts.js"></script>
+		<script type="text/javascript" src="js/jquery.chromatable.js"></script>
+		<script type="text/javascript" src="css/bootstrap3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/messenger.min.js"></script>
+		<script type="text/javascript" src="js/messenger-theme-flat.js"></script>
+		<script type="text/javascript" src="js/jquery-ias.min.js"></script>
+        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+	</head>
+	<body><link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="UVSUltra">
+<script type="text/javascript" src="js/index.js"></script>
+
+<nav class="navbar navbar-inverse" id="topbar">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+		<a class="navbar-brand" href="index.php">UVS Ultra</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="index.php"><i class="glyphicon glyphicon-search glyphicon glyphicon-white"></i> Card Search</a></li>
+            <li><a href="live.php"><i class="glyphicon glyphicon-bullhorn glyphicon glyphicon-white"></i> Live</a></li>
+            <li><a href="topdecks.php"><i class="glyphicon glyphicon-star glyphicon glyphicon-white"></i> Top decks</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-stats glyphicon glyphicon-white"></i> Stats <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="stats.php">Cards Statistics</a></li>
+                    <li><a href="tournament_rating.php">Player rating</a></li>
+                    <li><a href="tournament_character.php">Character rating</a></li>
+                </ul>
+            </li>
+                    </ul>
+        <ul class="nav navbar-nav pull-right">
+                        <li><a href="?lang=fr">FR</a></li>                            <li><a href="whyregister.php"><i class="glyphicon glyphicon-question-sign glyphicon glyphicon-white"></i> Why Register ?</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#connectionModal"><i class="glyphicon glyphicon-user glyphicon glyphicon-white"></i> Sign in</a></li>
+                    </ul>
+	</div><!-- /.navbar-collapse -->
+</nav><!-- /navbar -->
+<div id="newDeckModal" class="modal fade" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<form mehod="get" class="form-inline deck-form-create">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3 id="myModalLabel">Create new deck</h3>
+				</div>
+				<div class="modal-body">
+					<label>Name :</label> <input type="text" name="deck_name" id="deck_name" /><br />
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-default btn-success deck-save-name" value="Create" />
+				</div>
+			</form>
+        </div>
+    </div>
+</div>
+<div id="importDeckModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<form action="import_from_octgn.php" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3 id="myModalLabel">Import deck</h3>
+				</div>
+				<div class="modal-body">
+					<label>Name :</label> <input type="text" name="deck_name" id="deck_name" /><br />
+					<label>OCTGN File :</label> <input type="file" name="deck_file" id="deck_file" /><br />
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-default btn-success" value="Import" />
+				</div>
+			</form>
+        </div>
+    </div>
+</div>
+<div id="connectionModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="myModalLabel">Sign in or Register</h3>
+            </div>
+            <div class="modal-body">
+                <form name="login" method="post" class="form-horizontal well well-sm">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 controls col-sm-7">
+                            <div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input class="form-control" type="text" id="login" name="login" placeholder="Login">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 controls col-sm-7">
+                            <div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<div class="col-sm-offset-4 col-sm-3">
+		                    <input type="submit" class="btn btn-primary" value="Sign in" />
+						</div>
+                    </div>
+                    <div class="form-group">
+						<div class="col-sm-offset-3 col-sm-4">
+							<label><input type="checkbox" name="new" /> Create new account</label>
+						</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+				<a href="whyregister.php" class="btn btn-info btn-sm pull-left">Why Register ?</a>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deckModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header-mydeck">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="myModalLabel">
+					My decks<br />
+					<small class="list-mydeck-sort-by">
+						Order by :
+													<a href="menu_list_user_deck.php?orderby=date_created&js" rel="ASC" class="label label-default label-info">Date Created<i class="glyphicon glyphicon-sort-by-alphabet-alt"></i></a>
+														<a href="menu_list_user_deck.php?orderby=date_modified&js" rel="ASC" class="label label-default">Date modified</a>
+														<a href="menu_list_user_deck.php?orderby=name&js" rel="ASC" class="label label-default">Name</a>
+														<a href="menu_list_user_deck.php?orderby=comment&js" rel="ASC" class="label label-default">Comments</a>
+														<a href="menu_list_user_deck.php?orderby=likes&js" rel="ASC" class="label label-default">Likes</a>
+														<a href="menu_list_user_deck.php?orderby=view&js" rel="ASC" class="label label-default">Views</a>
+												</small>
+				</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary pull-left" data-toggle="modal" data-target="#newDeckModal" onclick="$('#deckModal').modal('hide');">Create new deck</a>
+                <a href="#" class="btn btn-info pull-left" data-toggle="modal" data-target="#importDeckModal" onclick="$('#deckModal').modal('hide');">Import deck from OCTGN</a>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="reportModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="myModalLabel">Report an error</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div><form method="post" id="search" onsubmit="send_form(0, false); return false;" class="form-inline content-block">
+	<div id="search_inputs">
+		<div id="search_general">
+			
+				<strong class="search-label">
+					<a href="tri.php?tri=name" onclick="return tri($(this));">Card name<span class="tri"></span></a>
+				</strong>
+
+					<input type="text" name="name" id="name" class="form-control"  /> <input type="button" class="btn btn-default" value="clear" onclick="$('#name').val('');" /><br />
+
+			
+			<strong class="search-label">Card text</strong> <input type="text" name="card_text" id="card_text" class="form-control" /> <input type="button" class="btn btn-default" value="clear" onclick="$('#card_text').val('');" /><br />
+			<strong class="search-label">Format</strong>
+				<input type="radio" name="format" value="all" id="format_all" /> <label for="format_all">All</label>
+				<input type="radio" name="format" value="standard" id="format_standard" /> <label for="format_standard">Standard</label>
+				<input type="radio" name="format" value="retro" id="format_retro" /> <label for="format_retro">Retro</label>
+				<input type="radio" name="format" value="mhaonly" id="format_myhero" /> <label for="format_myhero">My Hero Academia</label>
+				<br />
+			<strong class="search-label"><a href="tri.php?tri=type" onclick="return tri($(this));">Type<span class="tri"></span></a></strong> 
+				<input type="checkbox" name="type[]" value="character" id="character_checkbox"> <label for="character_checkbox">Character</label>
+				<input type="checkbox" name="type[]" value="action" id="action_checkbox"> <label for="action_checkbox">Action</label>
+				<input type="checkbox" name="type[]" value="asset" id="asset_checkbox"> <label for="asset_checkbox">Asset</label>
+				<input type="checkbox" name="type[]" value="attack" id="attack_checkbox"> <label for="attack_checkbox">Attack</label>
+				<input type="checkbox" name="type[]" value="foundation" id="foundation_checkbox"> <label for="foundation_checkbox">Foundation</label>
+			<br />
+			<div id="rarity_div">
+				<strong class="search-label"><a href="tri.php?tri=rarity" onclick="return tri($(this));">Rarity<span class="tri"></span></a></strong>
+				<div id="rarity_list">
+									<div class="float_rarity"><input type="checkbox" name="rarity[]" value="common" id="common_checkbox" /> <label for="common_checkbox">Common</label></div>
+										<div class="float_rarity"><input type="checkbox" name="rarity[]" value="uncommon" id="uncommon_checkbox" /> <label for="uncommon_checkbox">Unco</label></div>
+										<div class="float_rarity"><input type="checkbox" name="rarity[]" value="rare" id="rare_checkbox" /> <label for="rare_checkbox">Rare</label></div>
+										<div class="float_rarity"><input type="checkbox" name="rarity[]" value="ultra rare" id="ultra rare_checkbox" /> <label for="ultra rare_checkbox">Ultra rare</label></div>
+										<div class="float_rarity"><input type="checkbox" name="rarity[]" value="promo" id="promo_checkbox" /> <label for="promo_checkbox">Promo</label></div>
+										<div class="float_rarity"><input type="checkbox" name="rarity[]" value="starter exclusive" id="starter exclusive_checkbox" /> <label for="starter exclusive_checkbox">SE</label></div>
+									</div>
+			</div>
+				<br style="clear : both;" />
+			<strong class="search-label">Set</strong>
+			<select name="extension[]" id="extension" multiple class="form-control">
+									<option value="101">Crimson Rampage</option>
+										<option value="99">My Hero Academia</option>
+										<option value="100">Red Horizon Intro Deck</option>
+										<option value="98">Promo 2020</option>
+										<option value="97">DLC 2020</option>
+										<option value="96">SoulCalibur 6: Libra of Souls</option>
+										<option value="95">My Hero Academia Demo</option>
+										<option value="94">Yu Yu Hakusho</option>
+										<option value="93">Champion Promos 5</option>
+										<option value="92">Seventh Cross</option>
+										<option value="89">SoulCalibur 6</option>
+										<option value="90">PTC Promos</option>
+										<option value="91">Capcom League Kit</option>
+										<option value="88">Street Fighter Vs. Darkstalkers</option>
+										<option value="87">Mortal Kombat</option>
+										<option value="86">Cowboy Bebop</option>
+										<option value="85">Platinum</option>
+										<option value="84">Champion Promos 4</option>
+										<option value="82">Street Fighter</option>
+										<option value="83">Street Fighter vs. Darkstalkers Promo</option>
+										<option value="81">Grimm in Wonderland Promos</option>
+										<option value="80">Red Horizon: Blood Omen</option>
+										<option value="77">Mega Man: Battle for Power</option>
+										<option value="79">Champion Promos 3</option>
+										<option value="78">World of Indines</option>
+										<option value="76">Champion Promos 2</option>
+										<option value="74">Darkstalkers: Warriors of the night</option>
+										<option value="71">Mega Man: Rise of the Masters</option>
+										<option value="75">Unmarked Promos</option>
+										<option value="72">Tri-Swords Promos</option>
+										<option value="68">Darkstalkers</option>
+										<option value="67">Mega Man</option>
+										<option value="66">The King of Fighters 13: NeoMax</option>
+										<option value="62">The King of Fighters 13: Ruler of Time</option>
+										<option value="61">Champion Promos 1</option>
+										<option value="60">The King of Fighters 13</option>
+										<option value="28">Red Horizon: Tides of Vengeance</option>
+										<option value="1">Red Horizon</option>
+										<option value="29">6 Points Promos</option>
+										<option value="30">5 Points Promos</option>
+										<option value="2">SoulCalibur 4: Quest of Souls</option>
+										<option value="3">Tekken 6</option>
+										<option value="5">SoulCalibur 4: Tower of Souls</option>
+										<option value="4">ShadoWar</option>
+										<option value="6">SNK: Flames of Fame</option>
+										<option value="7">Street Fighter: Warrior's Dream</option>
+										<option value="8">SNK: The King of Fighers 2006</option>
+										<option value="9">SoulCalibur 3: Flash of the Blades</option>
+										<option value="10">Street Fighter: Deadly Ground</option>
+										<option value="11">Darkstalkers: Realm of Midnight</option>
+										<option value="12">SNK: The Cutting Edge</option>
+										<option value="13">Street Fighter: Domination</option>
+										<option value="14">Darkstalkers (2007)</option>
+										<option value="15">Street Fighter: Fight For The Future</option>
+										<option value="16">SNK: Fortune and Glory</option>
+										<option value="17">SoulCalibur 3: Higher Calibur</option>
+										<option value="63">Street Fighter: Ryu vs Akuma</option>
+										<option value="18">SoulCalibur 3: Blades of Fury</option>
+										<option value="19">Street Fighter: Extreme Rivals</option>
+										<option value="20">SoulCalibur 3: Soul Arena</option>
+										<option value="21">Street Fighter: The Dark Path</option>
+										<option value="22">SNK</option>
+										<option value="23">Street Fighter: The Next Level</option>
+										<option value="64">SoulCalibur 3: Siegfried vs Sophitia</option>
+										<option value="24">SoulCalibur 3: A Tale of Swords & Souls</option>
+										<option value="25">Street Fighter: World Warriors</option>
+										<option value="26">SoulCalibur 3</option>
+										<option value="27">Street Fighter</option>
+										<option value="65">Penny Arcade</option>
+										<option value="58">4 Points Promos</option>
+										<option value="59">Legacy promos</option>
+								</select><br />
+			<strong class="search-label-big">Resource symbol</strong> <input type="checkbox" name="ressource_match_all" id="ressource_match_all" /> <label for="ressource_match_all"><small>Match All Selected Resources</small></label>
+					<div id="rs_div">
+											<div class="float_rs"><input type="checkbox" name="rs[]" value="air" id="rs_air"><label for="rs_air"><img src="images/icons/air.png?3" style="vertical-align -1px;" /> Air</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="all" id="rs_all"><label for="rs_all"><img src="images/icons/all.png?3" style="vertical-align -1px;" /> All</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="chaos" id="rs_chaos"><label for="rs_chaos"><img src="images/icons/chaos.png?3" style="vertical-align -1px;" /> Chaos</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="death" id="rs_death"><label for="rs_death"><img src="images/icons/death.png?3" style="vertical-align -1px;" /> Death</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="earth" id="rs_earth"><label for="rs_earth"><img src="images/icons/earth.png?3" style="vertical-align -1px;" /> Earth</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="evil" id="rs_evil"><label for="rs_evil"><img src="images/icons/evil.png?3" style="vertical-align -1px;" /> Evil</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="fire" id="rs_fire"><label for="rs_fire"><img src="images/icons/fire.png?3" style="vertical-align -1px;" /> Fire</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="good" id="rs_good"><label for="rs_good"><img src="images/icons/good.png?3" style="vertical-align -1px;" /> Good</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="infinity" id="rs_infinity"><label for="rs_infinity"><img src="images/icons/infinity.png?3" style="vertical-align -1px;" /> Infinity</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="life" id="rs_life"><label for="rs_life"><img src="images/icons/life.png?3" style="vertical-align -1px;" /> Life</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="order" id="rs_order"><label for="rs_order"><img src="images/icons/order.png?3" style="vertical-align -1px;" /> Order</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="void" id="rs_void"><label for="rs_void"><img src="images/icons/void.png?3" style="vertical-align -1px;" /> Void</label></div>
+												<div class="float_rs"><input type="checkbox" name="rs[]" value="water" id="rs_water"><label for="rs_water"><img src="images/icons/water.png?3" style="vertical-align -1px;" /> Water</label></div>
+											</div><br />
+		</div>
+		<div id="search_infos">
+		<strong class="search-label"><a href="tri.php?tri=cc" onclick="return tri($(this));">Control<span class="tri"></span></a></strong> 
+			<input type="checkbox" name="cc[]" value="0" id="cc_0" /> <label for="cc_0">X</label>
+							<input type="checkbox" name="cc[]" value="1" id="cc_1" /> <label for="cc_1">1</label>
+								<input type="checkbox" name="cc[]" value="2" id="cc_2" /> <label for="cc_2">2</label>
+								<input type="checkbox" name="cc[]" value="3" id="cc_3" /> <label for="cc_3">3</label>
+								<input type="checkbox" name="cc[]" value="4" id="cc_4" /> <label for="cc_4">4</label>
+								<input type="checkbox" name="cc[]" value="5" id="cc_5" /> <label for="cc_5">5</label>
+								<input type="checkbox" name="cc[]" value="6" id="cc_6" /> <label for="cc_6">6</label>
+							<br />
+		<strong class="search-label"><a href="tri.php?tri=difficulty" onclick="return tri($(this));">Difficulty<span class="tri"></span></a></strong> <select name="difficulty_operand" class="form-control input-sm"><option value=">">></option><option value="=" selected="selected">=</option><option value="<"><</option></select><input type="text" class="form-control" name="difficulty" id="difficulty" /><br />
+		<strong class="search-label">Keyword</strong> <input type="checkbox" name="keyword_match_all" id="keyword_match_all" /> <label for="keyword_match_all"><small>Match All Selected Keywords</small></label>
+				<div id="keyword_div">
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Ally" value="3"><label for="keyword_Ally">Ally</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Breaker" value="6"><label for="keyword_Breaker">Breaker</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Charge" value="22"><label for="keyword_Charge">Charge</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Combo" value="2"><label for="keyword_Combo">Combo</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Desperation" value="12"><label for="keyword_Desperation">Desperation</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_EX" value="26"><label for="keyword_EX">EX</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Flash" value="18"><label for="keyword_Flash">Flash</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Fury" value="24"><label for="keyword_Fury">Fury</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Gauge" value="28"><label for="keyword_Gauge">Gauge</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Item" value="29"><label for="keyword_Item">Item</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Kick" value="10"><label for="keyword_Kick">Kick</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Multiple" value="11"><label for="keyword_Multiple">Multiple</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Only" value="16"><label for="keyword_Only">Only</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Powerful" value="15"><label for="keyword_Powerful">Powerful</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Punch" value="14"><label for="keyword_Punch">Punch</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Ranged" value="8"><label for="keyword_Ranged">Ranged</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Reversal" value="4"><label for="keyword_Reversal">Reversal</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Safe" value="19"><label for="keyword_Safe">Safe</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Slam" value="20"><label for="keyword_Slam">Slam</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Stance" value="30"><label for="keyword_Stance">Stance</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Stun" value="5"><label for="keyword_Stun">Stun</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Taunt" value="17"><label for="keyword_Taunt">Taunt</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Tech" value="25"><label for="keyword_Tech">Tech</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Terrain" value="13"><label for="keyword_Terrain">Terrain</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Throw" value="9"><label for="keyword_Throw">Throw</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Unique" value="7"><label for="keyword_Unique">Unique</label></div>
+										<div class="float_keyword"><input type="checkbox" name="keyword[]" id="keyword_Weapon" value="1"><label for="keyword_Weapon">Weapon</label></div>
+									</div>
+				<div id="block_div">
+					<strong class="search-label-medium"><a href="tri.php?tri=block" onclick="return tri($(this));">Block modifier<span class="tri"></span></a></strong> <select name="bm_operand" class="form-control"><option value=">">></option><option value="=" selected="selected">=</option><option value="<"><</option></select> <input type="text" class="form-control" name="block" id="block" /><br />
+				</div>
+			<strong class="search-label-medium"><a href="tri.php?tri=block_zone" onclick="return tri($(this));">Block zone<span class="tri"></span></a></strong>
+							<input type="checkbox" name="block_zone[]" value="low" id="block_Low" /> <label for="block_Low">Low</label>
+								<input type="checkbox" name="block_zone[]" value="mid" id="block_Mid" /> <label for="block_Mid">Mid</label>
+								<input type="checkbox" name="block_zone[]" value="high" id="block_High" /> <label for="block_High">High</label>
+							<br />
+			<strong class="search-label-medium"><a href="tri.php?tri=speed" onclick="return tri($(this));">Attack speed<span class="tri"></span></a></strong> <select name="as_operand" class="form-control"><option value=">">></option><option value="=" selected="selected">=</option><option value="<"><</option></select> <input type="text" class="form-control" name="speed" id="speed" /><br />
+			<strong class="search-label-medium"><a href="tri.php?tri=damage" onclick="return tri($(this));">Attack damage<span class="tri"></span></a></strong> <select name="ad_operand" class="form-control"><option value=">">></option><option value="=" selected="selected">=</option><option value="<"><</option></select> <input type="text" class="form-control" name="damage" id="damage" /><br />
+			<strong class="search-label-medium"><a href="tri.php?tri=attack_zone" onclick="return tri($(this));">Attack zone<span class="tri"></span></a></strong>
+							<input type="checkbox" name="attack_zone[]" value="low" id="attack_Low" /> <label for="attack_Low">Low</label>
+								<input type="checkbox" name="attack_zone[]" value="mid" id="attack_Mid" /> <label for="attack_Mid">Mid</label>
+								<input type="checkbox" name="attack_zone[]" value="high" id="attack_High" /> <label for="attack_High">High</label>
+							<br />
+			<div id="search_more">
+				<strong class="search-label-medium"><a href="tri.php?tri=hand_size" onclick="return tri($(this));">Hand size<span class="tri"></span></a></strong> 
+											<input type="checkbox" name="hs[]" value="3" id="hs_3" /> <label for="hs_3">3</label>
+												<input type="checkbox" name="hs[]" value="4" id="hs_4" /> <label for="hs_4">4</label>
+												<input type="checkbox" name="hs[]" value="5" id="hs_5" /> <label for="hs_5">5</label>
+												<input type="checkbox" name="hs[]" value="6" id="hs_6" /> <label for="hs_6">6</label>
+												<input type="checkbox" name="hs[]" value="7" id="hs_7" /> <label for="hs_7">7</label>
+												<input type="checkbox" name="hs[]" value="8" id="hs_8" /> <label for="hs_8">8</label>
+											<br />
+				<strong class="search-label-medium"><a href="tri.php?tri=vitality" onclick="return tri($(this));">Vitality<span class="tri"></span></a></strong> <select name="v_operand" class="form-control"><option value=">">></option><option value="=" selected="selected">=</option><option value="<"><</option></select> <input type="text" class="form-control" name="vitality" id="vitality" /><br />
+				<strong class="search-label-big">Keyword additional text</strong> <input type="text" class="form-control" name="keyword_text" id="keyword_text" /><br />
+			</div>
+		</div>
+	</div>
+    <div id="search_buttons">
+		<span class="pull-right btn btn-default btn-sm" id="btn_search_more" title="search_more"><span class="glyphicon glyphicon-plus"></span></span>
+        <button type="submit" class="btn btn-success" onclick="$('#search').submit(); return false;"/><i class="glyphicon glyphicon-search"></i> Search</button> <input type="reset" class="btn btn-default" name="reset" id="reset" value="Reset" onclick="$('#div_reset').load('tri.php?tri=reset'); $('.tri').html('');" /><div id="div_reset"></div>
+    </div>
+</form>
+<div id="actions"></div>
+<div id="ajax_load">
+</div>
+<div id="content">
+    </div>
+<div id="preview">
+    <div id="preview-image">
+        <img src="" alt="" class="img-polaroid" />
+    </div>
+    </div>
+<div id="footer">
+
+    <a href="http://www.rochesterccg.com/">Sponsored by <img src="images/RCCG_Logo.jpg" alt="Rochester CCG" style="width: 412px; height: 160px;">
+    </a>
+</div>
+</body>
