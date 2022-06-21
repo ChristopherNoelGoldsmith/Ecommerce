@@ -1,0 +1,40 @@
+@use "../../sass/mixins.scss";
+
+form {
+	@include mixins.flex-row;
+	padding: 1vh 0;
+	label {
+		@include mixins.flex-row;
+		font-size: mixins.$font-large;
+		padding: 5px;
+		background: mixins.$input-bg;
+		min-height: 3rem;
+	}
+	input {
+		background: mixins.$input-bg;
+		min-width: 2rem;
+		max-width: 2.5rem;
+		min-height: 3rem;
+		font-size: mixins.$font-large;
+		text-align: center;
+		border: none;
+		border-left: 1px solid black;
+	}
+	.btn-container {
+		@include mixins.flex-column;
+		button {
+			min-height: 1.5rem;
+		}
+		.add-btn {
+			background: seagreen;
+		}
+		.remove-btn {
+			background: crimson;
+		}
+	}
+
+	.to-cart-btn {
+		background: orange;
+		font-weight: 1000;
+	}
+}

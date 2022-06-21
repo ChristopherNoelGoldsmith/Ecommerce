@@ -1,0 +1,30 @@
+@use "../../../sass/mixins.scss";
+
+.cart-list-item {
+	@include mixins.flex-row;
+	margin: 1vh 1vw 1vh 1vw;
+	padding: 5px;
+	background: rgba($color: ivory, $alpha: 0.7);
+	box-shadow: 2px 2px 2px 2px black;
+	border-radius: 5px;
+	figure {
+		@include mixins.flex-row;
+		flex-direction: row-reverse;
+		height: 50px;
+		label {
+			@include mixins.flex-row;
+			font-size: mixins.$font-normal;
+			font-weight: 600;
+			text-align: center;
+			margin: 0 2rem;
+			height: inherit;
+			width: 20vw;
+			span {
+				word-wrap: break-word;
+			}
+		}
+		img {
+			height: inherit;
+		}
+	}
+}

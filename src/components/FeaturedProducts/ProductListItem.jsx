@@ -2,6 +2,7 @@
 import styles from "./ProductListItem.module.scss";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
+import ProductCartController from "../Utility/ProductCartController";
 import { useState } from "react";
 
 const ProductListItem = (props) => {
@@ -35,31 +36,13 @@ const ProductListItem = (props) => {
 						/>
 					</div>
 					<div className="product-details">
-						<form onSubmit={submithandler}>
-							<label htmlFor="price">
-								$ <span>{props.productPrice}</span>{" "}
-							</label>
-							<input type="none" readOnly value={productAmount} />
-							<div className={`${styles["btn-container"]}`}>
-								<Button
-									type={"reset"}
-									className={`${styles["add-btn"]}`}
-									onClick={incrimentProductHandler}
-								>
-									+
-								</Button>
-								<Button
-									type={"reset"}
-									className={`${styles["remove-btn"]}`}
-									onClick={decrimentProductHandler}
-								>
-									-
-								</Button>
-							</div>
-							<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>
-								Add
-							</Button>
-						</form>
+						<ProductCartController
+							productPrice={props.productPrice}
+							productAmount={productAmount}
+							submithandler={submithandler}
+							decrimentProductHandler={decrimentProductHandler}
+							incrimentProductHandler={incrimentProductHandler}
+						/>
 					</div>
 				</figure>
 			</Card>
