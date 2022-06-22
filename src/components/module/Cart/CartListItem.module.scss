@@ -10,7 +10,7 @@
 	figure {
 		@include mixins.flex-row;
 		flex-direction: row-reverse;
-		height: 50px;
+		height: 10vh;
 		label {
 			@include mixins.flex-row;
 			font-size: mixins.$font-normal;

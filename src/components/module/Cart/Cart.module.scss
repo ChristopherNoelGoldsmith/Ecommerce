@@ -6,6 +6,8 @@
 	max-width: 80vw;
 	min-height: 90vh;
 	ul {
-		min-height: 500%;
+		min-height: inherit;
+		height: 70%;
+		overflow-y: scroll;
 	}
 }
