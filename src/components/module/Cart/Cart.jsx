@@ -22,7 +22,7 @@ const DUMMY_DATA = [
 
 const createProductBuytList = () => {
 	return DUMMY_DATA.map((item) => {
-		const keys = Math.floor(Math.random()) + item.name;
+		const keys = Math.floor(Math.random() * 1000) + item.name;
 		return (
 			<CartListItem image={item.ultra_url_path} name={item.name} key={keys} />
 		);
@@ -32,12 +32,11 @@ const createProductBuytList = () => {
 
 const Cart = (props) => {
 	console.log(DUMMY_DATA);
-	const product = DUMMY_DATA;
 
 	const productBuyList = createProductBuytList();
 	console.log(productBuyList);
 	return (
-		<Card className={`${styles.cart}`}>
+		<Card onClick={(e) => e.stopPropagation()} className={`${styles.cart}`}>
 			<CartHeader />
 			<ul>{productBuyList}</ul>
 			<CartFooter />

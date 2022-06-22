@@ -12,10 +12,23 @@ const Navbar = (props) => {
 			<section>
 				<ul>
 					<ListItem>
-						<Button>My Hero Academia</Button>
+						<Button>
+							<Link to={"/"}>
+								<i className="fa-solid fa-house-user"></i>
+							</Link>
+						</Button>
 					</ListItem>
 					<ListItem>
-						<Button>Crimson Rampage</Button>
+						<Button>
+							<span>My Hero Academia</span>
+						</Button>
+					</ListItem>
+					<ListItem>
+						<Button>
+							<NavLink to={"/category"}>
+								<span>Crimson Rampage</span>
+							</NavLink>
+						</Button>
 					</ListItem>
 				</ul>
 
@@ -24,7 +37,7 @@ const Navbar = (props) => {
 						<ProfileButton />
 					</ListItem>
 					<ListItem>
-						<CartButton />
+						<CartButton populateModule={props.populateModule} />
 					</ListItem>
 				</ul>
 			</section>

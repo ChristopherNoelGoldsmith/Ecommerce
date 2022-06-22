@@ -8,6 +8,17 @@ import { useState } from "react";
 const ProductListItem = (props) => {
 	const [productAmount, setAmount] = useState(0);
 
+	const productNameEdit = () => {
+		if (props.productName.length > 25) {
+			let trimmedName = props.productName.slice(0, 22);
+			trimmedName = trimmedName + "...";
+			return trimmedName;
+		}
+		return props.productName;
+	};
+
+	const productName = productNameEdit();
+
 	const submithandler = (event) => {
 		event.preventDefault();
 		/*add to card goes here */
@@ -26,7 +37,7 @@ const ProductListItem = (props) => {
 			<Card>
 				<figure>
 					<label className={`${styles["product-name"]}`} htmlFor="product name">
-						{props.productName}
+						{productName}
 					</label>
 					<div className={`${styles["image-container"]}`}>
 						<img

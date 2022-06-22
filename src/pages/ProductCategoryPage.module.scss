@@ -1,0 +1,13 @@
+@use "../sass/mixins.scss";
+
+.category {
+	@include mixins.flex-column;
+	ul {
+		@include mixins.flex-row;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		li {
+			flex-basis: 20%;
+		}
+	}
+}

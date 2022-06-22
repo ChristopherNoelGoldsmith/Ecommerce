@@ -4,8 +4,27 @@
 	padding: 0;
 	box-sizing: border-box;
 	overflow: auto;
+	text-decoration: none;
 }
 
 body {
 	min-height: 100vh;
+}
+.container {
+	padding-top: 5%;
+}
+*::-webkit-scrollbar {
+	background-color: slategrey;
+	outline: 1px solid slategrey;
+	border-radius: 5px;
+}
+
+*::-webkit-scrollbar-button {
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: ghostwhite;
+	outline: 1px solid slategrey;
+	border-radius: 5px;
 }

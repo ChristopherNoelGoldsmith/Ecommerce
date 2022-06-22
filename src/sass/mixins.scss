@@ -32,3 +32,18 @@ $input-bg: rgba(
 	$color: ivory,
 	$alpha: 0.85,
 );
+
+//animations
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@mixin fade-in {
+	animation: fade-in 0.4s ease;
+}

@@ -25,7 +25,7 @@ const ProductCartController = (props) => {
 				</Button>
 			</div>
 			<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>
-				Add
+				<i className="fa-solid fa-cart-plus"></i>
 			</Button>
 		</form>
 	);

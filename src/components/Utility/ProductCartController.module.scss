@@ -34,7 +34,14 @@ form {
 	}
 
 	.to-cart-btn {
-		background: orange;
-		font-weight: 1000;
+		background: rgba($color: orange, $alpha: 0.8);
+		color: ivory;
+		text-shadow: 1px 1px black;
+		font-size: mixins.$font-normal;
+		transition: 0.4s ease;
+	}
+	.to-cart-btn:hover i {
+		transform: scale(1.3);
+		transition: 0.4s ease;
 	}
 }

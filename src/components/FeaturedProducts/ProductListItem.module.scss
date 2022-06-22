@@ -12,6 +12,7 @@
 			@include mixins.flex-column;
 
 			.product-image {
+				@include mixins.fade-in;
 				width: 75%;
 				margin: 1vh 1vw;
 				border-radius: 5px;
@@ -21,7 +22,6 @@
 			.product-image:hover {
 				transform: scale(1.05);
 				transition: ease 0.3s;
-				z-index: 10;
 			}
 		}
 	}
