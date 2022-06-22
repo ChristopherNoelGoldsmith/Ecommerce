@@ -1,6 +1,6 @@
 import styles from "./FeaturedProducts.module.scss";
 import ProductListItem from "./ProductListItem";
-import { useSelector } from "react-redux";
+import useProduct from "../hooks/useProduct";
 
 //placeholder
 const createFeaturedProductList = (products) => {
@@ -11,15 +11,15 @@ const createFeaturedProductList = (products) => {
 				productName={cards.name}
 				key={cards.asset}
 				src={cards.ultra_url_path}
-				productPrice={"10.00"}
+				productPrice={cards.price}
 			/>
 		);
 	});
 };
 
 const FeaturedProducts = (props) => {
-	const data = useSelector((store) => store.product);
-	const featuredProductList = createFeaturedProductList(data.data);
+	const { crimsonRampage } = useProduct();
+	const featuredProductList = createFeaturedProductList(crimsonRampage);
 
 	return (
 		<section className={`${styles["featured-product"]}`}>

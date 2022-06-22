@@ -37,7 +37,7 @@ const Navbar = (props) => {
 						<ProfileButton />
 					</ListItem>
 					<ListItem>
-						<CartButton populateModule={props.populateModule} />
+						<CartButton />
 					</ListItem>
 				</ul>
 			</section>

@@ -14,30 +14,15 @@ const createModule = (content, event) => {
 };
 
 function App() {
-	const [moduleState, setModuleState] = useState("");
-	const [moduleVis, setVis] = useState(false);
-
-	const toggleModuleVis = () => setVis((module) => !module);
-
-	const populateModule = (content) => {
-		const toggle = toggleModuleVis();
-		const moduleContent = createModule(content, toggle);
-		return setModuleState(moduleContent);
-	};
+	const { module, moduleVis } = useModule();
 
 	return (
 		<div className="container">
-			{moduleVis && moduleState}
-			<Navbar populateModule={populateModule} />
+			{moduleVis && module}
+			<Navbar />
 			<Routes>
-				<Route
-					path="/category"
-					element={<ProductCategoryPage populateModule={populateModule} />}
-				/>
-				<Route
-					path="/"
-					element={<HomePage populateModule={populateModule} />}
-				/>
+				<Route path="/category" element={<ProductCategoryPage />} />
+				<Route path="/" element={<HomePage />} />
 				<Route path="/profile" element={<ProfilePage />} />
 			</Routes>
 		</div>

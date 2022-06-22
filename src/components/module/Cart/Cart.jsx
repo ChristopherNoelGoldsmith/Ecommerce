@@ -24,7 +24,12 @@ const createProductBuytList = () => {
 	return DUMMY_DATA.map((item) => {
 		const keys = Math.floor(Math.random() * 1000) + item.name;
 		return (
-			<CartListItem image={item.ultra_url_path} name={item.name} key={keys} />
+			<CartListItem
+				price={item.price}
+				image={item.ultra_url_path}
+				name={item.name}
+				key={keys}
+			/>
 		);
 		//add the increase decrease buttons n shyt to this
 	});

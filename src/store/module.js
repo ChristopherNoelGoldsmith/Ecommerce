@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getDefaultMiddleware } from "@reduxjs/toolkit";
 
 const initialState = {
 	content: null,
 	vis: false,
 };
+
+//Used to get rid of middleware error created by custome slice
+const customeMiddleware = getDefaultMiddleware({
+	serializableCheck: false,
+});
 
 const moduleSlice = createSlice({
 	name: "module",
@@ -11,11 +17,11 @@ const moduleSlice = createSlice({
 	reducers: {
 		toggleVis(state) {
 			state.vis = !state.vis;
-			return;
+			return state;
 		},
 		setContent(state, action) {
 			state.content = action.payload;
-			return;
+			return state;
 		},
 	},
 });

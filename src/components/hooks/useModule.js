@@ -8,11 +8,13 @@ const useModule = () => {
 	const moduleVis = module.vis;
 	const moduleContent = module.content;
 
-	const toggleModuleVis = dispatch(moduleActions.toggleVis());
-
+	const toggleModuleVis = () => {
+		return dispatch(moduleActions.toggleVis());
+	};
 	const createModule = (content) => {
-		const module = <Module onClick={toggleModuleVis}>{content}</Module>;
-		dispatch(moduleActions.setContent(module));
+		toggleModuleVis();
+		const newModule = <Module onClick={toggleModuleVis}>{content}</Module>;
+		dispatch(moduleActions.setContent(newModule));
 		return;
 	};
 

@@ -1,10 +1,13 @@
 import Button from "../UI/Button";
 import Cart from "../module/Cart/Cart";
+import useModule from "../hooks/useModule";
 
 const CartButton = (props) => {
+	const { createModule } = useModule();
+
 	const moduleHandler = () => {
 		const cart = <Cart />;
-		return props.populateModule(cart);
+		return createModule(cart);
 	};
 	return (
 		<Button onClick={moduleHandler}>

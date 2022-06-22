@@ -2,6 +2,9 @@
 
 .module {
 	@include mixins.flex-column;
+	@include mixins.fade-in;
+	justify-content: start;
+
 	position: fixed;
 	width: 100vw;
 	min-height: 100vh;

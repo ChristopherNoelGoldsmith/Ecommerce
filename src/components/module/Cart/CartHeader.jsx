@@ -1,4 +1,5 @@
 import styles from "./CartHeader.module.scss";
+import image from "../../../assets/img/logo.png";
 
 const CartHeader = (props) => {
 	return (
@@ -6,7 +7,7 @@ const CartHeader = (props) => {
 			<section>
 				<h2>THANK YOU FOR SHOPPING WITH US!</h2>
 			</section>
-			<img src="current set" alt="current set" srcset="" />
+			<img src={image} alt="current set" srcset="" />
 		</header>
 	);
 };

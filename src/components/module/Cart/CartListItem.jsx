@@ -2,7 +2,6 @@ import styles from "./CartListItem.module.scss";
 import ProductCartController from "../../Utility/ProductCartController";
 
 //DUMMY DATA
-const productPrice = "10.00";
 
 const CartListItem = (props) => {
 	return (
@@ -13,7 +12,7 @@ const CartListItem = (props) => {
 				</label>
 				<img src={props.image} alt={props.name} />
 			</figure>
-			<ProductCartController productPrice={productPrice} />
+			<ProductCartController productPrice={props.price} />
 		</li>
 	);
 };

@@ -4,10 +4,11 @@ import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ProductCartController from "../Utility/ProductCartController";
 import { useState } from "react";
+import useModule from "../hooks/useModule";
 
 const ProductListItem = (props) => {
 	const [productAmount, setAmount] = useState(0);
-
+	const { createModule } = useModule();
 	const productNameEdit = () => {
 		if (props.productName.length > 25) {
 			let trimmedName = props.productName.slice(0, 22);
@@ -32,6 +33,18 @@ const ProductListItem = (props) => {
 		return setAmount((amount) => --amount);
 	};
 
+	const imageModuleHanlder = () => {
+		const productImage = (
+			<img
+				className={`${styles["product-image"]}`}
+				src={props.src}
+				alt={props.productName}
+			/>
+		);
+
+		return createModule(productImage);
+	};
+
 	return (
 		<li className={`${styles["product-list-item"]}`}>
 			<Card>
@@ -41,6 +54,7 @@ const ProductListItem = (props) => {
 					</label>
 					<div className={`${styles["image-container"]}`}>
 						<img
+							onClick={imageModuleHanlder}
 							className={`${styles["product-image"]}`}
 							src={props.src}
 							alt={props.productName}

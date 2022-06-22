@@ -1,5 +1,5 @@
 import styles from "./ProductCategoryPage.module.scss";
-import { useSelector } from "react-redux/es/exports";
+import useProduct from "../components/hooks/useProduct";
 import ProductListItem from "../components/FeaturedProducts/ProductListItem";
 
 const createProductList = (products) => {
@@ -9,15 +9,15 @@ const createProductList = (products) => {
 				productName={cards.name}
 				key={cards.asset}
 				src={cards.ultra_url_path}
-				productPrice={"10.00"}
+				productPrice={cards.price}
 			/>
 		);
 	});
 };
 
 const ProductCategoryPage = (props) => {
-	const data = useSelector((store) => store.product);
-	const productList = createProductList(data.data);
+	const { crimsonRampage } = useProduct();
+	const productList = createProductList(crimsonRampage);
 
 	return (
 		<section className={`${styles.category}`}>
