@@ -5,6 +5,7 @@
 	@include mixins.flex-column;
 	justify-content: flex-start;
 	background: rgba($color: darkgrey, $alpha: 0.8);
+	min-width: 60vw;
 	max-width: 80vw;
 	height: 100vh;
 	ul {

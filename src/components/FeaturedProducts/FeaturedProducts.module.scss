@@ -1,8 +1,18 @@
 @use "../../sass/mixins.scss";
 
 .featured-product {
+	@include mixins.flex-column;
+	background: mixins.$card-bg;
+	h2 {
+		@include mixins.title-font;
+		text-align: center;
+	}
+
 	ul {
 		@include mixins.flex-row;
 		max-width: 100vw;
+		li > * {
+			background: transparent;
+		}
 	}
 }

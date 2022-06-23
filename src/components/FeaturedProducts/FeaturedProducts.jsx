@@ -1,20 +1,31 @@
 import styles from "./FeaturedProducts.module.scss";
 import ProductListItem from "./ProductListItem";
 import useProduct from "../hooks/useProduct";
+import Card from "../UI/Card";
 
 //placeholder
 const createFeaturedProductList = (products) => {
-	return products.map((cards, index) => {
-		if (index > 4) return;
-		return (
-			<ProductListItem
-				productName={cards.name}
-				key={cards.asset}
-				src={cards.ultra_url_path}
-				productPrice={cards.price}
-			/>
-		);
-	});
+	return products
+		.sort((item1, item2) => {
+			if (item1.purchaseCount < item2.purchaseCount) {
+				return -1;
+			}
+			if (item1.purchaseCount > item2.purchaseCount) {
+				return 1;
+			}
+			return 0;
+		})
+		.map((cards, index) => {
+			if (index > 4) return;
+			return (
+				<ProductListItem
+					productName={cards.name}
+					key={cards.asset}
+					src={cards.ultra_url_path}
+					productPrice={cards.price}
+				/>
+			);
+		});
 };
 
 const FeaturedProducts = (props) => {
@@ -22,9 +33,10 @@ const FeaturedProducts = (props) => {
 	const featuredProductList = createFeaturedProductList(crimsonRampage);
 
 	return (
-		<section className={`${styles["featured-product"]}`}>
+		<Card className={`${styles["featured-product"]}`}>
+			<h2>HOT ITEMS!</h2>
 			<ul>{featuredProductList}</ul>
-		</section>
+		</Card>
 	);
 };
 

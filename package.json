@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "edit-product-data": "node ./src/tools/editProductFiles.js"
+    "edit-prod": "node ./src/tools/editProductFiles.js"
   },
   "eslintConfig": {
     "extends": [

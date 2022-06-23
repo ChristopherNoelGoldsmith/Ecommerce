@@ -6,13 +6,9 @@ it must be passed as {target: , count:}
 */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getDefaultMiddleware } from "@reduxjs/toolkit";
 import data from "../assets/rampage.json";
 
 //Used to get rid of middleware error created by custome slice
-const customeMiddleware = getDefaultMiddleware({
-	serializableCheck: false,
-});
 
 const initialState = { cartContents: [], totalCost: 0 };
 
@@ -51,7 +47,6 @@ const cartSlice = createSlice({
 						itemCount = item.count + itemCount;
 						const total = target.price * itemCount;
 						totalPrice = convertToDollarAmount(total);
-						console.log(totalPrice);
 						return {
 							name: target.name,
 							price: target.price,
@@ -86,7 +81,7 @@ const cartSlice = createSlice({
 			const newState = cartContents.forEach((item) => {
 				if (item.name === target.name) {
 					item.count = item.count + 1;
-					item.total = item.price * item.count;
+					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
 		},
@@ -96,7 +91,7 @@ const cartSlice = createSlice({
 			const newState = cartContents.forEach((item) => {
 				if (item.name === target.name) {
 					item.count = item.count - 1;
-					item.total = item.price * item.count;
+					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
 		},

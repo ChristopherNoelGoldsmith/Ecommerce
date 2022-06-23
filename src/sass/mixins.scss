@@ -22,6 +22,14 @@
 $font-small: 0.75rem;
 $font-normal: 1.25rem;
 $font-large: 2rem;
+$font-xl: 4rem;
+
+@mixin title-font {
+	color: ghostwhite;
+	font-size: $font-xl;
+	text-shadow: 2px 2px black;
+	font-weight: 600;
+}
 
 //colors
 $card-bg: rgba(
