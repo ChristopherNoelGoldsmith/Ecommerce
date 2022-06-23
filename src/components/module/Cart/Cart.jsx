@@ -18,20 +18,31 @@ import Card from "../../UI/Card";
 import useCart from "../../hooks/useCart";
 
 const createProductBuyList = (cartContents, onClickEvents) => {
-	const { removeItem } = onClickEvents;
+	const { removeItem, incrimentItem, decrimentItem } = onClickEvents;
 
 	return cartContents.map((item) => {
 		const keys = Math.floor(Math.random() * 1000) + item.name;
+
+		const incrimentItemHandler = () => {
+			incrimentItem({ target: item });
+			return;
+		};
+
+		const decrimentItemHandler = () => {
+			decrimentItem({ target: item });
+			return;
+		};
 		return (
 			<CartListItem
 				item={item}
 				price={item.price}
+				total={item.total}
 				image={item.image}
 				name={item.name}
 				key={keys}
 				productAmount={item.count}
-				incrimentProductHandler={null}
-				decrimentProductHandler={null}
+				incrimentProductHandler={incrimentItemHandler}
+				decrimentProductHandler={decrimentItemHandler}
 				removeItem={removeItem}
 			/>
 		);
@@ -40,9 +51,9 @@ const createProductBuyList = (cartContents, onClickEvents) => {
 };
 
 const Cart = () => {
-	const { cart, removeItem } = useCart();
+	const { cart, removeItem, incrimentItem, decrimentItem } = useCart();
 	const { cartContents, totalCost } = cart;
-	const onClickEvents = { removeItem };
+	const onClickEvents = { removeItem, incrimentItem, decrimentItem };
 	console.log(totalCost);
 	const productBuyList = createProductBuyList(cartContents, onClickEvents);
 	return (

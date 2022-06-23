@@ -16,15 +16,27 @@ const useCart = () => {
 		return;
 	};
 
+	const incrimentItem = (item) => {
+		dispatch(cartActions.incrimentItem(item));
+		getTotalCost();
+		return;
+	};
+
+	const decrimentItem = (item) => {
+		dispatch(cartActions.decrimentItem(item));
+		getTotalCost();
+		return;
+	};
+
 	const removeItem = (item) => {
 		dispatch(cartActions.removeItem(item));
 		getTotalCost();
 		return;
 	};
 
-	console.log(cart);
+	//console.log(cart);
 
-	return { cart, addItem, removeItem };
+	return { cart, addItem, removeItem, incrimentItem, decrimentItem };
 };
 
 export default useCart;

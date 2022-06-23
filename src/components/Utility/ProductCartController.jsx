@@ -22,7 +22,7 @@ const ProductCartController = (props) => {
 			image: props.productImage,
 		};
 		if (props.removeItem) return props.removeItem({ target: item });
-		console.log(props.productAmount);
+		console.log(props.productPrice);
 		addItem({ target: item, count: itemCountValue });
 		props.resetProductHandler();
 		return;
