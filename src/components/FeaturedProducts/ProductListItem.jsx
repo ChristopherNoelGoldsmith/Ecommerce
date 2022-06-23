@@ -1,14 +1,18 @@
 //not finished
 import styles from "./ProductListItem.module.scss";
-import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ProductCartController from "../Utility/ProductCartController";
-import { useState } from "react";
 import useModule from "../hooks/useModule";
+import useProductCounter from "../hooks/useProductCounter";
 
 const ProductListItem = (props) => {
-	const [productAmount, setAmount] = useState(0);
 	const { createModule } = useModule();
+	const {
+		incrimentProductHandler,
+		decrimentProductHandler,
+		resetProductHandler,
+		productAmount,
+	} = useProductCounter();
 	const productNameEdit = () => {
 		if (props.productName.length > 25) {
 			let trimmedName = props.productName.slice(0, 22);
@@ -19,19 +23,6 @@ const ProductListItem = (props) => {
 	};
 
 	const productName = productNameEdit();
-
-	const submithandler = (event) => {
-		event.preventDefault();
-		/*add to card goes here */
-	};
-
-	const incrimentProductHandler = () => {
-		return setAmount((amount) => ++amount);
-	};
-
-	const decrimentProductHandler = () => {
-		return setAmount((amount) => --amount);
-	};
 
 	const imageModuleHanlder = () => {
 		const productImage = (
@@ -62,11 +53,13 @@ const ProductListItem = (props) => {
 					</div>
 					<div className="product-details">
 						<ProductCartController
+							productName={props.productName}
 							productPrice={props.productPrice}
 							productAmount={productAmount}
-							submithandler={submithandler}
+							productImage={props.src}
 							decrimentProductHandler={decrimentProductHandler}
 							incrimentProductHandler={incrimentProductHandler}
+							resetProductHandler={resetProductHandler}
 						/>
 					</div>
 				</figure>

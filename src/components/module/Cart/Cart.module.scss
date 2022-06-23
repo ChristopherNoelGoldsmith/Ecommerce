@@ -3,12 +3,13 @@
 .cart {
 	@include mixins.fade-in;
 	@include mixins.flex-column;
+	justify-content: flex-start;
 	background: rgba($color: darkgrey, $alpha: 0.8);
 	max-width: 80vw;
-	height: 80vh;
+	height: 100vh;
 	ul {
 		min-height: inherit;
-		height: 60%;
+		height: 80%;
 		overflow-y: scroll;
 	}
 }

@@ -12,7 +12,16 @@ const CartListItem = (props) => {
 				</label>
 				<img src={props.image} alt={props.name} />
 			</figure>
-			<ProductCartController productPrice={props.price} />
+			<ProductCartController
+				item={props.item}
+				productName={props.name}
+				image={props.image}
+				productAmount={props.productAmount}
+				productPrice={props.price}
+				incrimentProductHandler={props.incrimentProductHandler}
+				decrimentProductHandler={props.decrimentProductHandler}
+				removeItem={props.removeItem}
+			/>
 		</li>
 	);
 };

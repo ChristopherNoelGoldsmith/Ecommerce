@@ -1,13 +1,38 @@
+/*
+ADD OPTION TO CHANGE TYPE OF BUTTON WITH FIT WITH
+ITS TYPE OF FUNCTION
+*/
+
 import styles from "./ProductCartController.module.scss";
 import Button from "../UI/Button";
+import useCart from "../hooks/useCart";
 
 const ProductCartController = (props) => {
+	const { addItem } = useCart();
+	const addItemHandler = (event) => {
+		event.preventDefault();
+		//targets first value of the event object which is the count input
+		const itemCountValue = event.target[0].value;
+
+		//converts props into format for the cartSlice in the store provided by the useCart hook.
+		const item = {
+			name: props.productName,
+			price: props.productPrice,
+			count: props.productAmount,
+			image: props.productImage,
+		};
+		if (props.removeItem) return props.removeItem({ target: item });
+		console.log(props.productAmount);
+		addItem({ target: item, count: itemCountValue });
+		props.resetProductHandler();
+		return;
+	};
 	return (
-		<form onSubmit={props.submithandler}>
+		<form onSubmit={addItemHandler}>
 			<label htmlFor="price">
-				$ <span>{props.productPrice}</span>{" "}
+				$ <span>{props.productPrice}</span>
 			</label>
-			<input type="none" readOnly value={props.productAmount} />
+			<input type="none" name={"count"} readOnly value={props.productAmount} />
 			<div className={`${styles["btn-container"]}`}>
 				<Button
 					type={"reset"}

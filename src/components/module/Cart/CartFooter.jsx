@@ -5,7 +5,9 @@ const CartFooter = (props) => {
 	return (
 		<section className={`${styles["cart-footer"]}`}>
 			<form>
-				<label htmlFor="checkout">Checkout</label>
+				<label htmlFor="checkout">
+					Checkout: <span>${props.totalCost}</span>
+				</label>
 				<span id="total-cost">{props.total}</span>
 				<Button id="checout" type="submit"></Button>
 			</form>
