@@ -22,7 +22,6 @@ const ProductCartController = (props) => {
 			image: props.productImage,
 		};
 		if (props.removeItem) return props.removeItem({ target: item });
-		console.log(props.productPrice);
 		addItem({ target: item, count: itemCountValue });
 		props.resetProductHandler();
 		return;
@@ -50,7 +49,7 @@ const ProductCartController = (props) => {
 				</Button>
 			</div>
 			<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>
-				<i className="fa-solid fa-cart-plus"></i>
+				{props.icon}
 			</Button>
 		</form>
 	);

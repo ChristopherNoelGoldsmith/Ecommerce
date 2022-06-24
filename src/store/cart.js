@@ -6,7 +6,6 @@ it must be passed as {target: , count:}
 */
 
 import { createSlice } from "@reduxjs/toolkit";
-import data from "../assets/rampage.json";
 
 //Used to get rid of middleware error created by custome slice
 
@@ -14,11 +13,16 @@ const initialState = { cartContents: [], totalCost: 0 };
 
 const convertToDollarAmount = (number) => {
 	const regExp = /\d+\.\d\d/;
-
-	const numberToString = number.toString() + "0";
+	const regExpForSingleCents = /\d+\.\d/;
+	let numberToString = number.toString();
+	if (!numberToString.match(regExp)) {
+		//checks to see if cents is a single numer like .1 and adds a 0 to the end making it .10 for cents
+		const checkForMissingCents = numberToString.match(regExpForSingleCents);
+		if (checkForMissingCents) numberToString = numberToString + "0";
+		if (!checkForMissingCents) numberToString = numberToString + ".00";
+	}
 	const numberToDollars = numberToString.match(regExp);
-	console.log(numberToDollars);
-	return numberToDollars;
+	return numberToDollars[0];
 };
 
 const cartSlice = createSlice({
@@ -30,12 +34,10 @@ const cartSlice = createSlice({
 			const { cartContents } = state;
 			//Handles invalid counts;
 			if (count < 1 || false) return;
-			//console.log(action.payload);
 			//sends in item object with a count
-			console.log(action.payload);
 			//Multiplied by 1 to ensure count is a number.
 			let itemCount = count * 1;
-			let totalPrice = target.price * itemCount;
+			let totalPrice = convertToDollarAmount(target.price * itemCount);
 
 			//Checks the store for the item in the cart
 
@@ -47,6 +49,7 @@ const cartSlice = createSlice({
 						itemCount = item.count + itemCount;
 						const total = target.price * itemCount;
 						totalPrice = convertToDollarAmount(total);
+						target.price = convertToDollarAmount(target.price);
 						return {
 							name: target.name,
 							price: target.price,
@@ -78,7 +81,7 @@ const cartSlice = createSlice({
 		incrimentItem(state, action) {
 			const { target } = action.payload;
 			const { cartContents } = state;
-			const newState = cartContents.forEach((item) => {
+			cartContents.forEach((item) => {
 				if (item.name === target.name) {
 					item.count = item.count + 1;
 					item.total = convertToDollarAmount(item.price * item.count);
@@ -88,7 +91,7 @@ const cartSlice = createSlice({
 		decrimentItem(state, action) {
 			const { target } = action.payload;
 			const { cartContents } = state;
-			const newState = cartContents.forEach((item) => {
+			cartContents.forEach((item) => {
 				if (item.name === target.name) {
 					item.count = item.count - 1;
 					item.total = convertToDollarAmount(item.price * item.count);
@@ -98,8 +101,7 @@ const cartSlice = createSlice({
 		//for removing counts from the card state
 		removeItem(state, action) {
 			const { target } = action.payload;
-			const { cartContents, totalCost } = state;
-			console.log(target);
+			const { cartContents } = state;
 			const targetItem = cartContents.find((item) => item.name === target.name);
 			if (!targetItem) return alert("Item is not in cart");
 			const filteredCart = cartContents.filter(
@@ -119,8 +121,15 @@ const cartSlice = createSlice({
 
 			const { cartContents } = state;
 
+			if (cartContents.length === 0) {
+				return {
+					cartContents: state.cartContents,
+					totalCost: "0.00",
+				};
+			}
+
 			const total = cartContents
-				.map((item) => item.total)
+				.map((item) => item.total * 1)
 				.reduce((item1, item2) => {
 					return item1 + item2;
 				});

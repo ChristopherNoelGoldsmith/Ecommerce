@@ -3,7 +3,7 @@
 .module {
 	@include mixins.flex-column;
 	@include mixins.fade-in;
-	justify-content: start;
+	justify-content: flex-start;
 
 	position: fixed;
 	width: 100vw;

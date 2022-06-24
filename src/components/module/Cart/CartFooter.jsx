@@ -6,10 +6,12 @@ const CartFooter = (props) => {
 		<section className={`${styles["cart-footer"]}`}>
 			<form>
 				<label htmlFor="checkout">
-					Checkout: <span>${props.totalCost}</span>
+					<span>${props.totalCost}</span>
 				</label>
 				<span id="total-cost">{props.total}</span>
-				<Button id="checout" type="submit"></Button>
+				<Button id="checkout" className={`${styles.checkout}`} type="submit">
+					<span>Checkout</span> <i class="fa-solid fa-cart-shopping"></i>
+				</Button>
 			</form>
 		</section>
 	);

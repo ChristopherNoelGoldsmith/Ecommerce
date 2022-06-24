@@ -15,18 +15,16 @@ const types = {
 const createProductList = (products, pageNumber, numberPerPage = 25) => {
 	const startOfPage = pageNumber * numberPerPage;
 	const endOfPage = startOfPage + numberPerPage;
-	console.log(pageNumber, numberPerPage);
-	return products.map((cards, index) => {
-		if (index >= startOfPage && index < endOfPage) {
-			return (
-				<ProductListItem
-					productName={cards.name}
-					key={cards.asset}
-					src={cards.ultra_url_path}
-					productPrice={cards.price}
-				/>
-			);
-		}
+	const thisPage = products.slice(startOfPage, endOfPage);
+	return thisPage.map((cards, index) => {
+		return (
+			<ProductListItem
+				productName={cards.name}
+				key={cards.asset}
+				src={cards.ultra_url_path}
+				productPrice={cards.price}
+			/>
+		);
 	});
 };
 
@@ -43,6 +41,9 @@ const configurePagesReducer = (state, action) => {
 			break;
 		case types.NUMBER_OF_ITEMS:
 			state.numberPerPage = action.numberPerPage;
+			break;
+		default:
+			console.log("invalid case");
 			break;
 	}
 	return { pageNumber: state.pageNumber, numberPerPage: state.numberPerPage };

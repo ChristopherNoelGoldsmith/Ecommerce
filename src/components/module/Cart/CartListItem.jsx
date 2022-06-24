@@ -4,8 +4,6 @@ import ProductCartController from "../../Utility/ProductCartController";
 //DUMMY DATA
 
 const CartListItem = (props) => {
-	console.log(props.total);
-
 	return (
 		<li className={`${styles["cart-list-item"]}`} key={props.keys}>
 			<figure>
@@ -20,6 +18,7 @@ const CartListItem = (props) => {
 				image={props.image}
 				productAmount={props.productAmount}
 				productPrice={props.total}
+				icon={<i class="fa-solid fa-xmark"></i>}
 				incrimentProductHandler={props.incrimentProductHandler}
 				decrimentProductHandler={props.decrimentProductHandler}
 				removeItem={props.removeItem}

@@ -57,6 +57,7 @@ const ProductListItem = (props) => {
 							productPrice={props.productPrice}
 							productAmount={productAmount}
 							productImage={props.src}
+							icon={<i className="fa-solid fa-cart-plus"></i>}
 							decrimentProductHandler={decrimentProductHandler}
 							incrimentProductHandler={incrimentProductHandler}
 							resetProductHandler={resetProductHandler}

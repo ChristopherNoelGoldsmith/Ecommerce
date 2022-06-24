@@ -10,7 +10,6 @@ product[name of property]
 */
 
 import styles from "./Cart.module.scss";
-import data from "../../../assets/rampage.json";
 import CartListItem from "./CartListItem";
 import CartHeader from "./CartHeader";
 import CartFooter from "./CartFooter";
@@ -54,7 +53,6 @@ const Cart = () => {
 	const { cart, removeItem, incrimentItem, decrimentItem } = useCart();
 	const { cartContents, totalCost } = cart;
 	const onClickEvents = { removeItem, incrimentItem, decrimentItem };
-	console.log(totalCost);
 	const productBuyList = createProductBuyList(cartContents, onClickEvents);
 	return (
 		<Card onClick={(e) => e.stopPropagation()} className={`${styles.cart}`}>

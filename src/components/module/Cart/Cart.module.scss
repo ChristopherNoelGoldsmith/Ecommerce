@@ -7,10 +7,12 @@
 	background: rgba($color: darkgrey, $alpha: 0.8);
 	min-width: 60vw;
 	max-width: 80vw;
-	height: 100vh;
+	height: 80vh;
+
 	ul {
-		min-height: inherit;
-		height: 80%;
 		overflow-y: scroll;
+	}
+	ul::-webkit-scrollbar-button {
+		display: hidden;
 	}
 }

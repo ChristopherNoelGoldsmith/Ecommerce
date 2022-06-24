@@ -2,10 +2,27 @@
 
 .cart-footer {
 	@include mixins.flex-row;
-	justify-content: end;
+	justify-content: flex-end;
 	width: 100%;
 	padding: 1rem;
-	section {
+	form {
 		@include mixins.flex-row;
+		label {
+			@include mixins.title-font;
+			background: transparent;
+		}
+		.checkout {
+			@include mixins.flex-row;
+			overflow: hidden;
+			background: rgba($color: seagreen, $alpha: 0.8);
+			span {
+				padding: 0.5rem;
+			}
+			i {
+				font-size: mixins.$font-large;
+				padding: 0.5rem;
+				color: ghostwhite;
+			}
+		}
 	}
 }
