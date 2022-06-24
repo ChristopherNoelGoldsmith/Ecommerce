@@ -55,7 +55,7 @@ const Cart = () => {
 	const onClickEvents = { removeItem, incrimentItem, decrimentItem };
 	const productBuyList = createProductBuyList(cartContents, onClickEvents);
 	return (
-		<Card onClick={(e) => e.stopPropagation()} className={`${styles.cart}`}>
+		<Card className={`${styles.cart}`}>
 			<CartHeader />
 			<ul>{productBuyList}</ul>
 			<CartFooter totalCost={totalCost} />

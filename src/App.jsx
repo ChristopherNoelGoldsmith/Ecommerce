@@ -1,16 +1,16 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
-import useModule from "./components/hooks/useModule";
+import useModal from "./components/hooks/useModal";
 
 function App() {
-	const { module, moduleVis } = useModule();
+	const { modal, modalVis } = useModal();
 	return (
 		<div className="container">
-			{moduleVis && module}
+			{modalVis && modal}
 			<Navbar />
 			<Routes>
 				<Route path="/category" element={<ProductCategoryPage />} />

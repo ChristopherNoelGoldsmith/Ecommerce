@@ -1,16 +1,27 @@
+import styles from "./CartButton.module.scss";
 import Button from "../UI/Button";
-import Cart from "../module/Cart/Cart";
-import useModule from "../hooks/useModule";
+import Cart from "../modals/Cart/Cart";
+import useModal from "../hooks/useModal";
+import useCart from "../hooks/useCart";
 
 const CartButton = (props) => {
-	const { createModule } = useModule();
+	const { createModal } = useModal();
+	const { cart } = useCart();
 
-	const moduleHandler = () => {
+	const itemsInCart = cart.totalItems;
+
+	const cartClass = itemsInCart > 0 ? styles.cart : "";
+
+	const modalHandler = () => {
 		const cart = <Cart />;
-		return createModule(cart);
+		return createModal(cart);
 	};
 	return (
-		<Button onClick={moduleHandler}>
+		<Button
+			className={cartClass}
+			cart-count={itemsInCart}
+			onClick={modalHandler}
+		>
 			<i className="fa-solid fa-cart-shopping"></i>
 		</Button>
 	);

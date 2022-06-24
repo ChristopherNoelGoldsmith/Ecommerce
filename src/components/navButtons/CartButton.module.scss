@@ -1,0 +1,18 @@
+@use "../../sass/mixins.scss";
+
+.cart {
+	position: relative;
+}
+
+.cart::after {
+	content: (attr(cart-count));
+	position: absolute;
+	background: red;
+	color: ghostwhite;
+	top: 0;
+	right: 0;
+	border-radius: 50%;
+	width: 1rem;
+	height: 1rem;
+	font-size: mixins.$font-small;
+}

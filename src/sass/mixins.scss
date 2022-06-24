@@ -52,6 +52,19 @@ $input-bg: rgba(
 	}
 }
 
+@keyframes dropdown {
+	from {
+		height: 0%;
+	}
+	to {
+		height: 100%;
+	}
+}
+
 @mixin fade-in {
 	animation: fade-in 0.4s ease;
+}
+
+@mixin dropdown {
+	animation: dropdown 0.4s ease-out;
 }

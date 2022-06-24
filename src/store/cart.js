@@ -9,7 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //Used to get rid of middleware error created by custome slice
 
-const initialState = { cartContents: [], totalCost: 0 };
+const initialState = { cartContents: [], totalCost: 0, totalItems: 0 };
 
 const convertToDollarAmount = (number) => {
 	const regExp = /\d+\.\d\d/;
@@ -60,10 +60,7 @@ const cartSlice = createSlice({
 					}
 					return item;
 				});
-				return {
-					cartContents: newState,
-					totalCost: state.totalCost,
-				};
+				state.cartContents = newState;
 			}
 
 			const item = {
@@ -73,10 +70,7 @@ const cartSlice = createSlice({
 				count: itemCount,
 				image: target.image,
 			};
-			return (state = {
-				cartContents: [...cartContents, item],
-				totalCost: state.totalCost,
-			});
+			state.cartContents = [...cartContents, item];
 		},
 		incrimentItem(state, action) {
 			const { target } = action.payload;
@@ -112,13 +106,6 @@ const cartSlice = createSlice({
 		},
 		//
 		getTotalCost(state) {
-			/*
-			ERROR
-			when removing last item from cart
-			price does not set to 0
-			
-			*/
-
 			const { cartContents } = state;
 
 			if (cartContents.length === 0) {
@@ -135,6 +122,14 @@ const cartSlice = createSlice({
 				});
 			const trimmedTotal = convertToDollarAmount(total);
 			state.totalCost = trimmedTotal;
+		},
+		getTotalNumberOfItems(state) {
+			const total = state.cartContents
+				.map((item) => item.count)
+				.reduce((item1, item2) => {
+					return item1 + item2;
+				});
+			state.totalItems = total;
 		},
 	},
 });

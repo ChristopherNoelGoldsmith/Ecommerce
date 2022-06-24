@@ -1,5 +1,5 @@
 const ListItem = (props) => {
-  return <li key={props.key}>{props.children}</li>;
+	return <li {...props}>{props.children}</li>;
 };
 
 export default ListItem;

@@ -2,11 +2,11 @@
 import styles from "./ProductListItem.module.scss";
 import Card from "../UI/Card";
 import ProductCartController from "../Utility/ProductCartController";
-import useModule from "../hooks/useModule";
+import useModal from "../hooks/useModal";
 import useProductCounter from "../hooks/useProductCounter";
 
 const ProductListItem = (props) => {
-	const { createModule } = useModule();
+	const { createModal } = useModal();
 	const {
 		incrimentProductHandler,
 		decrimentProductHandler,
@@ -24,7 +24,7 @@ const ProductListItem = (props) => {
 
 	const productName = productNameEdit();
 
-	const imageModuleHanlder = () => {
+	const imageModalHanlder = () => {
 		const productImage = (
 			<img
 				className={`${styles["product-image"]}`}
@@ -33,7 +33,7 @@ const ProductListItem = (props) => {
 			/>
 		);
 
-		return createModule(productImage);
+		return createModal(productImage);
 	};
 
 	return (
@@ -45,7 +45,7 @@ const ProductListItem = (props) => {
 					</label>
 					<div className={`${styles["image-container"]}`}>
 						<img
-							onClick={imageModuleHanlder}
+							onClick={imageModalHanlder}
 							className={`${styles["product-image"]}`}
 							src={props.src}
 							alt={props.productName}

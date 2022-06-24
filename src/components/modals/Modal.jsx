@@ -1,6 +1,6 @@
-import styles from "./Module.module.scss";
+import styles from "./Modal.module.scss";
 
-const Module = (props) => {
+const Modal = (props) => {
 	return (
 		<div onClick={props.onClick} className={`${styles.module}`}>
 			{props.children}
@@ -8,4 +8,4 @@ const Module = (props) => {
 	);
 };
 
-export default Module;
+export default Modal;

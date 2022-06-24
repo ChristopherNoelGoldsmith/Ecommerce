@@ -1,0 +1,22 @@
+@use "../../sass/mixins.scss";
+
+.text-input {
+	@include mixins.flex-column;
+	width: 80%;
+	padding: 1rem;
+	margin: 1rem;
+	font-size: mixins.$font-normal;
+	text-align: center;
+	label {
+		font-size: mixins.$font-normal;
+		width: 100%;
+	}
+	.login-input {
+		border: none;
+		border-radius: 5px;
+		width: 100%;
+		font-size: mixins.$font-normal;
+		text-align: center;
+		padding: 10px;
+	}
+}
