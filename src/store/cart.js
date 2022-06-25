@@ -61,6 +61,7 @@ const cartSlice = createSlice({
 					return item;
 				});
 				state.cartContents = newState;
+				return;
 			}
 
 			const item = {
@@ -71,26 +72,29 @@ const cartSlice = createSlice({
 				image: target.image,
 			};
 			state.cartContents = [...cartContents, item];
+			return;
 		},
 		incrimentItem(state, action) {
 			const { target } = action.payload;
 			const { cartContents } = state;
 			cartContents.forEach((item) => {
-				if (item.name === target.name) {
+				if (item.name === target.name && item.count < 99) {
 					item.count = item.count + 1;
 					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
+			return;
 		},
 		decrimentItem(state, action) {
 			const { target } = action.payload;
 			const { cartContents } = state;
 			cartContents.forEach((item) => {
-				if (item.name === target.name) {
+				if (item.name === target.name && item.count > 0) {
 					item.count = item.count - 1;
 					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
+			return;
 		},
 		//for removing counts from the card state
 		removeItem(state, action) {
@@ -103,6 +107,7 @@ const cartSlice = createSlice({
 			);
 
 			state.cartContents = filteredCart;
+			return;
 		},
 		//
 		getTotalCost(state) {
@@ -122,6 +127,7 @@ const cartSlice = createSlice({
 				});
 			const trimmedTotal = convertToDollarAmount(total);
 			state.totalCost = trimmedTotal;
+			return;
 		},
 		getTotalNumberOfItems(state) {
 			const total = state.cartContents
@@ -130,6 +136,7 @@ const cartSlice = createSlice({
 					return item1 + item2;
 				});
 			state.totalItems = total;
+			return;
 		},
 	},
 });

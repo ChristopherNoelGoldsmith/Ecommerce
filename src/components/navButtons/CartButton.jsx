@@ -9,7 +9,7 @@ const CartButton = (props) => {
 	const { cart } = useCart();
 
 	const itemsInCart = cart.totalItems;
-
+	const cartTotal = cart.totalCost;
 	const cartClass = itemsInCart > 0 ? styles.cart : "";
 
 	const modalHandler = () => {
@@ -20,6 +20,7 @@ const CartButton = (props) => {
 		<Button
 			className={cartClass}
 			cart-count={itemsInCart}
+			cart-total={`$${cartTotal}`}
 			onClick={modalHandler}
 		>
 			<i className="fa-solid fa-cart-shopping"></i>

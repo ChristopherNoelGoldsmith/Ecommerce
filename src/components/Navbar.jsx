@@ -6,6 +6,7 @@ import CartButton from "./navButtons/CartButton";
 import CategoryButton from "./navButtons/CategoryButton";
 import ProfileButton from "./navButtons/ProfileButton";
 import useModal from "./hooks/useModal";
+import logo from "../assets/img/logo.png";
 
 const Navbar = (props) => {
 	const { closeModal } = useModal();
@@ -22,13 +23,8 @@ const Navbar = (props) => {
 					<ListItem onClick={closeModal}>
 						<Button>
 							<Link to={"/"}>
-								<i className="fa-solid fa-house-user"></i>
+								<img className={`${styles.logo}`} src={logo} alt="" />
 							</Link>
-						</Button>
-					</ListItem>
-					<ListItem onClick={closeModal}>
-						<Button>
-							<span>My Hero Academia</span>
 						</Button>
 					</ListItem>
 					<ListItem onClick={closeModal}>

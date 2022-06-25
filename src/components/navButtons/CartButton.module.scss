@@ -16,3 +16,13 @@
 	height: 1rem;
 	font-size: mixins.$font-small;
 }
+
+.cart::before {
+	content: (attr(cart-total));
+	position: absolute;
+	color: ghostwhite;
+	bottom: 0;
+	left: 0;
+	height: 1rem;
+	font-size: mixins.$font-small;
+}

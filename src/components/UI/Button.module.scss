@@ -8,6 +8,7 @@ button {
 	font-size: mixins.$font-normal;
 	border-radius: 5px;
 	transition: ease 0.3s;
+	overflow: hidden;
 	i,
 	span {
 		color: ivory;

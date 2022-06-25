@@ -23,6 +23,8 @@ const createFeaturedProductList = (products) => {
 					key={cards.asset}
 					src={cards.ultra_url_path}
 					productPrice={cards.price}
+					text={cards.text}
+					extension={cards.extension}
 				/>
 			);
 		});

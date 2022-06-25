@@ -4,6 +4,7 @@ import Card from "../UI/Card";
 import ProductCartController from "../Utility/ProductCartController";
 import useModal from "../hooks/useModal";
 import useProductCounter from "../hooks/useProductCounter";
+import ProductDescription from "../modals/ProductDescription";
 
 const ProductListItem = (props) => {
 	const { createModal } = useModal();
@@ -24,13 +25,22 @@ const ProductListItem = (props) => {
 
 	const productName = productNameEdit();
 
+	// 	<ProductDescription
+	// 	extension={props.extension}
+	// 	name={props.productName}
+	// 	text={props.text}
+	// />
+
 	const imageModalHanlder = () => {
 		const productImage = (
-			<img
-				className={`${styles["product-image"]}`}
-				src={props.src}
-				alt={props.productName}
-			/>
+			<Card className={styles["item-description"]}>
+				<h3>{props.productName}</h3>
+				<img
+					className={`${styles["product-image"]}`}
+					src={props.src}
+					alt={props.productName}
+				/>
+			</Card>
 		);
 
 		return createModal(productImage);

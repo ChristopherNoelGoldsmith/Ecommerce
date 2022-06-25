@@ -5,7 +5,8 @@ import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
-
+import data from "./assets/rampage.json";
+console.log(data);
 function App() {
 	const { modal, modalVis } = useModal();
 	return (

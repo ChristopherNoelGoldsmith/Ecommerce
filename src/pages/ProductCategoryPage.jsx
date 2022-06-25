@@ -23,6 +23,9 @@ const createProductList = (products, pageNumber, numberPerPage = 25) => {
 				key={cards.asset}
 				src={cards.ultra_url_path}
 				productPrice={cards.price}
+				extension={cards.extension}
+				name={cards.name}
+				text={cards.text}
 			/>
 		);
 	});

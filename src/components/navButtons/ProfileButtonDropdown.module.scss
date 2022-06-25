@@ -1,15 +1,16 @@
 @use "../../sass/mixins.scss";
 
 .button-dropdown {
+	display: none; //just here because component under construction
+	position: relative;
 	opacity: 0;
-	position: absolute;
-	height: 100%;
 	z-index: 1000;
-	height: 80%;
 	transition: 0.4s ease-out;
 	background: rgba($color: red, $alpha: 0.8);
-
+	overflow: hidden;
 	ul {
+		position: absolute;
+		height: 100%;
 		li {
 			height: 100%;
 			font-size: mixins.$font-small;
@@ -20,7 +21,4 @@
 .button-dropdown:hover {
 	opacity: 1;
 	transition: 0.4s ease-out;
-	height: 200%;
-	top: 0;
-	left: 0;
 }

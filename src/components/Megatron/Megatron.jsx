@@ -4,7 +4,9 @@ import styles from "./Megatron.module.scss";
 const Megatron = (props) => {
 	return (
 		<section className={`${styles["megatron"]}`}>
-			<div className={`${styles["image-container"]}`}>UNDER CONSTRUCTION</div>
+			<div className={`${styles["image-container"]}`}>
+				ALLMIGHTY CCG! <span>Located in Las Vegas Nevada</span>
+			</div>
 		</section>
 	);
 };

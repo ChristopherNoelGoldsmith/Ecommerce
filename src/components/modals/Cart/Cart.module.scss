@@ -11,6 +11,7 @@
 
 	ul {
 		overflow-y: scroll;
+		min-height: 40vh;
 	}
 	ul::-webkit-scrollbar-button {
 		display: hidden;
