@@ -21,8 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "edit-prod": "node ./src/tools/editProductFiles.js"
-  },
+    "edit-prod": "node ./src/tools/editProductFiles.js",
+    "boot": "node ../backend/app.js"
+    },
   "eslintConfig": {
     "extends": [
       "react-app",
