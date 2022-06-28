@@ -55,14 +55,12 @@ const useLogin = () => {
 
 	const persistLogin = async () => {
 		const token = localStorage.getItem("userToken");
-		console.log(token);
 		if (!token) return;
 		const response = await fetch("/user/persist", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ token: token }),
 		}).then((res) => res.json());
-		console.log(response);
 		if (response.status !== "SUCCESS") return console.log("no persist");
 		dispatch(loginActions.login({ username: response.username }));
 		return console.log(

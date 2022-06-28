@@ -35,10 +35,13 @@ const useCart = () => {
 		return;
 	};
 
+	const persistCart = () => {};
+
 	//console.log(cart);
 
 	return {
 		cart,
+		persistCart,
 		addItem,
 		removeItem,
 		incrimentItem,

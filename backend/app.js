@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 //imports
 const User = require("./models/user");
+const Product = require("./models/product");
 const { off } = require("process");
 //statics
 const JWT_SECRET = "nfilidsndf)I(I5nb";
@@ -29,6 +30,25 @@ mongoose.connect(URI, {
 
 app.use("/", express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
+
+//Adding products to the store
+app.post("/product/create", async (req, res) => {
+	/* A post to create and add an item to the store  
+	Extenstion refers to the category of the item
+	*/
+	try {
+		const { name, text, img, count, extension } = req.body;
+		await Product.create({
+			name,
+			text,
+			img,
+			count,
+			extension,
+		});
+		res.json({ status: status.success, data: name });
+		console.log(`A new item was created ${name}`);
+	} catch (error) {}
+});
 
 //user CRUD
 //REGISTRATION!

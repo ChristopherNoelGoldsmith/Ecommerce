@@ -75,6 +75,7 @@ const Login = (props) => {
 					<TextInput
 						id={"username"}
 						placeholder={"PASSWORD"}
+						type={"password"}
 						value={authState.password || ""}
 						onChange={passwordHanlder}
 					/>

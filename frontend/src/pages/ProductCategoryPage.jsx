@@ -16,7 +16,7 @@ const createProductList = (products, pageNumber, numberPerPage = 25) => {
 	const startOfPage = pageNumber * numberPerPage;
 	const endOfPage = startOfPage + numberPerPage;
 	const thisPage = products.slice(startOfPage, endOfPage);
-	return thisPage.map((cards, index) => {
+	return thisPage.map((cards) => {
 		return (
 			<ProductListItem
 				productName={cards.name}

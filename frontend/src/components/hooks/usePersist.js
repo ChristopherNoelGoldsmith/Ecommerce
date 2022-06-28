@@ -8,14 +8,20 @@ IMPLIMENTATION AND CONSTRUCTION WILL BE POST FULL LOGIN
 SETUP!
 */
 
-import { useState } from "react";
+import { useEffect } from "react";
+import useLogin from "./useLogin";
+//import useCart from "./useCart";
 
 const usePersist = () => {
-	const [persistState, setPersist] = useState();
+	const { persistLogin } = useLogin();
+	//const { persistCart } = useCart();
 
-	const persistUser = () => {
-		localStorage.setItem("user", persistState);
-	};
+	const persistUser = useEffect(() => {
+		persistLogin();
+		//persistCart(); ---Needs to be built!
+	});
 
-	return [persistUser];
+	return persistUser;
 };
+
+export default usePersist;

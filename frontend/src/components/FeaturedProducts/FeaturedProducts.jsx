@@ -5,29 +5,25 @@ import Card from "../UI/Card";
 
 //placeholder
 const createFeaturedProductList = (products) => {
-	return products
-		.sort((item1, item2) => {
-			if (item1.purchaseCount < item2.purchaseCount) {
-				return -1;
-			}
-			if (item1.purchaseCount > item2.purchaseCount) {
-				return 1;
-			}
-			return 0;
-		})
-		.map((cards, index) => {
-			if (index > 4) return;
-			return (
-				<ProductListItem
-					productName={cards.name}
-					key={cards.asset}
-					src={cards.ultra_url_path}
-					productPrice={cards.price}
-					text={cards.text}
-					extension={cards.extension}
-				/>
-			);
-		});
+	const genRandomNum = () => {
+		const num = Math.floor(Math.random() * products.length);
+		if (num + 4 > products.length) return randomNum();
+		return num;
+	};
+	const randomNum = genRandomNum();
+	return products.map((cards, index) => {
+		if (index > randomNum || index < randomNum - 4) return;
+		return (
+			<ProductListItem
+				productName={cards.name}
+				key={cards.asset}
+				src={cards.ultra_url_path}
+				productPrice={cards.price}
+				text={cards.text}
+				extension={cards.extension}
+			/>
+		);
+	});
 };
 
 const FeaturedProducts = (props) => {

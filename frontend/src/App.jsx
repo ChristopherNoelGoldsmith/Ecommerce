@@ -6,16 +6,11 @@ import Navbar from "./components/Navbar";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
 import data from "./assets/rampage.json";
-import { useEffect } from "react";
-import useLogin from "./components/hooks/useLogin";
+import usePersist from "./components/hooks/usePersist";
 console.log(data);
 function App() {
 	const { modal, modalVis } = useModal();
-	const { persistLogin } = useLogin();
-	useEffect(() => {
-		persistLogin();
-	}, []);
-
+	usePersist();
 	return (
 		<div className="container">
 			{modalVis && modal}
