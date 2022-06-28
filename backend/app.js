@@ -33,12 +33,13 @@ app.use(bodyParser.json());
 //user CRUD
 //REGISTRATION!
 app.post("/user/register", async (req, res) => {
+	console.log(res);
 	try {
 		//Get Values from response and hash;
 		const { username, password: plainTextPassword } = req.body;
 		const password = await bcrypt.hash(plainTextPassword, 10);
 
-		const response = User.create({
+		await User.create({
 			username,
 			password,
 		});
@@ -55,9 +56,10 @@ app.post("/user/login", async (req, res) => {
 		const { username, password } = req.body;
 		const user = await User.findOne({ username }).lean();
 		//ERROR HANDLING ------
-		if (!user)
+		if (!user) {
+			console.log("ERROR: user not found");
 			res.json({ status: status.error, message: "INVALID USER INFORMATION!" });
-
+		}
 		const token = jwt.sign(
 			{ id: user._id, username: user.username },
 			JWT_SECRET
@@ -66,14 +68,25 @@ app.post("/user/login", async (req, res) => {
 		//used to validate the hashed password via bcrypt
 		if (await bcrypt.compare(password, user.password)) {
 			console.log(`USER: ${username} | HAS LOGGED IN!`);
-			res.json({ status: status.success, data: token });
+			return res.json({ status: status.success, token: token });
 		}
-
+		console.log("what?");
 		return res.json({
 			error: status.error,
 			message: `INVALID USER INFORMATION!`,
 		});
 	} catch (error) {}
+});
+
+app.post("/user/persist", async (req, res) => {
+	const { token } = req.body;
+	try {
+		const user = jwt.verify(token, JWT_SECRET);
+		const { _id, username } = user;
+		res.json({ status: status.success, username: username });
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 app.listen(PORT, () => console.log(`hello from the server on PORT:${PORT}`));

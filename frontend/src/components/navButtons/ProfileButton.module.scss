@@ -1,3 +1,17 @@
+@use "../../sass/mixins.scss";
+
 .profile-btn {
+	position: relative;
 	overflow: hidden;
+	padding: 1rem;
+}
+.profile-btn::after {
+	content: attr(username);
+	font-size: mixins.$font-small;
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	color: ivory;
+	bottom: 0;
+	left: 0;
 }
