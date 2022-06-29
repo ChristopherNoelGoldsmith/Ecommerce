@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "edit-prod": "node ./src/tools/editProductFiles.js",
-    "boot": "node ../backend/app.js"
+    "server": "node ../backend/server.js"
   },
   "eslintConfig": {
     "extends": [

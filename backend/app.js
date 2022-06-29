@@ -2,23 +2,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
-//imports
-const User = require("./models/user");
-const Product = require("./models/product");
+const morgan = require("morgan");
+//imports SCHEMA
 const { off } = require("process");
-//statics
+//Routers
+const productsRouter = require("./routers/productRouter");
+//Controllers
+const userController = require("./controllers/userController");
+//
 const JWT_SECRET = "nfilidsndf)I(I5nb";
 const URI_PASSWORD = "2KmSNnKXuHIipo54";
-const PORT = 1337;
 const URI = `mongodb+srv://Goldifysh:${URI_PASSWORD}@cluster0.wznu5v3.mongodb.net/allmightyccg?retryWrites=true&w=majority`;
-const status = {
-	success: "SUCCESS",
-	fail: "FAIL",
-	error: "ERROR",
-};
+
 //--------------------------------------
 const app = express();
 
@@ -27,86 +23,20 @@ mongoose.connect(URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
-
+//MIDDLEWARE
 app.use("/", express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
-
-//Adding products to the store
-app.post("/product/create", async (req, res) => {
-	/* A post to create and add an item to the store  
-	Extenstion refers to the category of the item
-	*/
-	try {
-		const { name, text, img, count, extension } = req.body;
-		await Product.create({
-			name,
-			text,
-			img,
-			count,
-			extension,
-		});
-		res.json({ status: status.success, data: name });
-		console.log(`A new item was created ${name}`);
-	} catch (error) {}
+app.use(morgan("dev"));
+app.use((req, res, next) => {
+	next();
 });
+//
 
-//user CRUD
-//REGISTRATION!
-app.post("/user/register", async (req, res) => {
-	console.log(res);
-	try {
-		//Get Values from response and hash;
-		const { username, password: plainTextPassword } = req.body;
-		const password = await bcrypt.hash(plainTextPassword, 10);
+//routers users// needs to broken up and placed so it can be turned into a router.
+app.post("/user/register", userController.registerUser);
+app.post("/user/login", userController.loginUser);
+app.post("/user/persist", userController.persistLogin);
 
-		await User.create({
-			username,
-			password,
-		});
-		console.log(`USER: ${username} | CREATED!`);
+app.use("/products", productsRouter);
 
-		res.json({ status: status.success, data: username });
-	} catch (error) {
-		console.log(`AN ERROR HAS OCCOURED: ${error}`);
-	}
-});
-//LOGIN! -----------------------
-app.post("/user/login", async (req, res) => {
-	try {
-		const { username, password } = req.body;
-		const user = await User.findOne({ username }).lean();
-		//ERROR HANDLING ------
-		if (!user) {
-			console.log("ERROR: user not found");
-			res.json({ status: status.error, message: "INVALID USER INFORMATION!" });
-		}
-		const token = jwt.sign(
-			{ id: user._id, username: user.username },
-			JWT_SECRET
-		);
-
-		//used to validate the hashed password via bcrypt
-		if (await bcrypt.compare(password, user.password)) {
-			console.log(`USER: ${username} | HAS LOGGED IN!`);
-			return res.json({ status: status.success, token: token });
-		}
-		console.log("what?");
-		return res.json({
-			error: status.error,
-			message: `INVALID USER INFORMATION!`,
-		});
-	} catch (error) {}
-});
-
-app.post("/user/persist", async (req, res) => {
-	const { token } = req.body;
-	try {
-		const user = jwt.verify(token, JWT_SECRET);
-		const { _id, username } = user;
-		res.json({ status: status.success, username: username });
-	} catch (error) {
-		console.log(error);
-	}
-});
-
-app.listen(PORT, () => console.log(`hello from the server on PORT:${PORT}`));
+module.exports = app;
