@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const APIFeatures = require("./APIFeatures");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 //status messages
@@ -20,9 +21,24 @@ const createProducts = async (req, res) => {
 	} catch (error) {}
 };
 
+/*GET PRODUCTS ALIAS */
+
+const crimsonRampage = async (req, res, next) => {
+	req.query.limit = 25;
+	req.query.page = 1;
+	req.query.fields = "name, price, extension, count, img, text";
+	req.query.extension = "Crimson Rampage";
+	next();
+};
+
+//PRIMARY GET FUNCTION FOR PRODUCTS!
 const getProducts = async (req, res) => {
 	try {
-		const data = await Product.find();
+		const query = new APIFeatures(Product, req.query);
+
+		// 1 ) Query Execution
+		const data = await query.init();
+		// 2 ) Data Response
 		return res.status(200).json({ status: status.success, data });
 	} catch (err) {
 		return console.log(err);
@@ -31,16 +47,20 @@ const getProducts = async (req, res) => {
 
 const patchProducts = async (req, res) => {
 	try {
-		Product.findByIdAndUpdate(req.body);
+		const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true,
+		});
 		res.status(200).json({});
 	} catch (err) {}
 };
 
 const deleteProducts = async (req, res) => {
 	try {
-		Product.findByIdAndDelete(req.body);
+		await Product.findByIdAndDelete(req.params.id);
 		res.status(200).json({
 			status: status.success,
+			data: null,
 		});
 	} catch (err) {
 		console.log(`Product could not be deleted | ${err}`);
@@ -88,6 +108,8 @@ const model = {
 	createProducts,
 	patchProducts,
 	deleteProducts,
+	getProductById,
+	crimsonRampage,
 };
 
 module.exports = model;

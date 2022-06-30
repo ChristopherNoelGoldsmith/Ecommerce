@@ -14,9 +14,16 @@ router.param("credentials", (req, res, next, val) => {
 //routers products
 //!!!ADD MIDDLEWARE TO THE POST BELOW
 router
+	.route("/crimson-rampage")
+	.get(productsController.crimsonRampage, productsController.getProducts);
+
+router
 	.route("/")
-	.post(productsController.massPopulate)
-	.get(productsController.getProducts);
+	.post(productsController.createProducts)
+	.get(productsController.getProducts)
+	.patch(productsController.patchProducts)
+	.delete(productsController.deleteProducts);
 //
+router.route("/:id").get(productsController.getProductById);
 
 module.exports = router;
