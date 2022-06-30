@@ -3,10 +3,10 @@ import Button from "../../UI/Button";
 import useLogin from "../../hooks/useLogin";
 
 const UserProfile = () => {
-	const { logout } = useLogin();
-
+	const { loginState, logout } = useLogin();
 	return (
 		<section className={`${styles.profile}`}>
+			<h2>{loginState.username}</h2>
 			<Button onClick={logout}>LOGOUT!</Button>
 		</section>
 	);

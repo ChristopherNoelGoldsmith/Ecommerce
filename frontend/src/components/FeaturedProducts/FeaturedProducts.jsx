@@ -2,38 +2,31 @@ import styles from "./FeaturedProducts.module.scss";
 import ProductListItem from "./ProductListItem";
 import useProduct from "../hooks/useProduct";
 import Card from "../UI/Card";
+import { useEffect } from "react";
+import { useState } from "react";
 
-//placeholder
-const createFeaturedProductList = (products) => {
-	const genRandomNum = () => {
-		const num = Math.floor(Math.random() * products.length);
-		if (num + 4 > products.length) return randomNum();
-		return num;
-	};
-	const randomNum = genRandomNum();
-	return products.map((cards, index) => {
-		if (index > randomNum || index < randomNum - 4) return;
-		return (
-			<ProductListItem
-				productName={cards.name}
-				key={cards.asset}
-				src={cards.ultra_url_path}
-				productPrice={cards.price}
-				text={cards.text}
-				extension={cards.extension}
-			/>
-		);
-	});
+const featureFilter = (products) => {
+	const filter = products.filter((product, index) => index < 5 && true);
+	return filter;
 };
 
 const FeaturedProducts = (props) => {
-	const { crimsonRampage } = useProduct();
-	const featuredProductList = createFeaturedProductList(crimsonRampage);
-
+	const [featured, setFeatured] = useState();
+	const { getProductList, getAllProducts } = useProduct();
+	useEffect(() => {
+		const fetchData = async () => {
+			const product = await getAllProducts();
+			const list = getProductList(product);
+			const filtered = featureFilter(list);
+			console.log(filtered);
+			setFeatured(filtered);
+		};
+		fetchData();
+	}, []);
 	return (
 		<Card className={`${styles["featured-product"]}`}>
 			<h2>HOT ITEMS!</h2>
-			<ul>{featuredProductList}</ul>
+			<ul>{featured}</ul>
 		</Card>
 	);
 };

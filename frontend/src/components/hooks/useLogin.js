@@ -8,7 +8,7 @@ const useLogin = () => {
 	const login = async (userInfo) => {
 		const { username, password } = userInfo;
 		console.log(userInfo);
-		const response = await fetch(`/user/login`, {
+		const response = await fetch(`api/v1/users/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -38,7 +38,7 @@ const useLogin = () => {
 
 	const registerAccount = async (userInfo) => {
 		const { username, password } = userInfo;
-		const response = await fetch(`/user/register`, {
+		const response = await fetch(`api/v1/users/register`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -56,7 +56,7 @@ const useLogin = () => {
 	const persistLogin = async () => {
 		const token = localStorage.getItem("userToken");
 		if (!token) return;
-		const response = await fetch("/user/persist", {
+		const response = await fetch("api/v1/users/persist", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ token: token }),

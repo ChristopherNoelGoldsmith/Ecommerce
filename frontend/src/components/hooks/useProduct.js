@@ -1,33 +1,46 @@
-/*
---example of the objects contained within the product array
-
-asset: "mha01/164.png"
-attack_zone: "mid"
-block_modifier: 2
-block_zone: "mid"
-control: 3
-damage: 6
-difficulty: 5
-extension: "My Hero Academia"
-extension_short: "mha01"
-formats: (3) ['retro', 'standard', 'My Hero Academia']
-keywords: ['Ranged']
-name: "20 Meter Tongue Strike"
-numero: 164
-numero_image: 164
-rarity: "common"
-resources: (3) ['water', 'air', 'life']
-speed: 4
-text: "Enhance: If your character is committed, commit 1 rival foundation."
-type: "attack"
-
-*/
-
 import crimsonRampage from "../../assets/rampage.json";
+import { useState } from "react";
+import ProductListItem from "../FeaturedProducts/ProductListItem";
 
 const useProduct = () => {
+	const [products, setProducts] = useState();
+	const [productsList, setProductsList] = useState();
+	const mount = "/api/v1";
+	const getAllProducts = async () => {
+		const products = await fetch(`${mount}/products`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			method: "GET",
+		});
+		const { data } = await products.json();
+		setProducts(data);
+		return data;
+	};
+
+	const getProductList = (product) => {
+		const productList = product.map((cards, index) => {
+			const { name, img, price, text, extension, _id } = cards;
+			return (
+				<ProductListItem
+					productName={name}
+					key={_id}
+					src={img}
+					productPrice={price}
+					text={text}
+					extension={extension}
+				/>
+			);
+		});
+		setProductsList(productList);
+		return productList;
+	};
+
 	return {
-		crimsonRampage,
+		products,
+		productsList,
+		getProductList,
+		getAllProducts,
 	};
 };
 

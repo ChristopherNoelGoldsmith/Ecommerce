@@ -28,4 +28,31 @@ const editFiles = (params) => {
 	}
 };
 
-editFiles(fileToEdit);
+const writeToDatabase = () => {
+	fs.readFile(`${__dirname}/../assets/rampage.json`, async (err, data) => {
+		data = JSON.parse(data);
+		console.log(data);
+		const editedData = data.map(async (item) => {
+			const {
+				purchaseCount,
+				ultra_url_path: img,
+				price,
+				text,
+				extension,
+			} = item;
+			const data = { purchaseCount };
+			fetch("/api/v1/products", {
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "POST",
+				body: {
+					data,
+				},
+			});
+			return data;
+		});
+	});
+};
+
+writeToDatabase(fileToEdit);

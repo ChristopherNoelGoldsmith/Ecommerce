@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const User = require(".././models/user");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 //status messages
 const statusMessages = require("../status");
@@ -42,11 +42,11 @@ const loginUser = async (req, res) => {
 			console.log("ERROR: user not found");
 			res.json({ status: status.error, message: "INVALID USER INFORMATION!" });
 		}
+		console.log(user);
 		const token = jwt.sign(
-			{ id: user._id, username: user.username },
+			{ id: user._id, username: user.username, credentials: false },
 			JWT_SECRET
 		);
-
 		//used to validate the hashed password via bcrypt
 		if (await bcrypt.compare(password, user.password)) {
 			console.log(`USER: ${username} | HAS LOGGED IN!`);
@@ -71,6 +71,21 @@ const persistLogin = async (req, res) => {
 	}
 };
 
-const model = { persistLogin, loginUser, registerUser };
+//INCOMPLETE CODE ON VERIFYING AN ADMIN ACCOUNT
+const verifyAdmin = async (req, res) => {
+	try {
+		const { credentials } = req.body;
+		const checkAdmin = jwt.verify(credentials, JWT_SECRET);
+		const { isAdmin } = checkAdmin;
+		res.json({ status: status.success, message: "Verified Admin" });
+		if (isAdmin === true) return next();
+
+		res.json({ status: status.error, message: "Invalid Credentials!" });
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+const model = { persistLogin, loginUser, registerUser, verifyAdmin };
 
 module.exports = model;

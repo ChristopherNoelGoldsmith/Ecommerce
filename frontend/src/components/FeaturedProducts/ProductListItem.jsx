@@ -45,7 +45,6 @@ const ProductListItem = (props) => {
 
 		return createModal(productImage);
 	};
-
 	return (
 		<li className={`${styles["product-list-item"]}`}>
 			<Card>

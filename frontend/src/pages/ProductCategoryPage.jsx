@@ -1,8 +1,8 @@
 import styles from "./ProductCategoryPage.module.scss";
 import useProduct from "../components/hooks/useProduct";
-import ProductListItem from "../components/FeaturedProducts/ProductListItem";
 import { useReducer, useState } from "react";
 import PageButtons from "../components/UI/PageButtons";
+import { useEffect } from "react";
 
 const types = {
 	INCRIMENT: "INCRIMENT",
@@ -12,23 +12,12 @@ const types = {
 	NUMBER_OF_ITEMS: "NUMBER_OF_ITEMS",
 };
 
-const createProductList = (products, pageNumber, numberPerPage = 25) => {
+const pageHandler = (products, pageNumber, numberPerPage = 25) => {
 	const startOfPage = pageNumber * numberPerPage;
 	const endOfPage = startOfPage + numberPerPage;
+	console.log(products);
 	const thisPage = products.slice(startOfPage, endOfPage);
-	return thisPage.map((cards) => {
-		return (
-			<ProductListItem
-				productName={cards.name}
-				key={cards.asset}
-				src={cards.ultra_url_path}
-				productPrice={cards.price}
-				extension={cards.extension}
-				name={cards.name}
-				text={cards.text}
-			/>
-		);
-	});
+	return thisPage;
 };
 
 const configurePagesReducer = (state, action) => {
@@ -52,27 +41,52 @@ const configurePagesReducer = (state, action) => {
 	return { pageNumber: state.pageNumber, numberPerPage: state.numberPerPage };
 };
 
+/*
+setCategory: the category of data being fetched from the server. Navbar category or a search.
+pagesConfig: takes the length of the categorhy and provides pagenation via the array slice method,
+	and passes its function to the page buttons.
+*/
+
 const ProductCategoryPage = (props) => {
-	const { crimsonRampage } = useProduct();
-	const [category, setCategory] = useState(crimsonRampage);
+	const { getProductList, getAllProducts } = useProduct();
+	const [category, setCategory] = useState([]);
 	const [pagesConfig, dispatchPages] = useReducer(configurePagesReducer, {
 		pageNumber: 0,
 		numberPerPage: 25,
 	});
-	const productList = createProductList(
-		crimsonRampage,
-		pagesConfig.pageNumber,
-		pagesConfig.numberPerPage
-	);
+	const [page, setPage] = useState();
 
+	//for pagenation
+	const thisPage = (products) => {
+		const page = pageHandler(
+			products,
+			pagesConfig.pageNumber,
+			pagesConfig.numberPerPage
+		);
+		setPage(page);
+	};
+	//Initialization
+	useEffect(() => {
+		const fetchData = async () => {
+			const products = await getAllProducts();
+			const productsList = await getProductList(products);
+			setCategory(productsList);
+			thisPage(productsList);
+			console.log(category);
+		};
+		fetchData();
+	}, []);
+
+	//handler function for pagenation
 	const setPageNumber = (page) => {
 		dispatchPages({ type: types.SET, pageNumber: page });
+		thisPage(category);
 		return;
 	};
 
 	return (
 		<section className={`${styles.category}`}>
-			<ul>{productList}</ul>
+			<ul>{page}</ul>
 			<PageButtons
 				category={category}
 				numberPerPage={pagesConfig.numberPerPage}
