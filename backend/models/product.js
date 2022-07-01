@@ -6,10 +6,17 @@ const ProductSchema = mongoose.Schema(
 			type: String,
 			required: [true, "A product must have a name."],
 			unique: true,
+			maxlength: [
+				50,
+				"The maximum length cannot be greater than 50 characters",
+			],
+			minlength: [1, "A name must have characters"],
+			trim: true,
 		},
 		text: {
 			type: String,
 			required: [true, "A product must have a description."],
+			trim: true,
 		},
 		count: {
 			type: Number,
@@ -18,11 +25,10 @@ const ProductSchema = mongoose.Schema(
 		img: { type: String },
 		extension: { type: String, default: "none" },
 		price: {
-			type: String,
-			default: "10.00",
+			type: Number,
+			default: 10.0,
 		},
-		purshaseCount: { type: Number, default: 0 },
-		_id: { type: String, required: [true, "An item must have an ID"] },
+		purchaseCount: { type: Number, default: 0 },
 	},
 	{ collection: "products" }
 );

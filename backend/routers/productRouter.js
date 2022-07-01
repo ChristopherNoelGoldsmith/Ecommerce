@@ -17,6 +17,10 @@ router
 	.route("/crimson-rampage")
 	.get(productsController.crimsonRampage, productsController.getProducts);
 
+router.route("/get-avg-price").get(productsController.getPriceAverage);
+
+router.route("/dev/populate-products").post(productsController.massPopulateDev);
+
 router
 	.route("/")
 	.post(productsController.createProducts)

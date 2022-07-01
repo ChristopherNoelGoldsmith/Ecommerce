@@ -1,11 +1,13 @@
 const Product = require("../models/product");
-const APIFeatures = require("./APIFeatures");
-const bcrypt = require("bcryptjs");
+const APIFeatures = require("../utilities/utilities");
+const dotenv = require("dotenv");
 const fs = require("fs");
+dotenv.config({ path: `${__dirname}../config.env` });
+
 //status messages
 const statusMessages = require("../status");
 //
-const JWT_SECRET = "nfilidsndf)I(I5nb";
+const JWT_SECRET = process.env.JWT_SECRET;
 const { status } = statusMessages();
 
 //Adding products to the store
@@ -34,12 +36,16 @@ const crimsonRampage = async (req, res, next) => {
 //PRIMARY GET FUNCTION FOR PRODUCTS!
 const getProducts = async (req, res) => {
 	try {
-		const query = new APIFeatures(Product, req.query);
+		const query = await new APIFeatures(Product, req.query)
+			.filter()
+			.sort()
+			.fields()
+			.pagenation();
 
 		// 1 ) Query Execution
-		const data = await query.init();
+		const data = await query.query;
 		// 2 ) Data Response
-		return res.status(200).json({ status: status.success, data });
+		return res.status(200).json({ status: status.success, data: data });
 	} catch (err) {
 		return console.log(err);
 	}
@@ -71,8 +77,11 @@ const getProductById = async (req, res) => {
 	try {
 	} catch (error) {}
 };
+
 /*
-const massPopulate = async (req, res) => {
+---massPopulate is used to write DUMMY_DATA to the database for devopment
+*/
+const massPopulateDev = async (req, res) => {
 	try {
 		fs.readFile(
 			`${__dirname}/../../frontend/src/assets/rampage.json`,
@@ -80,17 +89,13 @@ const massPopulate = async (req, res) => {
 				console.log(data);
 				data = JSON.parse(data);
 				data.forEach(async (product, index) => {
-					const { extension } = product;
-					const _id =
-						`${extension[0]}${extension[1]}${extension[2]}${index}`.toLocaleLowerCase();
 					const params = {
 						name: product.name,
 						img: product.ultra_url_path,
 						text: product.text,
 						count: product.count,
 						extension: product.extension,
-						price: product.price,
-						_id: _id,
+						price: product.price * 1,
 					};
 					await Product.create(params);
 					return;
@@ -102,14 +107,37 @@ const massPopulate = async (req, res) => {
 		console.log("poop");
 	}
 };
-*/
+
+const getPriceAverage = async (req, res) => {
+	try {
+		const stats = await Product.aggregate([
+			{
+				$match: { price: { $gte: 1 } },
+			},
+			{
+				$group: {
+					_id: null,
+					avgPrice: { $avg: "$price" },
+					maxPrice: { $max: "$price" },
+					minPrice: { $min: "$price" },
+				},
+			},
+		]);
+		res.status(200).json({ message: status.success, data: stats });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const model = {
 	getProducts,
 	createProducts,
 	patchProducts,
 	deleteProducts,
 	getProductById,
+	getPriceAverage,
 	crimsonRampage,
+	massPopulateDev,
 };
 
 module.exports = model;
