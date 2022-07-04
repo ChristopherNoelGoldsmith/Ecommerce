@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema(
 			required: [true, "You must have a password"],
 			trim: true,
 			minlength: 5,
+			select: false,
 		},
 		passwordConfirm: {
 			type: String,
@@ -42,7 +43,6 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			default: "USER",
 			enum: ["USER", "MODERATOR", "ADMIN"],
-			hidden: true,
 		},
 	},
 	{ collection: "users" }
@@ -55,7 +55,7 @@ const UserSchema = new mongoose.Schema(
 
 */
 
-// Security 1 ) PASSWORD ENCRYPTION!
+// SECURITY 1 ) PASSWORD ENCRYPTION!
 UserSchema.pre("save", async function (next) {
 	// A ) The below if statement prevents this middleware from running if the user password was not modified
 	if (!this.isModified("password")) return next();
@@ -68,6 +68,14 @@ UserSchema.pre("save", async function (next) {
 
 	next();
 });
+
+// SECURITY 2 ) PASSWORD CONFIRMATION!
+UserSchema.methods.correctPassword = async function (
+	hashedPassword,
+	userPassword
+) {
+	return await bcrypt.compare(hashedPassword, userPassword);
+};
 
 const model = mongoose.model("UserSchema", UserSchema);
 
