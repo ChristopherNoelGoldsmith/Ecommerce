@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -28,6 +29,7 @@ const UserSchema = new mongoose.Schema(
 				message: "Password must match!",
 			},
 		},
+		passwordChangedAt: { type: Date },
 
 		email: {
 			type: String,
@@ -37,6 +39,8 @@ const UserSchema = new mongoose.Schema(
 			trim: true,
 			validate: [validator.isEmail, "A valid email is required"],
 		},
+		passwordResetToken: { type: String },
+		passwordResetExpires: { type: Date },
 		image: { type: String },
 		dateCreated: { type: String, default: new Date() },
 		permissions: {
@@ -49,11 +53,12 @@ const UserSchema = new mongoose.Schema(
 );
 
 /*
---MIDDLEWARE--
-
-1 ) Password Encryption
+//////////////////
+  --MIDDLEWARE----
+//////////////////
 
 */
+//1 ) Password Encryption
 
 // SECURITY 1 ) PASSWORD ENCRYPTION!
 UserSchema.pre("save", async function (next) {
@@ -76,6 +81,54 @@ UserSchema.methods.correctPassword = async function (
 ) {
 	return await bcrypt.compare(hashedPassword, userPassword);
 };
+
+// SECUIRTY 3 ) CHECK FOR PASSWORD CHANGE
+//NOTE: Takes the time of the password change and comapres it to the time of the JWT token.
+//--If the token issue was before the password it returns true.
+UserSchema.methods.changedPasswordAfter = async function (jwtTimestamp) {
+	if (this.passwordChangedAt) {
+		const changedTimeStamp = parseInt(
+			this.passwordChangedAt.getTime() / 1000,
+			10
+		);
+		return jwtTimestamp < changedTimeStamp;
+	}
+
+	return false;
+};
+
+// SECURITY 4 ) GENERATES PASSWORD RESET TOKEN TO RESET PASSWORD
+UserSchema.methods.createPasswordResetToken = function () {
+	//SECURITY A ) CREATES A CRYPTO TOKEN TO BE SENT TO THE USER TO VERIFY THEIR IDENTITY TO RESET PASSWORD
+	const token = crypto.randomBytes(32).toString("hex");
+	console.log(token);
+	// RESET 1 ) HSASHES THE RESET TOKEN AND SETS IT TO THE USER
+	this.passwordResetToken = crypto
+		.createHash("sha256")
+		.update(token)
+		.digest("hex");
+
+	//SECURITY B ) SETS AN EXPIRATION ON THE TOKEN GENERATED AT THE TOP OF THIS FUNCTION
+	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+	console.log(this.passwordResetExpires);
+	//RETURNS THE TOKEN
+	return token;
+};
+
+// SECURITY 5 )
+
+UserSchema.pre("save", function (next) {
+	if (!this.isModified("password") || this.isNew) return next();
+
+	/* 
+	NOTE: time -1000 added to resolve a but with jwt authentication
+	lag on server causeing time token is generated to be after
+	the creation of a document
+	*/
+
+	this.passwordChangedAt = Date.now() - 1000;
+	next();
+});
 
 const model = mongoose.model("UserSchema", UserSchema);
 

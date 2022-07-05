@@ -9,6 +9,17 @@ router
 	.route("/profile")
 	.get(authController.protect, usersController.usersProfile);
 
+router
+	.route("/:id")
+	.get(usersController.getAllUsers)
+	.delete(
+		authController.protect,
+		authController.restrict("ADMIN"),
+		usersController.deleteUsers
+	);
+
+router.route("/reset-password").post(usersController.lostPassword);
+router.route("/reset-password/:token").patch(usersController.resetPassword);
 router.route("/register").post(authController.registerUsers);
 router.route("/persist").post(authController.persistLogin);
 

@@ -1,3 +1,12 @@
+const AppError = require("../utilities/appError");
+
+const handleJWTError = (err) => {
+	return new AppError("Invalid token, please log in again", 401);
+};
+const handleExpiredTokenError = (err) => {
+	return new AppError("Session has expired, please log in again!", 401);
+};
+
 const errDev = (res, err) => {
 	if (err.isOperational) {
 		return res.json({
@@ -22,7 +31,11 @@ module.exports = (err, req, res, next) => {
 	err.message = err.message || "ERROR!";
 
 	if (process.env.NODE_ENV === "development") {
+		console.log("poop");
 		return errDev(res, err);
 	}
+	if (error.name === "JsonWebTokenError") error = handleJWTError(error);
+	if (error.name === "TokenExpiredError")
+		error = handleExpiredTokenError(error);
 	return errProduction(res, err);
 };
