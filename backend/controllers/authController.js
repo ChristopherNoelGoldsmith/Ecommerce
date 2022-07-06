@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 //Imports
-const signToken = require("../utilities/signToken");
+const sign = require("../utilities/signToken");
 const User = require("../models/user");
 const AppError = require("../utilities/appError");
 const catchAsyncFunction = require("../utilities/catchAsync");
@@ -23,11 +23,7 @@ const registerUsers = catchAsyncFunction(async (req, res, next) => {
 
 	// SECURITY 2 ) JSON WEBTOKEN CREATED FOR USER LOGIN AND PERSISTENCE.
 
-	const token = jwt.sign(
-		{ id: newUser._id, username: newUser.username, permissions: "USER" },
-		process.env.JWT_SECRET,
-		{ expiresIn: process.env.JWT_EXPIRES }
-	);
+	const token = sign.signToken(newUser);
 
 	res.status(201).json({
 		status: "SUCCESS",
@@ -54,27 +50,61 @@ const loginUsers = catchAsyncFunction(async (req, res, next) => {
 	//SECURITY 1-B ) BCRYPT PASSWORD VALIDATION ------
 	if (!user || (await user.correctPassword(password, user.password))) {
 		//PERSISTANCE 1 ) JWT CREATION FOR PERSISTANCE ------
-
-		const token = signToken(username);
+		console.log(user);
+		const token = sign.signToken(user);
 
 		//PERSISTANCE 2 ) JWT TOKEN TO CLIENT ------
 
-		return res.status(201).json({ status: "SUCCESS", data: { token } });
+		return sign.sendToken(token, 201, res);
 	} else {
 		//SECURITY 1-C ) ERROR THROWN FOR INCORRECT PASSWORD
 		return next(new AppError("ERROR: USER INFORMATION IS INVAID!!!", 401));
 	}
 });
 
-const persistLogin = catchAsyncFunction(async (req, res) => {
-	const { token } = req.body;
-	const user = jwt.verify(token, JWT_SECRET);
-	const { _id, username } = user;
-	res.status(201).json({ status: "SUCCESS", username: username });
+const updatePassword = catchAsyncFunction(async (req, res, next) => {
+	/*
+	NOTE: THE PASSWORD UPDATE FUNCTION IS DESIGNED FOR 2 INPUTS OF THE SAME PASSWORD
+	TO KEEP UNDESIRABLE TYPOS FROM MAKING THEIR WAY INTO THE USER PASSWORD FROM
+	THE FRONTEND
+
+	THE .save METHOD IS ALSO USED DUE TO THE MIDDLEWARE IN THE SCHEMA UPDATING PARTS OF THE USER
+	ON THE MUTATION OF THE PASSWORD.
+	*/
+
+	const {
+		id,
+		password: oldPassword,
+		newPassword: password,
+		newPasswordConfirm,
+	} = req.body;
+	// VERIFICATION 1 ) CHECK TO MAKE SURE BOTH PASSWORD INPUTS WERE THE SAME
+	if (password !== newPasswordConfirm)
+		return next(new AppError("BOTH PASSWORD INPUTS MUST MATCH", 400));
+
+	// VERIFICATION 2 ) VERIFIES TOKEN THEN GETS USER FROM COLLECTION
+	const user = await User.findOne(id).select("+password");
+	if (!user) return next(new AppError("USER NOT FOUND!", 404));
+	// VERIFICATION 3 ) CHECK IF PASSWORD CORRECT
+	if (!(await user.correctPassword(oldPassword, user.password)))
+		return next(new AppError("INCORRECT PASSWORD!", 401));
+
+	/*
+	--NEED TO ADD!--
+	ADD AN EMAIL FUNCTION WHICH SENDS AN EMAIL TO THE USER
+	WHEN THEIR PASSWORD IS UPDATED. 
+	*/
+
+	// UPDATE 1 ) UPDATES USERS PASSWORD
+	await user.updatePassword(password);
+	await user.save({ validateBeforeSave: false });
+	const token = sign.signToken(user);
+	sign.sendToken(token, 200, res);
 });
 
 // SECURITY FUNCTIONS
 //MIDDLEWARE TO CHECK IF USER IS LOGGED IN UPON ENTERING A NEW ROUTE
+//!!!!IMPORTANT THE req IS MUTATED IN THIS FUNCTION AND PASSED DOWN TO OTHER METHODS THROUGH THIS APP
 const protect = catchAsyncFunction(async (req, res, next) => {
 	let token;
 	//SECURITY 1-A ) CHECKS THE HEADER OF THE BEARER OF THE TOKEN
@@ -95,6 +125,7 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 	//SECURITY 3 ) CHECKS IF USER STILL EXISTS
 	const { id } = verified;
 	const user = await User.findById(id);
+	console.log(user);
 	if (!user) return next(new AppError("THIS USER DOES NOT EXIST!", 401));
 
 	//SECURITY 4 ) CHECKS IF USER'S PASSWORD HAS BEEN CHANGED SINCE THE TOKEN WAS ISSUED
@@ -107,6 +138,7 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 	}
 
 	//ALL SAFETY CHECKS COMPLETED AT THIS POINT!
+	//MUTATION!
 	req.user = user;
 	next();
 });
@@ -116,7 +148,6 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 
 const restrict = (...permissions) => {
 	return catchAsyncFunction(async (req, res, next) => {
-		console.log("sex");
 		console.log(req.user.permissions);
 		if (!permissions.includes(req.user.permissions)) {
 			return next(new AppError("NO PERMISSION!", 403));
@@ -125,6 +156,6 @@ const restrict = (...permissions) => {
 	});
 };
 
-const models = { registerUsers, loginUsers, persistLogin, protect, restrict };
+const models = { updatePassword, registerUsers, loginUsers, protect, restrict };
 
 module.exports = models;

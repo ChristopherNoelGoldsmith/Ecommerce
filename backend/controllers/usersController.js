@@ -5,7 +5,7 @@ const AppError = require("../utilities/appError");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("./email");
 const crypto = require("crypto");
-const signToken = require("../utilities/signToken");
+const sign = require("../utilities/signToken");
 //status messages and error handling
 const catchAsyncFunction = require("../utilities/catchAsync");
 const statusMessages = require("../status");
@@ -33,20 +33,6 @@ const usersProfile = catchAsyncFunction(async (req, res, next) => {
 	}
 	//IF NOT VERIFIED OR IF USER DOES NOT EXISTS I THIS ERROR IS THROWN
 	return new AppError("YOU ARE NOT LOGGED IN!", 401);
-});
-
-const patchUsers = catchAsyncFunction(async (req, res, next) => {
-	const { id, update } = req.params;
-
-	// VALIDATION 1 ) CHECKS THE URL FOR THE ID
-	if (!id) return next(new AppError("INVALID ID!", 401));
-	if (!update) return next(new AppError("INVALID UPDATE INFORMATION!", 401));
-	//VALIDATION 2 ) ENSURE THE USER EXISTS ON THE SERVER
-	const user = await User.findByIdAndUpdate(id, update);
-	if (!user) return next(new AppError("USER NOT FOUND!", 404));
-	return res
-		.status(200)
-		.json({ status: "SUCCESS", message: "USER WAS UPDATED" });
 });
 
 const deleteUsers = catchAsyncFunction(async (req, res, next) => {
@@ -134,11 +120,54 @@ const resetPassword = catchAsyncFunction(async (req, res, next) => {
 	user.passwordResetToken = undefined;
 	user.passwordResetExpires = undefined;
 
-	const token = signToken(user._id);
+	const token = sign.signToken(user._id);
 
 	await user.save();
 
-	res.status(200).json({ STATUS: "SUCCESS", token });
+	sign.sendToken(token, 200, res);
+});
+
+//UPDATES THE USERS EMAIL OR USERNAME!
+/*
+NOTE: FUNCTION NEED TO BE UPDATED TO TAKE ANY PARAMS OTHER THAN PERMISSIONS OR PASSWORD!
+*/
+const updateMe = catchAsyncFunction(async (req, res, next) => {
+	const { id, username, email } = req.body;
+	if (!username && !email)
+		return next(new AppError("YOU MUST PROVIDE A USERNAME OR EMAIL"));
+	if (!email) {
+		await User.findOneAndUpdate(id, { username });
+		return res
+			.status(200)
+			.json({ status: "SUCCESS", message: "USERNAME HAS BEEN UPDATED" });
+	}
+	// UPDATE USERNAME
+	if (!username) {
+		await User.findOneAndUpdate(id, { email });
+		return res
+			.status(200)
+			.json({ status: "SUCCESS", message: "EMAIL HAS BEEN UPDATED" });
+	}
+	//UPDATES BOTH USERNAME AND EMAIL
+	await User.findOneAndUpdate(id, { username, email });
+	return res.status(200).json({
+		status: "SUCCESS",
+		message: "EMAIL AND USERNAME HAVE BEEN UPDATED",
+	});
+});
+
+const deleteMe = catchAsyncFunction(async (req, res, next) => {
+	const { id } = req.user;
+	console.log(req.user);
+	if (!id) return next(new AppError("USER NOT FOUND!", 404));
+	// VERIFICATION
+	const user = await User.findOneAndUpdate(id, { active: false }).select(
+		"+active"
+	);
+
+	res
+		.status(204)
+		.json({ status: "YOUR ACCOUNT HAS BEEN SET TO INNACTIVE", data: null });
 });
 
 const model = {
@@ -147,6 +176,8 @@ const model = {
 	deleteUsers,
 	lostPassword,
 	resetPassword,
+	updateMe,
+	deleteMe,
 };
 
 module.exports = model;

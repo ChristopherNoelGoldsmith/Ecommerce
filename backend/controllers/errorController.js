@@ -31,7 +31,6 @@ module.exports = (err, req, res, next) => {
 	err.message = err.message || "ERROR!";
 
 	if (process.env.NODE_ENV === "development") {
-		console.log("poop");
 		return errDev(res, err);
 	}
 	if (error.name === "JsonWebTokenError") error = handleJWTError(error);

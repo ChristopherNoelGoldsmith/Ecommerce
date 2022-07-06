@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema(
 			required: [true, "You must have a username"],
 			unique: true,
 			trim: true,
+			minlength: 5,
 		},
 		password: {
 			type: String,
@@ -48,6 +49,7 @@ const UserSchema = new mongoose.Schema(
 			default: "USER",
 			enum: ["USER", "MODERATOR", "ADMIN"],
 		},
+		active: { type: Boolean, default: true, select: false },
 	},
 	{ collection: "users" }
 );
@@ -76,10 +78,10 @@ UserSchema.pre("save", async function (next) {
 
 // SECURITY 2 ) PASSWORD CONFIRMATION!
 UserSchema.methods.correctPassword = async function (
-	hashedPassword,
+	unhashedPassword,
 	userPassword
 ) {
-	return await bcrypt.compare(hashedPassword, userPassword);
+	return await bcrypt.compare(unhashedPassword, userPassword);
 };
 
 // SECUIRTY 3 ) CHECK FOR PASSWORD CHANGE
@@ -110,7 +112,6 @@ UserSchema.methods.createPasswordResetToken = function () {
 
 	//SECURITY B ) SETS AN EXPIRATION ON THE TOKEN GENERATED AT THE TOP OF THIS FUNCTION
 	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-	console.log(this.passwordResetExpires);
 	//RETURNS THE TOKEN
 	return token;
 };
@@ -127,6 +128,20 @@ UserSchema.pre("save", function (next) {
 	*/
 
 	this.passwordChangedAt = Date.now() - 1000;
+	next();
+});
+
+// UTILITY 1 ) PASSWORD UPDATING WHILE LOGGED IN!
+// NOTE: THIS EXISTS AS A SHORTCUT TO USE SINCE .findOneAndPatch DOES NOT TRIGGER
+//MIDDLEWAREABOVE FOR THE PASSWORD CHANGE.
+UserSchema.methods.updatePassword = function (newPassword) {
+	console.log(newPassword, 134);
+	return (this.password = newPassword);
+};
+
+// UTILITY 2 ) ONLY TARGET ACTIVE USERS
+UserSchema.pre(/find/, function (next) {
+	this.find({ active: { $ne: false } });
 	next();
 });
 

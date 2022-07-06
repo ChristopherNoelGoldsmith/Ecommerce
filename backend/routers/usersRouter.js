@@ -10,6 +10,13 @@ router
 	.get(authController.protect, usersController.usersProfile);
 
 router
+	.route("/update-password")
+	.patch(authController.protect, authController.updatePassword);
+router
+	.route("/current-user")
+	.patch(authController.protect, usersController.updateMe)
+	.delete(authController.protect, usersController.deleteMe);
+router
 	.route("/:id")
 	.get(usersController.getAllUsers)
 	.delete(
@@ -21,7 +28,7 @@ router
 router.route("/reset-password").post(usersController.lostPassword);
 router.route("/reset-password/:token").patch(usersController.resetPassword);
 router.route("/register").post(authController.registerUsers);
-router.route("/persist").post(authController.persistLogin);
+//router.route("/persist").post(authController.persistLogin);
 
 /*
 router

@@ -6,6 +6,11 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 dotenv.config({ path: `${__dirname}/config.env` });
 // 1 ) --IMPORTS--
 const productsRouter = require("./routers/productRouter");
@@ -29,15 +34,58 @@ mongoose
 	.then((con) => console.log(`CONNECTION SUCCESSFUL!`));
 
 /*
--MIDDLEWARE
-
--MORGAN IS USED ONLY FOR Development
+--------------
+///MIDDLEWARE///
+--------------
 */
-app.use("/", express.static(path.join(__dirname, "static")));
-app.use(bodyParser.json());
-app.use(morgan("dev"));
 
-//routers users// needs to broken up and placed so it can be turned into a router.
+const limiter = rateLimit({
+	max: 100,
+	windowMs: 60 * 60 * 1000, //milliseconds for 1 hour
+	message: "YOU HAVE REACHED YOUR REQUEST LIMIT, PLEASE TRY AGAIN LATER!",
+});
+// SECURITY 1) HELMET
+app.use(helmet());
+
+// SERVING STATIC FILES )
+app.use("/", express.static(path.join(__dirname, "static")));
+
+//TOOLS )
+app.use(bodyParser.json());
+
+/*
+SECURITY 2 )
+///////////////////////////
+--DATA SANITIZATION BELOW--
+///////////////////////////
+*/
+//USE TO KEEP $gte, ect query injection exploits from working
+app.use(mongoSanitize());
+
+//XSS PROTECTION
+app.use(xss());
+
+//PERAMITER POLLUTION
+//NOTE: POSsiable SOURCE OF BUGS WITH QUERIES IF NOT WHITELISTEWD PROPERLY
+app.use(
+	hpp({
+		whitelist: ["price"],
+	})
+);
+
+// DOS PROTECTION VIA LIMIT BELOW
+app.use("/api", limiter);
+app.use(express({ limit: "10kb" }));
+
+//Dev
+app.use(morgan("dev"));
+// MIDDLEWARE END ----------------------
+
+/*
+---------------------
+///////ROUTERS////// 
+--------------------
+*/
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/products", productsRouter);
 
