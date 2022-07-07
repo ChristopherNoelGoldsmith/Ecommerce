@@ -5,8 +5,8 @@ const router = express.Router();
 //routers products
 //TODO: ADD MIDDLEWARE TO THE POST BELOW
 router
-	.route("/crimson-rampage")
-	.get(productsController.crimsonRampage, productsController.getProducts);
+	.route("/category/:extension")
+	.get(productsController.categorySelect, productsController.getProducts);
 
 //AGGREGATION ROUTES )
 router.route("/get-avg-price").get(productsController.getPriceAverage);

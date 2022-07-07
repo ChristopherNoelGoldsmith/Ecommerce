@@ -15,7 +15,6 @@ dotenv.config({ path: `${__dirname}/config.env` });
 // 1 ) --IMPORTS--
 const productsRouter = require("./routers/productRouter");
 const usersRouter = require("./routers/usersRouter");
-const categoriesRouter = require("./routers/categoriesRouter");
 const AppError = require("./utilities/appError");
 const errorHandler = require("./controllers/errorController");
 // 2 ) --ENV VARIABLES--
@@ -87,9 +86,8 @@ app.use(morgan("dev"));
 --------ROUTERS------
 //--------------------//
 */
-app.use("/api/v1/categories", categoriesRouter);
 app.use("/api/v1/users", usersRouter);
-//! app.use("/api/v1/products", productsRouter);
+app.use("/api/v1/products", productsRouter);
 
 //FOR BAD URLS
 app.all("*", (req, res, next) => {

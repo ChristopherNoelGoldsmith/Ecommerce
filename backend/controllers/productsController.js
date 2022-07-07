@@ -24,11 +24,13 @@ const createProducts = catchAsyncFunction(async (req, res) => {
 
 /*GET PRODUCTS ALIAS */
 
-const crimsonRampage = catchAsyncFunction(async (req, res, next) => {
+const categorySelect = catchAsyncFunction(async (req, res, next) => {
+	//TODO encode req param so that it is useable in url
+	console.log(req.params);
 	req.query.limit = 25;
 	req.query.page = 1;
 	req.query.fields = "name, price, extension, count, img, text";
-	req.query.extension = "Crimson Rampage";
+	req.query.extension = req.params.extension;
 	next();
 });
 
@@ -126,7 +128,7 @@ const model = {
 	deleteProducts,
 	getProductById,
 	getPriceAverage,
-	crimsonRampage,
+	categorySelect,
 	massPopulateDev,
 };
 
