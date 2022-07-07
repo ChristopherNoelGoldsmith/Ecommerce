@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Category = require("./categories");
 
 const ProductSchema = mongoose.Schema(
 	{
@@ -24,13 +25,19 @@ const ProductSchema = mongoose.Schema(
 		},
 		img: { type: String },
 		extension: { type: String, default: "none" },
+		category: [{ type: mongoose.Schema.ObjectId, ref: "Category" }],
+
 		price: {
 			type: Number,
 			default: 10.0,
 		},
 		purchaseCount: { type: Number, default: 0 },
 	},
-	{ collection: "products" }
+	{
+		toJSON: { virtuals: true },
+		toObject: { virtuals: true },
+		collection: "products",
+	}
 );
 
 const model = mongoose.model("ProductSchema", ProductSchema);

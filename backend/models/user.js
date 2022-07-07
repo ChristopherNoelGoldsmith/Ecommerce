@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const Products = require("./product");
+
 const UserSchema = new mongoose.Schema(
 	{
 		username: {
@@ -31,7 +33,7 @@ const UserSchema = new mongoose.Schema(
 			},
 		},
 		passwordChangedAt: { type: Date },
-
+		cart: [{ type: mongoose.Schema.ObjectId, ref: "ProductSchema" }],
 		email: {
 			type: String,
 			required: [true, "You must have an email"],
