@@ -14,19 +14,19 @@ const { status } = statusMessages();
 
 //Adding products to the store
 const createProducts = catchAsyncFunction(async (req, res) => {
-	/* A post to create and add an item to the store  
+	/* 
+	A post to create and add an item to the store  
 	Extenstion refers to the category of the item
 	*/
-	await Product.create(req.body);
-	res.json({ status: status.success, data: name });
-	console.log(`A new item was created ${name}`);
+	const product = await Product.create(req.body);
+	res.json({ status: status.success, data: product });
 });
-
+///////////////////////
 /*GET PRODUCTS ALIAS */
-
+///////////////////////
 const categorySelect = catchAsyncFunction(async (req, res, next) => {
 	//TODO encode req param so that it is useable in url
-	console.log(req.params);
+	//TODO make so that it will get mult
 	req.query.limit = 25;
 	req.query.page = 1;
 	req.query.fields = "name, price, extension, count, img, text";
@@ -34,6 +34,8 @@ const categorySelect = catchAsyncFunction(async (req, res, next) => {
 	next();
 });
 
+///////////////////////
+///////////////////////
 //PRIMARY GET FUNCTION FOR PRODUCTS!
 const getProducts = catchAsyncFunction(async (req, res, next) => {
 	const query = await new APIFeatures(Product, req.query)
@@ -72,11 +74,7 @@ const deleteProducts = catchAsyncFunction(async (req, res, next) => {
 	});
 });
 
-const getProductById = async (req, res, next) => {};
-
-/*
----massPopulate is used to write DUMMY_DATA to the database for devopment
-*/
+//! DEVTOOL
 const massPopulateDev = async (req, res, next) => {
 	try {
 		fs.readFile(
@@ -103,6 +101,24 @@ const massPopulateDev = async (req, res, next) => {
 		console.log("poop");
 	}
 };
+//! DEVTOOL
+const setExtensionsDev = catchAsyncFunction(async (req, res, next) => {
+	const fixExtensionRegexp = /\s/gi;
+	const products = await Product.find();
+	products.forEach(async (product) => {
+		//EDIT FIELDS HERE!
+		product.extension = product.extension.replace(fixExtensionRegexp, "-");
+		product.extension = product.extension.toLowerCase();
+		return await Product.findByIdAndUpdate(product.id, {
+			extension: product.extension,
+		});
+	});
+	res.json({
+		status: "SUCCESS",
+		message: "YOUR FILE HAS BEEN PATCHED",
+		data: products,
+	});
+});
 
 const getPriceAverage = catchAsyncFunction(async (req, res, next) => {
 	const stats = await Product.aggregate([
@@ -126,10 +142,10 @@ const model = {
 	createProducts,
 	patchProducts,
 	deleteProducts,
-	getProductById,
 	getPriceAverage,
 	categorySelect,
 	massPopulateDev,
+	setExtensionsDev,
 };
 
 module.exports = model;

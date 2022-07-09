@@ -11,12 +11,13 @@ router
 //AGGREGATION ROUTES )
 router.route("/get-avg-price").get(productsController.getPriceAverage);
 
-//!development route
+//!development routes
 router.route("/dev/populate-products").post(productsController.massPopulateDev);
-
+router.route("/dev/patch-products").patch(productsController.setExtensionsDev);
+//!------------------
 /*
 ////////////////
---Product CRUD--
+--PRODUCT CRUD--
 ////////////////
 */
 router
@@ -25,9 +26,8 @@ router
 	.get(productsController.getProducts)
 	.patch(productsController.patchProducts)
 	.delete(productsController.deleteProducts);
-///////
+////////////////////////
 //GET INDIVIDUAL PRODUCT
 router.route("/:id").get(productsController.getProductById);
-
 ////////////////////////
 module.exports = router;

@@ -1,0 +1,1 @@
+web: ./backend npm run start
