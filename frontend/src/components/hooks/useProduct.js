@@ -5,7 +5,7 @@ import ProductListItem from "../FeaturedProducts/ProductListItem";
 const useProduct = () => {
 	const [products, setProducts] = useState();
 	const [productsList, setProductsList] = useState();
-	const mount = "/api/v1";
+	const mount = "https://allmightyccg.herokuapp.com/api/v1";
 	const getAllProducts = async () => {
 		const products = await fetch(`${mount}/products`, {
 			headers: {

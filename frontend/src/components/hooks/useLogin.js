@@ -4,11 +4,12 @@ import { loginActions } from "../../store/login";
 const useLogin = () => {
 	const dispatch = useDispatch();
 	const loginState = useSelector((store) => store.login);
+	const mount = "https://allmightyccg.herokuapp.com/api/v1";
 
 	const login = async (userInfo) => {
 		const { username, password } = userInfo;
 		console.log(userInfo);
-		const response = await fetch(`api/v1/users/login`, {
+		const response = await fetch(`${mount}/users/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

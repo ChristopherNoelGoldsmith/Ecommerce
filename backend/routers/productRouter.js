@@ -28,6 +28,6 @@ router
 	.delete(productsController.deleteProducts);
 ////////////////////////
 //GET INDIVIDUAL PRODUCT
-router.route("/:id").get(productsController.getProductById);
+//router.route("/:id").get(productsController.getProductById);
 ////////////////////////
 module.exports = router;
