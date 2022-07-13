@@ -1,3 +1,5 @@
+@use "./variables.scss";
+
 @mixin flex-row {
 	display: flex;
 	flex-direction: row;
@@ -13,33 +15,27 @@
 }
 
 @mixin product-label {
-	color: ivory;
+	color: variables.$primary-font;
 	border-bottom: 1px dotted black;
 	text-shadow: 2px 2px black;
 }
 //font sizes
 
-$font-small: 0.75rem;
-$font-normal: 1.25rem;
-$font-large: 2rem;
-$font-xl: 4rem;
-
 @mixin title-font {
-	color: ghostwhite;
-	font-size: $font-xl;
+	color: variables.$primary-font;
+	font-size: variables.$font-xl;
 	text-shadow: 2px 2px black;
 	font-weight: 600;
 }
 
-//colors
-$card-bg: rgba(
-	$color: black,
-	$alpha: 0.5,
-);
-$input-bg: rgba(
-	$color: ivory,
-	$alpha: 0.85,
-);
+// hovers
+
+@mixin hover {
+	opacity: 0.7;
+	cursor: pointer;
+	color: variables.$primary-font;
+	transition: ease 0.3s;
+}
 
 //animations
 

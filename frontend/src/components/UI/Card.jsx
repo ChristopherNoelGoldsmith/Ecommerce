@@ -1,5 +1,9 @@
 import styles from "./Card.module.scss";
 
+/*
+GENERAL JSX TO USE AS A WRAPPER TO MANY OF THE COMPONENTS IN THIS APP
+*/
+
 const Card = (props) => {
 	return (
 		<section

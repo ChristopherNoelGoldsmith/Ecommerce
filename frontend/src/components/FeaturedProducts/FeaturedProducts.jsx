@@ -5,21 +5,15 @@ import Card from "../UI/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 
-const featureFilter = (products) => {
-	const filter = products.filter((product, index) => index < 5 && true);
-	return filter;
-};
-
 const FeaturedProducts = (props) => {
 	const [featured, setFeatured] = useState();
 	const { getProductList, getAllProducts } = useProduct();
 	useEffect(() => {
 		const fetchData = async () => {
-			const product = await getAllProducts();
-			const list = getProductList(product);
-			const filtered = featureFilter(list);
-			console.log(filtered);
-			setFeatured(filtered);
+			//TODO input function in api so that it can filter and sort for highest bought items
+			const product = await getAllProducts(10, 5);
+			const list = getProductList(product.data);
+			setFeatured(list);
 		};
 		fetchData();
 	}, []);

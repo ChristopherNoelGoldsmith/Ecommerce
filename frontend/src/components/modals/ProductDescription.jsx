@@ -5,7 +5,7 @@ props.name
 props.extension
 props.text
 */
-
+//TODO make this
 const createDescriptionList = (props, className = "") => {
 	const list = [];
 	for (let each in props) {

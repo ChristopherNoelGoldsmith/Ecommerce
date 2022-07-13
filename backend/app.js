@@ -11,6 +11,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const cors = require("cors");
 dotenv.config({ path: `${__dirname}/config.env` });
 // 1 ) --IMPORTS--
 const productsRouter = require("./routers/productRouter");
@@ -44,7 +45,10 @@ const limiter = rateLimit({
 	windowMs: 60 * 60 * 1000, //milliseconds for 1 hour
 	message: "YOU HAVE REACHED YOUR REQUEST LIMIT, PLEASE TRY AGAIN LATER!",
 });
-// SECURITY 1) HELMET
+// SECURITY 1) HELMET & CORS
+app.use(cors());
+app.options("*", cors());
+
 app.use(helmet());
 
 // SERVING STATIC FILES//

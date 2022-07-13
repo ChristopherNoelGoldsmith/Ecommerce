@@ -1,4 +1,6 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
+
 .product-list-item {
 	@include mixins.flex-row;
 	figure {
@@ -6,7 +8,7 @@
 
 		.product-name {
 			@include mixins.product-label;
-			font-size: mixins.$font-normal;
+			font-size: variables.$font-normal;
 		}
 		.image-container {
 			@include mixins.flex-column;
@@ -30,7 +32,7 @@
 .item-description {
 	@include mixins.flex-row;
 	@include mixins.title-font;
-	font-size: mixins.$font-large;
+	font-size: variables.$font-large;
 	text-align: center;
 	padding: 1rem;
 	border-radius: 5px;

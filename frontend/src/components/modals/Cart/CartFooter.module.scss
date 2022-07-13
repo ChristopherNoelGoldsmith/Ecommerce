@@ -1,4 +1,5 @@
 @use "../../../sass/mixins.scss";
+@use "../../../sass/variables.scss";
 
 .cart-footer {
 	@include mixins.flex-row;
@@ -14,14 +15,14 @@
 		.checkout {
 			@include mixins.flex-row;
 			overflow: hidden;
-			background: rgba($color: seagreen, $alpha: 0.8);
+			background: rgba($color: variables.$add-btn, $alpha: 0.8);
 			span {
 				padding: 0.5rem;
 			}
 			i {
-				font-size: mixins.$font-large;
+				font-size: variables.$font-large;
 				padding: 0.5rem;
-				color: ghostwhite;
+				color: variables.$primary-font;
 			}
 		}
 	}

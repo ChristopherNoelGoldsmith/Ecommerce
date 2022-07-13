@@ -1,21 +1,22 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
 
 form {
 	@include mixins.flex-row;
 	padding: 1vh 0;
 	label {
 		@include mixins.flex-row;
-		font-size: mixins.$font-large;
+		font-size: variables.$font-large;
 		padding: 5px;
-		background: mixins.$input-bg;
+		background: variables.$input-bg;
 		min-height: 3rem;
 	}
 	.product-input {
-		background: mixins.$input-bg;
+		background: variables.$input-bg;
 		min-width: 2rem;
 		max-width: 2.5rem;
 		min-height: 3rem;
-		font-size: mixins.$font-large;
+		font-size: variables.$font-large;
 		text-align: center;
 		border: none;
 		border-left: 1px solid black;
@@ -26,18 +27,18 @@ form {
 			min-height: 1.5rem;
 		}
 		.add-btn {
-			background: seagreen;
+			background: variables.$add-btn;
 		}
 		.remove-btn {
-			background: crimson;
+			background: variables.$remove-btn;
 		}
 	}
 
 	.to-cart-btn {
-		background: rgba($color: orange, $alpha: 0.8);
-		color: ivory;
+		background: rgba($color: variables.$cart-btn, $alpha: 0.8);
+		color: variables.$primary-font;
 		text-shadow: 1px 1px black;
-		font-size: mixins.$font-normal;
+		font-size: variables.$font-normal;
 		transition: 0.4s ease;
 	}
 	.to-cart-btn:hover i {

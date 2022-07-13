@@ -1,86 +1,46 @@
 import styles from "./ProductCategoryPage.module.scss";
 import useProduct from "../components/hooks/useProduct";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import PageButtons from "../components/UI/PageButtons";
 import { useEffect } from "react";
 
-const types = {
-	INCRIMENT: "INCRIMENT",
-	DECRIMENT: "DECRIMENT",
-	SET: "SET",
-	PAGE: "PAGE",
-	NUMBER_OF_ITEMS: "NUMBER_OF_ITEMS",
-};
-
-const pageHandler = (products, pageNumber, numberPerPage = 25) => {
-	const startOfPage = pageNumber * numberPerPage;
-	const endOfPage = startOfPage + numberPerPage;
-	console.log(products);
-	const thisPage = products.slice(startOfPage, endOfPage);
-	return thisPage;
-};
-
-const configurePagesReducer = (state, action) => {
-	switch (action.type) {
-		case types.INCRIMENT:
-			state.pageNumber++;
-			break;
-		case types.DECRIMENT:
-			state.pageNumber--;
-			break;
-		case types.SET:
-			state.pageNumber = action.pageNumber - 1;
-			break;
-		case types.NUMBER_OF_ITEMS:
-			state.numberPerPage = action.numberPerPage;
-			break;
-		default:
-			console.log("invalid case");
-			break;
-	}
-	return { pageNumber: state.pageNumber, numberPerPage: state.numberPerPage };
-};
-
 /*
-setCategory: the category of data being fetched from the server. Navbar category or a search.
-pagesConfig: takes the length of the categorhy and provides pagenation via the array slice method,
-	and passes its function to the page buttons.
+//------------------------------------------------------------------
+PAGE FOR THE CATEGORIES ACCESSED THROUGH THE NAVBAR OR OTHER MEANS.
+DISPLAYS DATA FROM THE API VIA THE "extension" PROPERY OF THE PRODUCTS
+//------------------------------------------------------------------
 */
 
 const ProductCategoryPage = (props) => {
 	const { getProductList, getAllProducts } = useProduct();
-	const [category, setCategory] = useState([]);
-	const [pagesConfig, dispatchPages] = useReducer(configurePagesReducer, {
-		pageNumber: 0,
-		numberPerPage: 25,
-	});
+	const [numberOfPages, setNumberOfPages] = useState();
 	const [page, setPage] = useState();
 
-	//for pagenation
-	const thisPage = (products) => {
-		const page = pageHandler(
-			products,
-			pagesConfig.pageNumber,
-			pagesConfig.numberPerPage
-		);
-		setPage(page);
-	};
-	//Initialization
+	//ONLOAD 1 ) Initialization
 	useEffect(() => {
 		const fetchData = async () => {
+			//API 1 ) MAKES INITIAL DATACALL FROM THE SERVER FOR THE GIVEN CATEGORY
+			//TODO: ADD CATEGORY OPTION ON getAllProducts()
 			const products = await getAllProducts();
-			const productsList = await getProductList(products);
-			setCategory(productsList);
-			thisPage(productsList);
-			console.log(category);
+			//JSX 2 ) ASSEMBLES JSX LIST OF THE PRODUCT DATA
+			const productList = await getProductList(products.data);
+
+			// JSX 3 ) SETS JSX TO PAGE
+			setPage(productList);
+
+			// PAGENATION 1 ) SETS THE PAGENATIION BUTTONS
+			setNumberOfPages(products.pages);
 		};
 		fetchData();
 	}, []);
 
-	//handler function for pagenation
-	const setPageNumber = (page) => {
-		dispatchPages({ type: types.SET, pageNumber: page });
-		thisPage(category);
+	//PAGENATION ) SETS PAGENATION ONCLICK EVENT FOR PAGE BUTTONS
+	const setPageNumber = async (page) => {
+		//REMINDER: PAGE AND LIMIT ARE THE PARAMS
+		const products = await getAllProducts(page);
+		const productList = await getProductList(products.data);
+		setPage(productList);
+		setNumberOfPages(products.pages);
 		return;
 	};
 
@@ -88,8 +48,7 @@ const ProductCategoryPage = (props) => {
 		<section className={`${styles.category}`}>
 			<ul>{page}</ul>
 			<PageButtons
-				category={category}
-				numberPerPage={pagesConfig.numberPerPage}
+				numberPerPage={numberOfPages}
 				setPageNumber={setPageNumber}
 			/>
 		</section>

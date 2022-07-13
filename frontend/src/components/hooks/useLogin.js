@@ -1,75 +1,54 @@
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { loginActions } from "../../store/login";
 
+/*///////////////////////////////////////////////////////////////////
+CONTROLS ALL LOGIN AND REGISTRATION FUNCTIONS WITHIN THE APPLICATION!
+*/ ///////////////////////////////////////////////////////////////////
+
 const useLogin = () => {
 	const dispatch = useDispatch();
 	const loginState = useSelector((store) => store.login);
 	const mount = "https://allmightyccg.herokuapp.com/api/v1";
 
-	const login = async (userInfo) => {
-		const { username, password } = userInfo;
-		console.log(userInfo);
-		const response = await fetch(`${mount}/users/login`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				username,
-				password,
-			}),
-		}).then((res) => res.json());
+	const queryApi = async (query, userInfo) => {
+		// API CONNECT 1 ) NORMAL API CONNECTION SENDING THE USERNAME/EMAIL AND PASSWORD
+		try {
+			console.log(query, userInfo);
+			const response = await fetch(`${mount}/users/${query}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(userInfo),
+			}).then((res) => res.json());
 
-		if (response.status !== "SUCCESS") return console.log(response.status);
+			//SECURITY 1 ) COOKIES
+			document.cookie = `loginToken=${response.token}`;
+			console.log(response);
+			// DISPLAY 1 ) SETS STATE OF USERNAME DISPLAY THROUGHOUT THE APP.
+			dispatch(loginActions.login({ username: userInfo.username }));
+			return response;
+		} catch (err) {
+			//console.log(err);
+		}
+	};
 
-		//EXTRACTS THE USERTOKEN FROM THE RESPONSE AND SETS IT TO LOCALSTORAGE FOR STATE PERSISTANCE
-		const { token } = response;
-
-		localStorage.setItem("userToken", token);
-		dispatch(loginActions.login({ username: username }));
-		console.log(`You have logged in: USERNAME:${username}, token: ${token}`);
+	//PRIMARY FUNCTION USED TO LOG THE USER IN.
+	const loginOrRegister = async (query) => {
+		// API CONNECT 1 ) NORMAL API CONNECTION SENDING THE USERNAME/EMAIL AND PASSWORD
+		//NOTE: query should be either "register" or "login"
+		const response = await queryApi(query.type, query.user);
 		return response;
 	};
 
+	//CLEARS THE ACTIVE USER AND THE LOGINTOKEN.
 	const logout = () => {
-		localStorage.removeItem("userToken");
+		document.cookie = `loginToken=''`;
 		dispatch(loginActions.logout());
 		return;
 	};
 
-	const registerAccount = async (userInfo) => {
-		const { username, password } = userInfo;
-		const response = await fetch(`api/v1/users/register`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				username,
-				password,
-			}),
-		}).then((res) => res.json());
-		if (response.status !== "SUCCESS") return console.log("invalid user input");
-		console.log(response);
-		return response;
-	};
-
-	const persistLogin = async () => {
-		const token = localStorage.getItem("userToken");
-		if (!token) return;
-		const response = await fetch("api/v1/users/persist", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ token: token }),
-		}).then((res) => res.json());
-		if (response.status !== "SUCCESS") return console.log("no persist");
-		dispatch(loginActions.login({ username: response.username }));
-		return console.log(
-			`You have logged in: USERNAME:${response.username}, token: ${token}`
-		);
-	};
-
-	return { login, logout, persistLogin, registerAccount, loginState };
+	return { loginOrRegister, logout, loginState };
 };
 
 export default useLogin;

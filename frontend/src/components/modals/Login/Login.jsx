@@ -3,64 +3,36 @@ import Card from "../../UI/Card";
 import Button from "../../UI/Button";
 import TextInput from "../../UI/TextInput";
 import { checkValidity } from "./loginUtilities";
-import { useReducer } from "react";
 import useLogin from "../../hooks/useLogin";
 import useModal from "../../hooks/useModal";
+import Register from "./Register";
+import useInput from "../../hooks/useInput";
 
-const loginReducer = (state, action) => {
-	switch (action.type) {
-		case "PASSWORD":
-			state.password = action.password;
-			break;
-		case "USERNAME":
-			state.username = action.username;
-			break;
-		default:
-			alert("invalid value input");
-	}
-	return {
-		username: state.username,
-		password: state.password,
-	};
-};
+//TODO have css styles to make inputs red when invalid input is added
 
 const Login = (props) => {
-	const [authState, dispatchAuth] = useReducer(loginReducer, {});
-	const { login, registerAccount } = useLogin();
-	const { closeModal } = useModal();
-	const usernameHandler = (event) => {
-		const value = event.target.value;
-		if (value.length >= 15) return;
-		dispatchAuth({ type: "USERNAME", username: value });
-		return;
-	};
-
-	const passwordHanlder = (event) => {
-		const value = event.target.value;
-		if (value.length >= 15) return;
-		dispatchAuth({ type: "PASSWORD", password: value });
-		return;
-	};
-
+	const { loginOrRegister } = useLogin();
+	const { closeModal, createModal } = useModal();
+	const { inputState, usernameHandler, passwordHanlder } = useInput();
 	const loginHandler = async (event) => {
 		event.preventDefault();
-		//BASIC VALIDATION -- MOVE TO SERVER!
-		const checkIfValid = checkValidity(authState);
+		//VALIDATION 1 )
+		const checkIfValid = checkValidity(inputState);
 		if (!checkIfValid) return;
-		//USER LOGIN!
-		const loginStatus = await login(authState);
+		//LOGIN 1 )
+		const loginStatus = await loginOrRegister({
+			type: "login",
+			user: inputState,
+		});
 		if (loginStatus) return closeModal();
-		//SHOULD ONLY TRIGGER IF INVALID LOGIN INFORMATION
-		//OR A SERVER ISSUE
-		console.log("login fail");
+		// INVALID LOGIN 1 )
+		//TODO: change to pop up or modal
+		return alert("INVALID LOGIN INFORMATION");
 	};
-	const registerHandler = async () => {
-		const resistrationStatus = await registerAccount(authState);
-		if (resistrationStatus.status !== "SUCCESS")
-			return console.log("registration error");
-		const loginStatus = await login(authState);
-		if (loginStatus) return closeModal();
-		console.log("registration failed");
+	//FOR CHANGING TO THE REGISTRATION MODAL
+	const registerModalHandler = async () => {
+		const modal = <Register />;
+		return createModal(modal, true);
 	};
 	return (
 		<Card>
@@ -69,14 +41,14 @@ const Login = (props) => {
 					<TextInput
 						id={"username"}
 						placeholder={"USERNAME"}
-						value={authState.username || ""}
+						value={inputState.username || ""}
 						onChange={usernameHandler}
 					/>
 					<TextInput
 						id={"username"}
 						placeholder={"PASSWORD"}
 						type={"password"}
-						value={authState.password || ""}
+						value={inputState.password || ""}
 						onChange={passwordHanlder}
 					/>
 					<figure>
@@ -84,8 +56,12 @@ const Login = (props) => {
 							LOGIN
 						</Button>
 
-						<Button id="register" type={"button"} onClick={registerHandler}>
-							Register
+						<Button
+							id="register"
+							type={"button"}
+							onClick={registerModalHandler}
+						>
+							No Account?
 						</Button>
 					</figure>
 				</form>

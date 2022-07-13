@@ -55,6 +55,8 @@ class APIFeatures {
 		this.query = this.query.skip(skip).limit(limit);
 		if (this.queryString.page) {
 			const numberOfItems = await Product.countDocuments();
+			console.log(numberOfItems);
+			this.numberOfPages = Math.ceil(numberOfItems / limit);
 			if (skip > numberOfItems) throw new Error("THIS PAGE DOES NOT EXIST!");
 		}
 		return this;

@@ -1,0 +1,28 @@
+//font sizes
+$font-small: 0.75rem;
+$font-normal: 1.25rem;
+$font-large: 2rem;
+$font-xl: 4rem;
+
+//button colors
+$cart-btn: orange;
+$add-btn: seagreen;
+$remove-btn: crimson;
+
+//font colors
+$primary-font: ghostwhite;
+$secondary-font: #333;
+//background colors
+$card-bg: rgba(
+	$color: $secondary-font,
+	$alpha: 0.7,
+);
+$input-bg: rgba(
+	$color: $primary-font,
+	$alpha: 0.85,
+);
+
+$cart-bg: rgba(
+	$color: darkgrey,
+	$alpha: 0.8,
+);

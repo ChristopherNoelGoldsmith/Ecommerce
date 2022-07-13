@@ -1,8 +1,9 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
 
 .featured-product {
 	@include mixins.flex-column;
-	background: mixins.$card-bg;
+	background: variables.$card-bg;
 	h2 {
 		@include mixins.title-font;
 		text-align: center;

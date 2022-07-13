@@ -1,22 +1,20 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
 
 button {
 	min-width: 3rem;
 	min-height: 3rem;
 	border: none;
 	background: transparent;
-	font-size: mixins.$font-normal;
+	font-size: variables.$font-normal;
 	border-radius: 5px;
 	transition: ease 0.3s;
 	overflow: hidden;
 	i,
 	span {
-		color: ivory;
+		color: variables.$primary-font;
 	}
 }
 button:hover {
-	opacity: 0.7;
-	cursor: pointer;
-	color: white;
-	transition: ease 0.3s;
+	@include mixins.hover;
 }

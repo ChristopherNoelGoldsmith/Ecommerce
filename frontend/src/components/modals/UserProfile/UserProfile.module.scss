@@ -1,18 +1,19 @@
 @use "../../../sass/mixins.scss";
+@use "../../../sass/variables.scss";
 
 .profile {
 	@include mixins.flex-column;
 	z-index: 1000;
 	min-height: 60vh;
 	min-width: 80vw;
-	background: mixins.$card-bg;
+	background: variables.$card-bg;
 	color: ghostwhite;
 
 	h2 {
-		font-size: mixins.$font-large;
+		font-size: variables.$font-large;
 	}
 	button {
-		color: ghostwhite;
+		color: variables.$primary-font;
 		padding: 1rem;
 		background: rgba($color: darkblue, $alpha: 0.7);
 	}

@@ -14,7 +14,7 @@ const signToken = (user) => {
 	);
 };
 
-const sendToken = (token, statusCode, res) => {
+const sendToken = (token, statusCode, req, res) => {
 	//PERSISTANCE 1 ) COOKIE WITH EXPIRATION
 	//NOTE: MATH IN EXPIRES SET TO CONVERT TIME INTO milliseconds
 	//httpOnly: purpose to prevent cross site attacks
@@ -23,12 +23,10 @@ const sendToken = (token, statusCode, res) => {
 		expires: new Date(
 			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
 		),
-		secure: true,
+		secure: req.secure || req.header("x-forwarded-proto") === "https",
 		httpOnly: true,
 	};
-	if (process.env.NODE_ENV === "production") {
-		res.cookie("jwt", token, cookieConfig);
-	}
+	res.cookie("jwt", token, cookieConfig);
 
 	res.status(statusCode).json({ STATUS: "SUCCESS", token });
 };

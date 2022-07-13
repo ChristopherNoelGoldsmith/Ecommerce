@@ -1,6 +1,8 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
+
 .page-btn {
-	background: ghostwhite;
+	background: variables.$primary-font;
 	margin: 10px;
 	//width: 0.5rem;
 	//height: 0.5rem;

@@ -6,11 +6,11 @@ import Navbar from "./components/Navbar";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
 import data from "./assets/rampage.json";
-import usePersist from "./components/hooks/usePersist";
-console.log(data);
+//import usePersist from "./components/hooks/usePersist";
+//console.log(data);
 function App() {
 	const { modal, modalVis } = useModal();
-	usePersist();
+	//usePersist();
 	return (
 		<div className="container">
 			{modalVis && modal}

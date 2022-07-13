@@ -51,11 +51,12 @@ const loginUsers = catchAsyncFunction(async (req, res, next) => {
 	if (!user || (await user.correctPassword(password, user.password))) {
 		//PERSISTANCE 1 ) JWT CREATION FOR PERSISTANCE ------
 		console.log(user);
+		//NOTE: TOKEN IS FORMATTED AS A COOKIE!
 		const token = sign.signToken(user);
 
 		//PERSISTANCE 2 ) JWT TOKEN TO CLIENT ------
 
-		return sign.sendToken(token, 201, res);
+		return sign.sendToken(token, 201, req, res);
 	} else {
 		//SECURITY 1-C ) ERROR THROWN FOR INCORRECT PASSWORD
 		return next(new AppError("ERROR: USER INFORMATION IS INVAID!!!", 401));
@@ -99,7 +100,7 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	await user.updatePassword(password);
 	await user.save({ validateBeforeSave: false });
 	const token = sign.signToken(user);
-	sign.sendToken(token, 200, res);
+	sign.sendToken(token, 200, req, res);
 });
 
 // SECURITY FUNCTIONS

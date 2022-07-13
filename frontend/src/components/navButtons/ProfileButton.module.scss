@@ -1,4 +1,5 @@
 @use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
 
 .profile-btn {
 	position: relative;
@@ -7,11 +8,11 @@
 }
 .profile-btn::after {
 	content: attr(username);
-	font-size: mixins.$font-small;
+	font-size: variables.$font-small;
 	width: 100%;
 	text-align: center;
 	position: absolute;
-	color: ivory;
+	color: variables.$primary-font;
 	bottom: 0;
 	left: 0;
 }

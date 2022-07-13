@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+/*
+TODO: ADD INDEXING FOR THE EXTENSION
+see upon implimentation: https://mongoosejs.com/docs/guide.html#indexes
+*/
+
 const ProductSchema = mongoose.Schema(
 	{
 		name: {

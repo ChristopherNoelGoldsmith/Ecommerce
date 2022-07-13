@@ -1,10 +1,11 @@
 @use "../../../sass/mixins.scss";
+@use "../../../sass/variables.scss";
 
 .cart {
 	@include mixins.fade-in;
 	@include mixins.flex-column;
 	justify-content: flex-start;
-	background: rgba($color: darkgrey, $alpha: 0.8);
+	background: variables.$cart-bg;
 	min-width: 60vw;
 	max-width: 80vw;
 	height: 80vh;

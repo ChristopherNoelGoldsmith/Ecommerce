@@ -1,10 +1,11 @@
 @use "../../../sass/mixins.scss";
+@use "../../../sass/variables.scss";
 
 .cart-list-item {
 	@include mixins.flex-row;
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 5px;
-	background: rgba($color: ivory, $alpha: 0.7);
+	background: rgba($color: variables.$primary-font, $alpha: 0.7);
 	box-shadow: 2px 2px 2px 2px black;
 	border-radius: 5px;
 	figure {
@@ -13,7 +14,7 @@
 		height: 10vh;
 		label {
 			@include mixins.flex-row;
-			font-size: mixins.$font-normal;
+			font-size: variables.$font-normal;
 			font-weight: 600;
 			text-align: center;
 			margin: 0 2rem;

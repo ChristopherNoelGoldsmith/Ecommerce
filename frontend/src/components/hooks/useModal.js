@@ -8,11 +8,15 @@ const useModal = () => {
 	const modalVis = modal.vis;
 	const modalContent = modal.content;
 
+	//TOGGLES MODULE VISABILITY.
 	const toggleModalVis = () => {
 		return dispatch(modalActions.toggleVis());
 	};
-	const createModal = (content) => {
-		toggleModalVis();
+
+	//INSERT JSX IN THE "content" PARAM AND IT WILL APPEAR IN THE MODAL.
+	//SET PERSIST TO TRUE TO REPLACE THE CURRENT MODAL
+	const createModal = (content, persist = false) => {
+		if (!persist) toggleModalVis();
 		const newModal = <Modal onClick={toggleModalVis}>{content}</Modal>;
 		dispatch(modalActions.setContent(newModal));
 		return;
