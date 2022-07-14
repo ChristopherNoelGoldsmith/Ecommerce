@@ -3,6 +3,8 @@
 
 .cart-list-item {
 	@include mixins.flex-row;
+	justify-content: space-between;
+	width: 100%;
 	margin: 1vh 1vw 1vh 1vw;
 	padding: 5px;
 	background: rgba($color: variables.$primary-font, $alpha: 0.7);
@@ -14,12 +16,14 @@
 		height: 10vh;
 		label {
 			@include mixins.flex-row;
-			font-size: variables.$font-normal;
+			font-size: variables.$font-small;
+			@include mixins.md {
+				font-size: variables.$font-normal;
+			}
 			font-weight: 600;
 			text-align: center;
 			margin: 0 2rem;
 			height: inherit;
-			width: 20vw;
 			span {
 				word-wrap: break-word;
 			}

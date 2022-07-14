@@ -48,7 +48,48 @@ const useLogin = () => {
 		return;
 	};
 
-	return { loginOrRegister, logout, loginState };
+	const updatePassword = async (userInfo) => {
+		//TODO make the fetch functions into a factory function
+		/*
+		////////////////////////////////////
+		NOTE: Params needed
+		* password
+		* newPassword
+		* passwordConfrim:newPasswordConfirm
+		* the userToken found in cookies
+		/////////////////////////////////////
+		*/
+		//deconstruction used to allias passwordCOnfirm as newPasswordConfirm
+		//! turn cookie finding into its own function
+		const {
+			id,
+			password,
+			newPassword,
+			passwordConfirm: newPasswordConfirm,
+		} = userInfo;
+		const userData = {
+			id,
+			password,
+			newPassword,
+			newPasswordConfirm,
+		};
+		console.log(id);
+		try {
+			const response = await fetch(`${mount}/users/update-password`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${id}`,
+				},
+				body: JSON.stringify(userData),
+			}).then((res) => res.json());
+			return response;
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	return { loginOrRegister, logout, updatePassword, loginState };
 };
 
 export default useLogin;

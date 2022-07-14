@@ -2,16 +2,26 @@
 @use "../../../sass/variables.scss";
 
 .login {
-	@include mixins.flex-column;
-	padding: 2rem;
 	height: 75vh;
-	width: 60vw;
+
+	@include mixins.xs {
+		width: 100%;
+		padding: 1rem;
+	}
+	@include mixins.lg {
+		@include mixins.flex-column;
+		padding: 2rem;
+		width: 60vw;
+	}
+
 	.login-form {
 		@include mixins.flex-column;
 		height: 100%;
 		width: 60%;
 		overflow: hidden;
-
+		@include mixins.xs {
+			width: 100%;
+		}
 		figure {
 			@include mixins.flex-row;
 			justify-content: space-around;

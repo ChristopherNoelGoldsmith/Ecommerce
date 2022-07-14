@@ -2,7 +2,12 @@
 @use "../../sass/variables.scss";
 
 form {
-	@include mixins.flex-row;
+	@include mixins.xs {
+		@include mixins.flex-column;
+	}
+	@include mixins.lg {
+		@include mixins.flex-row;
+	}
 	padding: 1vh 0;
 	label {
 		@include mixins.flex-row;
@@ -21,28 +26,33 @@ form {
 		border: none;
 		border-left: 1px solid black;
 	}
-	.btn-container {
-		@include mixins.flex-column;
-		button {
-			min-height: 1.5rem;
+	.product-btns {
+		@include mixins.xs {
+			@include mixins.flex-row;
 		}
-		.add-btn {
-			background: variables.$add-btn;
+		.btn-container {
+			@include mixins.flex-column;
+			button {
+				min-height: 1.5rem;
+			}
+			.add-btn {
+				background: variables.$add-btn;
+			}
+			.remove-btn {
+				background: variables.$remove-btn;
+			}
 		}
-		.remove-btn {
-			background: variables.$remove-btn;
-		}
-	}
 
-	.to-cart-btn {
-		background: rgba($color: variables.$cart-btn, $alpha: 0.8);
-		color: variables.$primary-font;
-		text-shadow: 1px 1px black;
-		font-size: variables.$font-normal;
-		transition: 0.4s ease;
-	}
-	.to-cart-btn:hover i {
-		transform: scale(1.3);
-		transition: 0.4s ease;
+		.to-cart-btn {
+			background: rgba($color: variables.$cart-btn, $alpha: 0.8);
+			color: variables.$primary-font;
+			text-shadow: 1px 1px black;
+			font-size: variables.$font-normal;
+			transition: 0.4s ease;
+		}
+		.to-cart-btn:hover i {
+			transform: scale(1.3);
+			transition: 0.4s ease;
+		}
 	}
 }

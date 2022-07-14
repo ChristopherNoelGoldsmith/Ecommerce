@@ -38,25 +38,27 @@ const ProductCartController = (props) => {
 				readOnly
 				value={props.productAmount}
 			/>
-			<div className={`${styles["btn-container"]}`}>
-				<Button
-					type={"reset"}
-					className={`${styles["add-btn"]}`}
-					onClick={props.incrimentProductHandler}
-				>
-					+
+			<figure className={`${styles["product-btns"]}`}>
+				<div className={`${styles["btn-container"]}`}>
+					<Button
+						type={"reset"}
+						className={`${styles["add-btn"]}`}
+						onClick={props.incrimentProductHandler}
+					>
+						+
+					</Button>
+					<Button
+						type={"reset"}
+						className={`${styles["remove-btn"]}`}
+						onClick={props.decrimentProductHandler}
+					>
+						-
+					</Button>
+				</div>
+				<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>
+					{props.icon}
 				</Button>
-				<Button
-					type={"reset"}
-					className={`${styles["remove-btn"]}`}
-					onClick={props.decrimentProductHandler}
-				>
-					-
-				</Button>
-			</div>
-			<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>
-				{props.icon}
-			</Button>
+			</figure>
 		</form>
 	);
 };

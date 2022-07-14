@@ -1,4 +1,5 @@
 @use "../sass/mixins.scss";
+@use "../index.scss";
 
 .category {
 	@include mixins.flex-column;
@@ -7,7 +8,15 @@
 		flex-wrap: wrap;
 		justify-content: space-evenly;
 		li {
-			flex-basis: 20%;
+			@include index.xs {
+				flex-basis: 50%;
+			}
+			@include mixins.lg {
+				flex-basis: 33%;
+			}
+			@include mixins.xl {
+				flex-basis: 20%;
+			}
 		}
 	}
 }

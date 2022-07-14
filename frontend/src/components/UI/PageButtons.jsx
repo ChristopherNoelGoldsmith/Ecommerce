@@ -35,7 +35,6 @@ const generatePagenationbuttons = (props) => {
 
 // JSX 1 ) FUNCTION WHICH RETURNS THE JSX FOR THE FINAL COMPONENT
 const PageButtons = (props = null) => {
-	console.log(props);
 	const pages = generatePagenationbuttons(props);
 	return <section>{pages}</section>;
 };

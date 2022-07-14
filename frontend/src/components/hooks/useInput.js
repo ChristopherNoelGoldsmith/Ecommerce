@@ -11,6 +11,9 @@ const inputReducer = (state, action) => {
 		case "PASSWORD":
 			state.password = action.password;
 			break;
+		case "NEW_PASSWORD":
+			state.newPassword = action.newPassword;
+			break;
 		case "USERNAME":
 			state.username = action.username;
 			break;
@@ -20,14 +23,16 @@ const inputReducer = (state, action) => {
 		case "PASSWORDCONFIRM":
 			state.passwordConfirm = action.passwordConfirm;
 			break;
+
 		default:
 			alert("invalid value input");
 	}
 	return {
-		username: state.username,
-		password: state.password,
-		passwordConfirm: state.passwordConfirm,
-		email: state.email,
+		username: state.username || "",
+		password: state.password || "",
+		passwordConfirm: state.passwordConfirm || "",
+		email: state.email || "",
+		newPassword: state.newPassword || "",
 	};
 };
 
@@ -63,6 +68,13 @@ const useInput = () => {
 		return;
 	};
 
+	const newPasswordHanlder = (event) => {
+		const value = event.target.value;
+		if (value.length >= 15) return;
+		dispatchInput({ type: "NEW_PASSWORD", newPassword: value });
+		return;
+	};
+
 	const emailHanlder = (event) => {
 		const value = event.target.value;
 		dispatchInput({ type: "EMAIL", email: value });
@@ -75,6 +87,7 @@ const useInput = () => {
 		passwordHanlder,
 		passwordConfirmHandler,
 		emailHanlder,
+		newPasswordHanlder,
 	};
 };
 
