@@ -21,7 +21,6 @@ const UserProfile = () => {
 		setCookie("loginToken");
 		return updatePassword({
 			id: cookies,
-
 			password: inputState.password,
 			newPassword: inputState.newPassword,
 			newPasswordConfirm: inputState.passwordConfirm,

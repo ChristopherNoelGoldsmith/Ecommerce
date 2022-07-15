@@ -61,19 +61,13 @@ const useLogin = () => {
 		*/
 		//deconstruction used to allias passwordCOnfirm as newPasswordConfirm
 		//! turn cookie finding into its own function
-		const {
-			id,
-			password,
-			newPassword,
-			passwordConfirm: newPasswordConfirm,
-		} = userInfo;
+		const { id, password, newPassword, newPasswordConfirm } = userInfo;
 		const userData = {
-			id,
-			password,
-			newPassword,
-			newPasswordConfirm,
+			password: password,
+			newPassword: newPassword,
+			newPasswordConfirm: newPasswordConfirm,
 		};
-		console.log(id);
+		console.log(userInfo);
 		try {
 			const response = await fetch(`${mount}/users/update-password`, {
 				method: "PATCH",
