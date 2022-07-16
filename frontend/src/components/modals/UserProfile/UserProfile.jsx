@@ -5,10 +5,12 @@ import TextInput from "../../UI/TextInput";
 import useInput from "../../hooks/useInput";
 import Card from "../../UI/Card";
 import useCookies from "../../hooks/useCookies";
+import useModal from "../../hooks/useModal";
 
 const UserProfile = () => {
 	const { loginState, logout, updatePassword } = useLogin();
-	const [cookies, setCookie] = useCookies();
+	const cookies = useCookies();
+	const { closeModal } = useModal();
 	const {
 		inputState,
 		passwordHanlder,
@@ -16,15 +18,27 @@ const UserProfile = () => {
 		newPasswordHanlder,
 	} = useInput();
 
-	const updatePasswordHandler = (event) => {
+	const updatePasswordHandler = async (event) => {
 		event.preventDefault();
-		setCookie("loginToken");
-		return updatePassword({
-			id: cookies,
+		//setCookie("loginToken");
+		const passwordChanged = await updatePassword({
+			id: cookies.loginToken,
 			password: inputState.password,
 			newPassword: inputState.newPassword,
 			newPasswordConfirm: inputState.passwordConfirm,
 		});
+
+		if (passwordChanged.token) {
+			closeModal();
+			logout();
+		}
+		return;
+	};
+
+	const logoutHandler = () => {
+		closeModal();
+		logout();
+		return;
 	};
 
 	return (
@@ -55,7 +69,7 @@ const UserProfile = () => {
 					<Button type={"submit"}>Change Password</Button>
 				</form>
 
-				<Button type={"button"} onClick={logout}>
+				<Button type={"button"} onClick={logoutHandler}>
 					LOGOUT!
 				</Button>
 			</section>

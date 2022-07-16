@@ -77,6 +77,8 @@ const useLogin = () => {
 				},
 				body: JSON.stringify(userData),
 			}).then((res) => res.json());
+			console.log(response);
+			if (response) alert("PASSWORD CHANGED");
 			return response;
 		} catch (err) {
 			console.log(err);

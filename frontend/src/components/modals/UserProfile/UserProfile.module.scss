@@ -7,10 +7,13 @@
 	min-height: 60vh;
 	min-width: 80vw;
 	background: variables.$card-bg;
-	color: ghostwhite;
+	color: variables.$primary-font;
+	form {
+		@include mixins.flex-column;
 
-	h2 {
-		font-size: variables.$font-large;
+		h2 {
+			font-size: variables.$font-large;
+		}
 	}
 	button {
 		color: variables.$primary-font;
