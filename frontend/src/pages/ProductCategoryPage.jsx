@@ -3,7 +3,7 @@ import useProduct from "../components/hooks/useProduct";
 import { useState } from "react";
 import PageButtons from "../components/UI/PageButtons";
 import { useEffect } from "react";
-
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 /*
 //------------------------------------------------------------------
 PAGE FOR THE CATEGORIES ACCESSED THROUGH THE NAVBAR OR OTHER MEANS.
@@ -46,7 +46,7 @@ const ProductCategoryPage = (props) => {
 
 	return (
 		<section className={`${styles.category}`}>
-			<ul>{page}</ul>
+			<ul>{<LoadingSpinner /> && page}</ul>
 			<PageButtons
 				numberPerPage={numberOfPages}
 				setPageNumber={setPageNumber}

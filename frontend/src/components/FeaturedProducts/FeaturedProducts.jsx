@@ -4,6 +4,7 @@ import useProduct from "../hooks/useProduct";
 import Card from "../UI/Card";
 import { useEffect } from "react";
 import { useState } from "react";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const FeaturedProducts = (props) => {
 	const [featured, setFeatured] = useState();
@@ -20,7 +21,7 @@ const FeaturedProducts = (props) => {
 	return (
 		<Card className={`${styles["featured-product"]}`}>
 			<h2>HOT ITEMS!</h2>
-			<ul>{featured}</ul>
+			<ul>{<LoadingSpinner /> && featured}</ul>
 		</Card>
 	);
 };

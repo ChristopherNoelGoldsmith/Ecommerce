@@ -22,7 +22,7 @@ const ProfileButton = (props) => {
 
 	return (
 		<Button
-			username={loginState.username}
+			username={loginState.username || "LOGIN"}
 			className={`${styles["profile-btn"]}`}
 			onClick={modalHandler}
 		>

@@ -9,8 +9,9 @@ import useModal from "../../hooks/useModal";
 
 const UserProfile = () => {
 	const { loginState, logout, updatePassword } = useLogin();
-	const cookies = useCookies();
 	const { closeModal } = useModal();
+	const cookies = useCookies();
+
 	const {
 		inputState,
 		passwordHanlder,
@@ -29,8 +30,9 @@ const UserProfile = () => {
 		});
 
 		if (passwordChanged.token) {
-			closeModal();
 			logout();
+			cookies.clear();
+			closeModal();
 		}
 		return;
 	};
