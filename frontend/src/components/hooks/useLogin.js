@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { loginActions } from "../../store/login";
+import useCookies from "./useCookies";
 
 /*///////////////////////////////////////////////////////////////////
 CONTROLS ALL LOGIN AND REGISTRATION FUNCTIONS WITHIN THE APPLICATION!
@@ -9,11 +10,11 @@ const useLogin = () => {
 	const dispatch = useDispatch();
 	const loginState = useSelector((store) => store.login);
 	const mount = "https://allmightyccg.herokuapp.com/api/v1";
+	const cookies = useCookies();
 
 	const queryApi = async (query, userInfo) => {
 		// API CONNECT 1 ) NORMAL API CONNECTION SENDING THE USERNAME/EMAIL AND PASSWORD
 		try {
-			console.log(query, userInfo);
 			const response = await fetch(`${mount}/users/${query}`, {
 				method: "POST",
 				headers: {
@@ -24,7 +25,8 @@ const useLogin = () => {
 
 			//SECURITY 1 ) COOKIES
 			document.cookie = `loginToken=${response.token}`;
-			console.log(response);
+			document.cookie = `user=${userInfo.username}`;
+
 			// DISPLAY 1 ) SETS STATE OF USERNAME DISPLAY THROUGHOUT THE APP.
 			dispatch(loginActions.login({ username: userInfo.username }));
 			return response;
@@ -43,7 +45,7 @@ const useLogin = () => {
 
 	//CLEARS THE ACTIVE USER AND THE LOGINTOKEN.
 	const logout = () => {
-		document.cookie = `loginToken=''`;
+		cookies.getKeys({ type: "clear" });
 		dispatch(loginActions.logout());
 		return;
 	};
@@ -67,7 +69,6 @@ const useLogin = () => {
 			newPassword: newPassword,
 			newPasswordConfirm: newPasswordConfirm,
 		};
-		console.log(userInfo);
 		try {
 			const response = await fetch(`${mount}/users/update-password`, {
 				method: "PATCH",
@@ -85,7 +86,17 @@ const useLogin = () => {
 		}
 	};
 
-	return { loginOrRegister, logout, updatePassword, loginState };
+	const persistUserOnLogin = (username) => {
+		return dispatch(loginActions.login({ username: username }));
+	};
+
+	return {
+		loginOrRegister,
+		persistUserOnLogin,
+		logout,
+		updatePassword,
+		loginState,
+	};
 };
 
 export default useLogin;

@@ -33,6 +33,9 @@
 				font-weight: 600;
 				border-radius: 10px;
 			}
+			button:hover {
+				color: variables.$secondary-hover;
+			}
 		}
 	}
 }

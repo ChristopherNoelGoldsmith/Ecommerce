@@ -6,9 +6,9 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("./email");
 const crypto = require("crypto");
 const sign = require("../utilities/signToken");
+const stripeController = require("./stripe");
 //status messages and error handling
 const catchAsyncFunction = require("../utilities/catchAsync");
-const statusMessages = require("../status");
 
 // 1 ) FOR GETTING ALL USERS INFORMATION FROM THE DATABASE
 const getAllUsers = catchAsyncFunction(async (req, res, next) => {
@@ -131,6 +131,72 @@ const resetPassword = catchAsyncFunction(async (req, res, next) => {
 /*
 NOTE: FUNCTION NEED TO BE UPDATED TO TAKE ANY PARAMS OTHER THAN PERMISSIONS OR PASSWORD!
 */
+
+/*
+/////////////////////
+USER CART FUNCTIONS
+/////////////////////
+*/
+
+//TODO: CREATE FUNCTION THAT ACCEPTS SINGLE VALUES AND ADDS THEM TO CART OR REMOVES THE FROM CART
+
+// const removeCartItem = catchAsyncFunction(async (req, res, next) => {
+// 	const { id } = req.body;
+
+// 	// VALIDATION 1 ) CHECKS THE REQUEST FOR A PRODUCT
+// 	if (!req.body.product)
+// 		return new AppError("YOU MUST HAVE ITEMS TO REMOVE!", 400);
+
+// 	const user = await User.findById(id);
+
+// 	// VALIDATION 2 ) CHECKS USER'S CART FOR ITEMS
+// 	if (user.cart.length < 1)
+// 		return new AppError("THIS USER HAS AN EMPTY CART", 400);
+
+// 	//ITEM REMOVAL 1 ) REMOVES ALL ITEMS WITH THE SELECTED ID FROM THE CART
+// 	user.cart = user.cart.filter((item) => {
+// 		if (item.id === product.id) return false;
+// 		return true;
+// 	});
+
+// 	//ITEM REMOVAL 2 ) SAVES THE NEW UPADTED CART TO THE USER
+
+// 	await user.save({ validateBeforeSave: false });
+
+// 	res.status(200).json({ status: "SUCCESS", data: user.cart });
+// });
+
+const updateCart = catchAsyncFunction(async (req, res, next) => {
+	const { id, cart } = req.body;
+	if (cart.length < 1) return new AppError("YOUR CART MUST HAVE ITEMS!", 400);
+
+	//CART 1 ) ADDS THE CURRENT ITEMS IN THE CART TO THE CART PROPERTY ON THE USER
+	const user = await User.findByIdAndUpdate(id, { cart: cart }).populate(
+		"cart"
+	);
+
+	if (!user) new AppError("UNABLE TO ADD ITEMS TO CART", 400);
+
+	stripeController.checkoutSession(user.cart);
+
+	res.status(200).json({ status: "SUCCESS", data: user.cart });
+});
+
+const clearCart = catchAsyncFunction(async (req, res, next) => {
+	const { id } = req.body;
+
+	//IDENTIFY 1 ) IDENTIFIES USER IN DATABASE
+	const user = await User.findById(id);
+
+	//CLEAR CART 1 ) SETS CART TO EMPTY ARRAY WITH .save METHOD
+	user.cart = [];
+	await user.save({ validateBeforeSave: false });
+
+	res.status(200).json({ status: "SUCCESS", data: user });
+});
+
+//////////////////////////////////////////////////////////////////
+
 const updateMe = catchAsyncFunction(async (req, res, next) => {
 	const { id, username, email } = req.body;
 	if (!username && !email)
@@ -176,6 +242,8 @@ const model = {
 	deleteUsers,
 	lostPassword,
 	resetPassword,
+	updateCart,
+	clearCart,
 	updateMe,
 	deleteMe,
 };

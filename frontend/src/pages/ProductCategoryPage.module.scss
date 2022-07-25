@@ -3,6 +3,7 @@
 
 .category {
 	@include mixins.flex-column;
+	min-height: 100vh;
 	ul {
 		@include mixins.flex-row;
 		flex-wrap: wrap;

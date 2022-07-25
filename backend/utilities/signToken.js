@@ -28,7 +28,7 @@ const sendToken = (token, statusCode, req, res) => {
 	};
 	res.cookie("jwt", token, cookieConfig);
 
-	res.status(statusCode).json({ STATUS: "SUCCESS", token });
+	res.status(statusCode).json({ status: "SUCCESS", token });
 };
 
 const model = { signToken, sendToken };

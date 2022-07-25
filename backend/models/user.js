@@ -90,11 +90,14 @@ UserSchema.methods.correctPassword = async function (
 //NOTE: Takes the time of the password change and comapres it to the time of the JWT token.
 //--If the token issue was before the password it returns true.
 UserSchema.methods.changedPasswordAfter = async function (jwtTimestamp) {
+	console.log(jwtTimestamp, "inpassword changed");
 	if (this.passwordChangedAt) {
 		const changedTimeStamp = parseInt(
 			this.passwordChangedAt.getTime() / 1000,
 			10
 		);
+		console.log(jwtTimestamp, "inpassword changed 2");
+
 		return jwtTimestamp < changedTimeStamp;
 	}
 

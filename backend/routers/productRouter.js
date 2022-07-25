@@ -24,10 +24,17 @@ router
 	.route("/")
 	.post(productsController.createProducts)
 	.get(productsController.getProducts)
-	.patch(productsController.patchProducts)
 	.delete(productsController.deleteProducts);
 ////////////////////////
 //GET INDIVIDUAL PRODUCT
 //router.route("/:id").get(productsController.getProductById);
+router
+	.route("/:id")
+	.patch(
+		productsController.uploadProductPhoto,
+		productsController.resizePhoto,
+		productsController.patchProducts
+	);
+
 ////////////////////////
 module.exports = router;

@@ -18,6 +18,8 @@
 	button {
 		color: variables.$primary-font;
 		padding: 1rem;
-		background: rgba($color: darkblue, $alpha: 0.7);
+	}
+	button:hover {
+		color: variables.$secondary-hover;
 	}
 }

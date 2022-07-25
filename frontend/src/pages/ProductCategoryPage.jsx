@@ -19,6 +19,10 @@ const ProductCategoryPage = (props) => {
 	//ONLOAD 1 ) Initialization
 	useEffect(() => {
 		const fetchData = async () => {
+			const loading = <LoadingSpinner />;
+
+			setPage(loading);
+
 			//API 1 ) MAKES INITIAL DATACALL FROM THE SERVER FOR THE GIVEN CATEGORY
 			//TODO: ADD CATEGORY OPTION ON getAllProducts()
 			const products = await getAllProducts();
@@ -46,7 +50,7 @@ const ProductCategoryPage = (props) => {
 
 	return (
 		<section className={`${styles.category}`}>
-			<ul>{<LoadingSpinner /> && page}</ul>
+			<ul>{page}</ul>
 			<PageButtons
 				numberPerPage={numberOfPages}
 				setPageNumber={setPageNumber}

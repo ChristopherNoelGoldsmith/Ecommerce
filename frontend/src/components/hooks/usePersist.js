@@ -10,16 +10,15 @@ SETUP!
 
 import { useEffect } from "react";
 import useLogin from "./useLogin";
-//import useCart from "./useCart";
 
 const usePersist = () => {
-	const { persistLogin } = useLogin();
-	//const { persistCart } = useCart();
+	const { persistUserOnLogin } = useLogin();
 
-	const persistUser = useEffect(() => {
-		persistLogin();
-		//persistCart(); ---Needs to be built!
-	});
+	//TODO: AFTER CART API IS CREATED ADD PERSISTANCE INTO THIS HOOK
+	const persistUser = useEffect((username) => {
+		persistUserOnLogin();
+		return;
+	}, []);
 
 	return persistUser;
 };

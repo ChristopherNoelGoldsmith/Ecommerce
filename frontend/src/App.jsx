@@ -5,12 +5,25 @@ import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
-import data from "./assets/rampage.json";
-//import usePersist from "./components/hooks/usePersist";
-//console.log(data);
+import usePersist from "./components/hooks/usePersist";
+import useLogin from "./components/hooks/useLogin";
+import useCookies from "./components/hooks/useCookies";
+import { useEffect } from "react";
+
 function App() {
 	const { modal, modalVis } = useModal();
-	//usePersist();
+	const cookies = useCookies();
+	const { persistUserOnLogin } = useLogin();
+	/*
+	///////////////////////////////////////////////////////////////////
+	CHECKS COOKIES FOR A VALID LOGIN TOKEN THEN PERSIST THE LOGIN STATE
+	///////////////////////////////////////////////////////////////////
+	*/
+	useEffect(() => {
+		if (!cookies) return;
+		persistUserOnLogin(cookies.user);
+		return;
+	}, [cookies]);
 	return (
 		<div className="container">
 			{modalVis && modal}

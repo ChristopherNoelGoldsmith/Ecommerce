@@ -50,7 +50,6 @@ const loginUsers = catchAsyncFunction(async (req, res, next) => {
 	//SECURITY 1-B ) BCRYPT PASSWORD VALIDATION ------
 	if (!user || (await user.correctPassword(password, user.password))) {
 		//PERSISTANCE 1 ) JWT CREATION FOR PERSISTANCE ------
-		console.log(user);
 		//NOTE: TOKEN IS FORMATTED AS A COOKIE!
 		const token = sign.signToken(user);
 
@@ -72,9 +71,12 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	THE .save METHOD IS ALSO USED DUE TO THE MIDDLEWARE IN THE SCHEMA UPDATING PARTS OF THE USER
 	ON THE MUTATION OF THE PASSWORD.
 	*/
+	console.log("hello");
+	console.log(req.body);
+
+	const { id } = req.user;
 
 	const {
-		id,
 		password: oldPassword,
 		newPassword: password,
 		newPasswordConfirm,
@@ -82,9 +84,8 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	// VERIFICATION 1 ) CHECK TO MAKE SURE BOTH PASSWORD INPUTS WERE THE SAME
 	if (password !== newPasswordConfirm)
 		return next(new AppError("BOTH PASSWORD INPUTS MUST MATCH", 400));
-
 	// VERIFICATION 2 ) VERIFIES TOKEN THEN GETS USER FROM COLLECTION
-	const user = await User.findOne(id).select("+password");
+	const user = await User.findById(id).select("+password");
 	if (!user) return next(new AppError("USER NOT FOUND!", 404));
 	// VERIFICATION 3 ) CHECK IF PASSWORD CORRECT
 	if (!(await user.correctPassword(oldPassword, user.password)))
@@ -118,15 +119,12 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 	}
 	//SECURITY 1-C ) CHECKS FOR THE TOKEN
 	if (!token) return next(new AppError("YOU ARE NOT LOGGED IN!", 401));
-
 	//SECURITY 2 ) VERIFIES IF THE TOKEN IS VALID
 	//NOTE: Promisify node utility used to prevent a clog in the event loop
 	const verified = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
 	//SECURITY 3 ) CHECKS IF USER STILL EXISTS
 	const { id } = verified;
 	const user = await User.findById(id);
-	console.log(user);
 	if (!user) return next(new AppError("THIS USER DOES NOT EXIST!", 401));
 
 	//SECURITY 4 ) CHECKS IF USER'S PASSWORD HAS BEEN CHANGED SINCE THE TOKEN WAS ISSUED
@@ -137,9 +135,13 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 			new AppError("YOUR PASSWORD HAS CHANGED, PLEASE LOG BACK IN!", 401)
 		);
 	}
-
+	////////////////////////////////
+	//! if (!checkIfPasswordChanged)
+	//! 	new AppError("THERE WAS AN ERROR WHEN TRYING TO CHANGE YOUR PASSWORD");
+	////////////////////////////////
 	//ALL SAFETY CHECKS COMPLETED AT THIS POINT!
 	//MUTATION!
+	console.log("poop");
 	req.user = user;
 	next();
 });

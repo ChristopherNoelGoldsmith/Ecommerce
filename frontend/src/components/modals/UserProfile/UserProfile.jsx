@@ -31,15 +31,14 @@ const UserProfile = () => {
 
 		if (passwordChanged.token) {
 			logout();
-			cookies.clear();
 			closeModal();
 		}
 		return;
 	};
 
 	const logoutHandler = () => {
-		closeModal();
 		logout();
+		closeModal();
 		return;
 	};
 
