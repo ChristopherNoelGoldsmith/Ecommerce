@@ -7,7 +7,7 @@ const useCart = () => {
 	const dispatch = useDispatch();
 	const cart = useSelector((store) => store.cart);
 	const cookies = useCookies();
-	const mount = "http://localhost:1337/api/v1"; //"https://allmightyccg.herokuapp.com/api/v1";
+	const mount = "https://allmightyccg.herokuapp.com/api/v1"; //"http://localhost:1337/api/v1"; //
 
 	/*
 	/////////////////////////////////////////////////////////////////////////////////
