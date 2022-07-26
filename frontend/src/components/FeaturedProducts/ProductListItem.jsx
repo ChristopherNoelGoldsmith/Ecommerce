@@ -62,6 +62,7 @@ const ProductListItem = (props) => {
 					</div>
 					<div className="product-details">
 						<ProductCartController
+							productId={props.productId}
 							productName={props.productName}
 							productPrice={props.productPrice}
 							productAmount={productAmount}

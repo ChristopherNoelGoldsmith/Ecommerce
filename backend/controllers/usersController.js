@@ -167,28 +167,39 @@ USER CART FUNCTIONS
 // });
 
 const updateCart = catchAsyncFunction(async (req, res, next) => {
-	const { id, cart } = req.body;
+	const { cart } = req.body;
+	const { id } = req.user;
 	if (cart.length < 1) return new AppError("YOUR CART MUST HAVE ITEMS!", 400);
-
 	//CART 1 ) ADDS THE CURRENT ITEMS IN THE CART TO THE CART PROPERTY ON THE USER
-	const user = await User.findByIdAndUpdate(id, { cart: cart }).populate(
-		"cart"
-	);
+	const cartContents = cart.map((item) => {
+		return { product: item.id, quantity: item.count * 1 };
+	});
+	const user = await User.findByIdAndUpdate(id, {
+		cart: cartContents,
+	});
 
 	if (!user) new AppError("UNABLE TO ADD ITEMS TO CART", 400);
 
-	stripeController.checkoutSession(user.cart);
-
-	res.status(200).json({ status: "SUCCESS", data: user.cart });
+	const url = {
+		success_url: `http://localhost:3000/category`,
+		cancel_url: `http://localhost:3000/category`,
+	};
+	//await stripeController.createItem();
+	const checkoutSession = await stripeController.checkoutSession(
+		user.cart,
+		url
+	);
+	console.log(checkoutSession);
+	res.status(200).json({ status: "SUCCESS", data: checkoutSession });
 });
 
 const clearCart = catchAsyncFunction(async (req, res, next) => {
-	const { id } = req.body;
+	const { id } = req.user;
 
 	//IDENTIFY 1 ) IDENTIFIES USER IN DATABASE
 	const user = await User.findById(id);
-
 	//CLEAR CART 1 ) SETS CART TO EMPTY ARRAY WITH .save METHOD
+	//TODO create dummy object to handle blank cart;
 	user.cart = [];
 	await user.save({ validateBeforeSave: false });
 

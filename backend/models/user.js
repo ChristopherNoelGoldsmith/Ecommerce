@@ -33,7 +33,12 @@ const UserSchema = new mongoose.Schema(
 			},
 		},
 		passwordChangedAt: { type: Date },
-		cart: [{ type: mongoose.Schema.ObjectId, ref: "ProductSchema" }],
+		cart: [
+			{
+				product: { type: mongoose.Schema.ObjectId, ref: "ProductSchema" },
+				quantity: Number,
+			},
+		],
 		email: {
 			type: String,
 			required: [true, "You must have an email"],

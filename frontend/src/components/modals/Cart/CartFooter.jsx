@@ -1,10 +1,18 @@
 import styles from "./CartFooter.module.scss";
 import Button from "../../UI/Button";
+import useCart from "../../hooks/useCart";
 
 const CartFooter = (props) => {
+	const { createCart } = useCart();
+
+	const checkout = async (event) => {
+		event.preventDefault();
+		await createCart();
+	};
+
 	return (
 		<section className={`${styles["cart-footer"]}`}>
-			<form>
+			<form onSubmit={checkout}>
 				<label htmlFor="checkout">
 					<span>${props.totalCost}</span>
 				</label>

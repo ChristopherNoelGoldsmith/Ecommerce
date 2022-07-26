@@ -8,12 +8,14 @@ import useModal from "./components/hooks/useModal";
 import usePersist from "./components/hooks/usePersist";
 import useLogin from "./components/hooks/useLogin";
 import useCookies from "./components/hooks/useCookies";
+import useCart from "./components/hooks/useCart";
 import { useEffect } from "react";
 
 function App() {
 	const { modal, modalVis } = useModal();
 	const cookies = useCookies();
 	const { persistUserOnLogin } = useLogin();
+	const { clearCart } = useCart();
 	/*
 	///////////////////////////////////////////////////////////////////
 	CHECKS COOKIES FOR A VALID LOGIN TOKEN THEN PERSIST THE LOGIN STATE
@@ -22,6 +24,10 @@ function App() {
 	useEffect(() => {
 		if (!cookies) return;
 		persistUserOnLogin(cookies.user);
+		const asyncfn = async () => {
+			await clearCart();
+		};
+		asyncfn();
 		return;
 	}, [cookies]);
 	return (

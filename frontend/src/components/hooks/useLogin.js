@@ -45,7 +45,7 @@ const useLogin = () => {
 
 	//CLEARS THE ACTIVE USER AND THE LOGINTOKEN.
 	const logout = () => {
-		cookies.getKeys({ type: "clear" });
+		cookies.getKeys("clear");
 		dispatch(loginActions.logout());
 		return;
 	};
@@ -87,6 +87,8 @@ const useLogin = () => {
 	};
 
 	const persistUserOnLogin = (username) => {
+		if (!username || username === "null") return;
+		console.log(username);
 		return dispatch(loginActions.login({ username: username }));
 	};
 

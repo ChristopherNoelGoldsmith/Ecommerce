@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 class CookieKeys {
 	contructor() {}
 
-	//!COPYPASTA
 	//INSERT THE NAME OF A COOKIE AND IT WILL EXTRACT THE VALUE
+	//!COPYPASTA
 	getCookieByName = (name) => {
 		const match = document.cookie.match(
 			new RegExp("(^| )" + name + "=([^;]+)")
@@ -11,22 +11,23 @@ class CookieKeys {
 		return match ? match[2] : "";
 	};
 
-	//EXTRACTS KEYS FROM THE COOKIES IN THE BROSER AND APPENDS THEM TO THE OBJECT WITH THE VALUE
+	// COOKIE SET 1 ) EXTRACTS KEYS FROM THE COOKIES IN THE BROSER AND APPENDS THEM TO THE OBJECT WITH THE VALUE
 	getKeys(type = "create") {
 		const regExpForKeys = /\w+(?==)/gi;
 		const cookiesString = document.cookie;
 		const cookieKeys = cookiesString.match(regExpForKeys);
-
-		//CLEARS COOKIES IN OBJECT
+		// COOKIE CLEAR 1 ) CLEARS COOKIES IN OBJECT
 		if (type === "clear") {
 			cookieKeys.forEach((cookieKey) => {
+				console.log(cookieKeys, "poop");
 				const cookieContent = this.getCookieByName(cookieKey);
 				this[cookieKey] = "";
-				document.cookie = `${cookieKey}=''`;
+				document.cookie = `${cookieKey}=null`;
 			});
+			return;
 		}
 
-		//ADDS COOKIES TO OBJECTS
+		//COOKIE SET 2 ) ADDS COOKIES TO OBJECTS
 		cookieKeys.forEach((cookieKey) => {
 			const cookieContent = this.getCookieByName(cookieKey);
 			this[cookieKey] = cookieContent;
@@ -43,7 +44,6 @@ const useCookies = () => {
 		const createCookieJar = () => {
 			const cookieJar = new CookieKeys();
 			cookieJar.getKeys();
-			console.log(cookieJar);
 			setCookies(cookieJar);
 			return cookies;
 		};

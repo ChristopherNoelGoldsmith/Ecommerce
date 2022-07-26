@@ -1,4 +1,5 @@
-/*SYNTAX ISSUE
+/*
+!SYNTAX ISSUE
 
 the slice refers to the products name and price as
 'name' and 'price' but some funtions refer to them as
@@ -58,7 +59,7 @@ const Cart = () => {
 		<Card className={`${styles.cart}`}>
 			<CartHeader />
 			<ul>{productBuyList}</ul>
-			<CartFooter totalCost={totalCost} />
+			<CartFooter cart={cart} totalCost={totalCost} />
 		</Card>
 	);
 };

@@ -11,19 +11,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { cartContents: [], totalCost: 0, totalItems: 0 };
 
-const convertToDollarAmount = (number) => {
-	const regExp = /\d+\.\d\d/;
-	const regExpForSingleCents = /\d+\.\d/;
-	let numberToString = number.toString();
-	if (!numberToString.match(regExp)) {
-		//checks to see if cents is a single numer like .1 and adds a 0 to the end making it .10 for cents
-		const checkForMissingCents = numberToString.match(regExpForSingleCents);
-		if (checkForMissingCents) numberToString = numberToString + "0";
-		if (!checkForMissingCents) numberToString = numberToString + ".00";
-	}
-	const numberToDollars = numberToString.match(regExp);
-	return numberToDollars[0];
-};
+//! DEPRECIATED
+// const convertToDollarAmount = (number) => {
+// 	const regExp = /\d+\.\d\d/;
+// 	const regExpForSingleCents = /\d+\.\d/;
+// 	let numberToString = number.toString();
+// 	if (!numberToString.match(regExp)) {
+// 		//checks to see if cents is a single numer like .1 and adds a 0 to the end making it .10 for cents
+// 		const checkForMissingCents = numberToString.match(regExpForSingleCents);
+// 		if (checkForMissingCents) numberToString = numberToString + "0";
+// 		if (!checkForMissingCents) numberToString = numberToString + ".00";
+// 	}
+// 	const numberToDollars = numberToString.match(regExp);
+// 	return numberToDollars[0];
+// };
 
 const cartSlice = createSlice({
 	name: "cart",
@@ -37,10 +38,9 @@ const cartSlice = createSlice({
 			//sends in item object with a count
 			//Multiplied by 1 to ensure count is a number.
 			let itemCount = count * 1;
-			let totalPrice = convertToDollarAmount(target.price * itemCount);
+			let totalPrice = target.price * itemCount;
 
 			//Checks the store for the item in the cart
-
 			const targetItem = cartContents.find((item) => item.name === target.name);
 			//If targetItem returns true creates a new state with the count and total price mutated.
 			if (targetItem) {
@@ -48,14 +48,15 @@ const cartSlice = createSlice({
 					if (target.name === item.name) {
 						itemCount = item.count + itemCount;
 						const total = target.price * itemCount;
-						totalPrice = convertToDollarAmount(total);
-						target.price = convertToDollarAmount(target.price);
+						totalPrice = total;
+						target.price = target.price;
 						return {
 							name: target.name,
 							price: target.price,
 							total: totalPrice,
 							count: itemCount,
 							image: target.image,
+							id: target.id,
 						};
 					}
 					return item;
@@ -70,6 +71,7 @@ const cartSlice = createSlice({
 				total: totalPrice,
 				count: itemCount,
 				image: target.image,
+				id: target.id,
 			};
 			state.cartContents = [...cartContents, item];
 			return;
@@ -80,7 +82,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count < 99) {
 					item.count = item.count + 1;
-					item.total = convertToDollarAmount(item.price * item.count);
+					item.total = item.price * item.count;
 				}
 			});
 			return;
@@ -91,7 +93,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count > 0) {
 					item.count = item.count - 1;
-					item.total = convertToDollarAmount(item.price * item.count);
+					item.total = item.price * item.count;
 				}
 			});
 			return;
@@ -125,7 +127,7 @@ const cartSlice = createSlice({
 				.reduce((item1, item2) => {
 					return item1 + item2;
 				});
-			const trimmedTotal = convertToDollarAmount(total);
+			const trimmedTotal = total;
 			state.totalCost = trimmedTotal;
 			return;
 		},

@@ -13,13 +13,14 @@ const ProductCartController = (props) => {
 		event.preventDefault();
 		//targets first value of the event object which is the count input
 		const itemCountValue = event.target[0].value;
-
+		console.log(props.productId);
 		//converts props into format for the cartSlice in the store provided by the useCart hook.
 		const item = {
 			name: props.productName,
 			price: props.productPrice,
 			count: props.productAmount,
 			image: props.productImage,
+			id: props.productId,
 		};
 		if (props.removeItem) return props.removeItem({ target: item });
 		addItem({ target: item, count: itemCountValue });

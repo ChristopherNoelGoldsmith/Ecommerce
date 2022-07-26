@@ -14,7 +14,10 @@ const useProduct = () => {
 	///////////
 	*/
 	const getAllProducts = async (page = 1, limit = 25, category = null) => {
+		// QUERY 1 ) FILTER FOR THE URL
 		const queryFilter = category ? `&category${category}` : "";
+
+		// QUERY 2 ) QUERIES THE PRODUCTS COLLECTION
 		const products = await fetch(
 			`${mount}/products?&page=${page}&limit=${limit}${queryFilter}`,
 			{
@@ -24,6 +27,8 @@ const useProduct = () => {
 				method: "GET",
 			}
 		);
+
+		// QUERY 3 ) RETURNS THE RESULT OF THE QUERY AND A NUMBER FOR PAGENATION
 		const { data, pages } = await products.json();
 		setProducts(data);
 		return { data, pages };
@@ -35,6 +40,7 @@ const useProduct = () => {
 			const { name, img, price, text, extension, _id } = cards;
 			return (
 				<ProductListItem
+					productId={_id}
 					productName={name}
 					key={_id}
 					src={img}
@@ -47,7 +53,6 @@ const useProduct = () => {
 		setProductsList(productList);
 		return productList;
 	};
-
 	/* 
 ? NOTES ON RETURNED ITEMS
 /////////////////////////////////////////////////////////////////

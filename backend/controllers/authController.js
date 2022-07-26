@@ -71,8 +71,6 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	THE .save METHOD IS ALSO USED DUE TO THE MIDDLEWARE IN THE SCHEMA UPDATING PARTS OF THE USER
 	ON THE MUTATION OF THE PASSWORD.
 	*/
-	console.log("hello");
-	console.log(req.body);
 
 	const { id } = req.user;
 
@@ -126,7 +124,6 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 	const { id } = verified;
 	const user = await User.findById(id);
 	if (!user) return next(new AppError("THIS USER DOES NOT EXIST!", 401));
-
 	//SECURITY 4 ) CHECKS IF USER'S PASSWORD HAS BEEN CHANGED SINCE THE TOKEN WAS ISSUED
 	// NOTE: If the below schema method returns true an error is thrown
 	const checkIfPasswordChanged = await user.changedPasswordAfter(verified.iat);
@@ -141,7 +138,6 @@ const protect = catchAsyncFunction(async (req, res, next) => {
 	////////////////////////////////
 	//ALL SAFETY CHECKS COMPLETED AT THIS POINT!
 	//MUTATION!
-	console.log("poop");
 	req.user = user;
 	next();
 });
