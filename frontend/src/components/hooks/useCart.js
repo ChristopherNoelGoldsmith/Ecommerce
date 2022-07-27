@@ -7,8 +7,7 @@ const useCart = () => {
 	const dispatch = useDispatch();
 	const cart = useSelector((store) => store.cart);
 	const cookies = useCookies();
-	const mount = "https://allmightyccg.herokuapp.com/api/v1"; //"http://localhost:1337/api/v1"; //
-
+	const mount = "https://allmightyccg.herokuapp.com/api/v1"; //	"http://localhost:1337/api/v1"; //
 	/*
 	/////////////////////////////////////////////////////////////////////////////////
 	---------------FUNCTIONS HANDLING THE CART STORE FUNCTIONS-----------------------	
@@ -70,7 +69,6 @@ const useCart = () => {
 
 			const { cartContents } = cart;
 			const { loginToken } = cookies;
-
 			// DATA HANDLING 1 ) WRITES CART TO THE USER IN DATABASE
 			const createUsersCart = await fetch(`${mount}/users/cart`, {
 				headers: {
@@ -82,7 +80,6 @@ const useCart = () => {
 					cart: cartContents,
 				}),
 			}).then((res) => res.json());
-
 			//STRIPE 2 ) REDIRECTS TO CHECKOUT WITH THE SESSION ID RETURNED BY 'createUsersCart'
 			await stripe.redirectToCheckout({
 				sessionId: createUsersCart.data,
