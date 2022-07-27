@@ -69,6 +69,7 @@ const useCart = () => {
 
 			const { cartContents } = cart;
 			const { loginToken } = cookies;
+			console.log(cartContents);
 			// DATA HANDLING 1 ) WRITES CART TO THE USER IN DATABASE
 			const createUsersCart = await fetch(`${mount}/users/cart`, {
 				headers: {

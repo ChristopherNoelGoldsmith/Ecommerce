@@ -73,7 +73,7 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	*/
 
 	const { id } = req.user;
-
+	console.log("authorized");
 	const {
 		password: oldPassword,
 		newPassword: password,
