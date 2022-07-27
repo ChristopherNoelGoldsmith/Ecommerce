@@ -80,7 +80,9 @@ const useCart = () => {
 				body: JSON.stringify({
 					cart: cartContents,
 				}),
-			}).then((res) => res.json());
+			})
+				.then((res) => res.json())
+				.catch((err) => err);
 			//STRIPE 2 ) REDIRECTS TO CHECKOUT WITH THE SESSION ID RETURNED BY 'createUsersCart'
 			await stripe.redirectToCheckout({
 				sessionId: createUsersCart.data,
