@@ -69,7 +69,6 @@ const useCart = () => {
 
 			const { cartContents } = cart;
 			const { loginToken } = cookies;
-			console.log(cartContents);
 			// DATA HANDLING 1 ) WRITES CART TO THE USER IN DATABASE
 			const createUsersCart = await fetch(`${mount}/users/cart`, {
 				headers: {
@@ -80,9 +79,10 @@ const useCart = () => {
 				body: JSON.stringify({
 					cart: cartContents,
 				}),
-			})
-				.then((res) => res.json())
-				.catch((err) => err);
+			}).then((res) => {
+				console.log(res);
+				res.json();
+			});
 			//STRIPE 2 ) REDIRECTS TO CHECKOUT WITH THE SESSION ID RETURNED BY 'createUsersCart'
 			await stripe.redirectToCheckout({
 				sessionId: createUsersCart.data,
