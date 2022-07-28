@@ -31,7 +31,7 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.then((con) => console.log(`CONNECTION SUCCESSFUL!`));
+	.then((con) => console.log(`CONNECTION SUCCESSFUL!: ${con}`));
 
 /*
 /////////////////
@@ -40,7 +40,7 @@ mongoose
 */
 
 const limiter = rateLimit({
-	max: 100,
+	max: 1000,
 	windowMs: 60 * 60 * 1000, //milliseconds for 1 hour
 	message: "YOU HAVE REACHED YOUR REQUEST LIMIT, PLEASE TRY AGAIN LATER!",
 });
@@ -78,7 +78,7 @@ app.use(
 
 // DOS PROTECTION VIA LIMIT BELOW //
 app.use("/api", limiter);
-app.use(express({ limit: "10kb" }));
+app.use(express({ limit: "100kb" }));
 
 //Dev
 app.use(morgan("dev"));

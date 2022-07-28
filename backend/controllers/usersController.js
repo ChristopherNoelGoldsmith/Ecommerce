@@ -167,7 +167,6 @@ USER CART FUNCTIONS
 // });
 
 const updateCart = catchAsyncFunction(async (req, res, next) => {
-	res.json({ message: req.body });
 	const { cart } = req.body;
 	const { id } = req.user;
 	console.log(cart);

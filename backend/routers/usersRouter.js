@@ -53,7 +53,7 @@ ROUTES FOR THE USER CART
 //////////////////////
 */
 
-router.route("/cart");
+//router.route("/cart");
 
 //////////////////////////////////////
 /*

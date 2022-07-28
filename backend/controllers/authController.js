@@ -37,7 +37,7 @@ const registerUsers = catchAsyncFunction(async (req, res, next) => {
 //LOGIN!
 const loginUsers = catchAsyncFunction(async (req, res, next) => {
 	const { username, password, email } = req.body;
-
+	console.log(req.body);
 	//INPUT CONFIRMATION 1 )
 	if ((!username && !email) || !password)
 		return next(new AppError("ERROR: PLEASE FILL ALL FIELDS", 400));
@@ -71,9 +71,9 @@ const updatePassword = catchAsyncFunction(async (req, res, next) => {
 	THE .save METHOD IS ALSO USED DUE TO THE MIDDLEWARE IN THE SCHEMA UPDATING PARTS OF THE USER
 	ON THE MUTATION OF THE PASSWORD.
 	*/
+	console.log("authorized");
 
 	const { id } = req.user;
-	console.log("authorized");
 	const {
 		password: oldPassword,
 		newPassword: password,

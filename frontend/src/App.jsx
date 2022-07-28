@@ -26,13 +26,11 @@ function App() {
 		//PERSIST 1 ) CHECKS FOR USER IN COOKIES, RETURNS IF NOT FOUND
 		if (!cookies) return;
 		persistUserOnLogin(cookies.user);
-
 		//ASYNC FUNCTION CREATED TO CALL CLEAR CART IN 'useEffect()'
 		const asyncfn = async () => {
 			//PERSIST 2 ) CLEARS CART UPON PERSISTANCE
 			await clearCart();
 		};
-
 		asyncfn();
 		return;
 	}, [cookies]);

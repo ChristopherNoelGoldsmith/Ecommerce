@@ -19,8 +19,6 @@ class CookieKeys {
 		// COOKIE CLEAR 1 ) CLEARS COOKIES IN OBJECT
 		if (type === "clear") {
 			cookieKeys.forEach((cookieKey) => {
-				console.log(cookieKeys, "poop");
-				const cookieContent = this.getCookieByName(cookieKey);
 				this[cookieKey] = "";
 				document.cookie = `${cookieKey}=null`;
 			});
@@ -39,8 +37,8 @@ const useCookies = () => {
 	const [cookies, setCookies] = useState();
 
 	//TODO: TURN INTO A FUNCTIONAL BASED HOOK FOR CONSISTANCY
-
 	useEffect(() => {
+		if (!document.cookie) return;
 		const createCookieJar = () => {
 			const cookieJar = new CookieKeys();
 			cookieJar.getKeys();
@@ -48,7 +46,7 @@ const useCookies = () => {
 			return cookies;
 		};
 		createCookieJar();
-	}, []);
+	}, [document.cookie]);
 
 	return cookies;
 };

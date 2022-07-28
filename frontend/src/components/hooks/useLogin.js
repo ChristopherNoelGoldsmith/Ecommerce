@@ -31,7 +31,7 @@ const useLogin = () => {
 			dispatch(loginActions.login({ username: userInfo.username }));
 			return response;
 		} catch (err) {
-			//console.log(err);
+			console.log(err);
 		}
 	};
 
