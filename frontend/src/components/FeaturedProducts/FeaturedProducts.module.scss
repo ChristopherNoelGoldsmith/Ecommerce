@@ -3,14 +3,17 @@
 
 .featured-product {
 	@include mixins.flex-column;
-	background: variables.$card-bg;
+	background: transparent;
 	h2 {
 		@include mixins.title-font;
 		text-align: center;
 	}
 
 	ul {
-		@include mixins.flex-row;
+		@include mixins.flex-column;
+		@include mixins.md {
+			@include mixins.flex-row;
+		}
 		max-width: 100vw;
 		li > * {
 			background: transparent;

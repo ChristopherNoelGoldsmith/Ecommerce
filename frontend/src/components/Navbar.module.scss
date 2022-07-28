@@ -9,6 +9,7 @@
 	width: 100vw;
 	padding: 2vh 1vw;
 	z-index: 100;
+	transition: 0.8s ease-out;
 	section {
 		@include mixins.flex-row;
 		width: inherit;
@@ -24,4 +25,9 @@
 			}
 		}
 	}
+}
+.hidden {
+	opacity: 0;
+	transform: translateY(-10vh);
+	transition: 0.8s ease-out;
 }

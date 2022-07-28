@@ -62,12 +62,18 @@ const useCart = () => {
 	 */
 	const createCart = async () => {
 		try {
+			const { cartContents } = cart;
+			const { loginToken } = cookies;
+
+			if (!cartContents)
+				return console.log("You must have items in your cart to checkout!");
+			if (!loginToken)
+				return console.log("You must be logged in to check out!");
+
 			// STRIPE 1 ) LOADS STRIPE
 			const stripe = await loadStripe(
 				"pk_test_51LNCVkL4WOl3po2AOH348VofF0FucaDm2iKFDd2EBYkP7EgdKQcuVdmBPEOZHsXzY3kcgx8TOA9IZwxki6jY334Y00LHUcVhoI"
 			);
-			const { cartContents } = cart;
-			const { loginToken } = cookies;
 			// DATA HANDLING 1 ) WRITES CART TO THE USER IN DATABASE
 			const createUsersCart = await fetch(`${mount}/users/cart`, {
 				headers: {
@@ -78,8 +84,8 @@ const useCart = () => {
 				body: JSON.stringify({
 					cart: cartContents,
 				}),
-			}).catch((err) => console.log(err));
-			const { data } = await createUsersCart.json();
+			}).then((res) => res.json());
+			const { data } = createUsersCart;
 			//STRIPE 2 ) REDIRECTS TO CHECKOUT WITH THE SESSION ID RETURNED BY 'createUsersCart'
 			await stripe.redirectToCheckout({
 				sessionId: data,

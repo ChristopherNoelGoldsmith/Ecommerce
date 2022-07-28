@@ -7,12 +7,24 @@ import CategoryButton from "./navButtons/CategoryButton";
 import ProfileButton from "./navButtons/ProfileButton";
 import useModal from "./hooks/useModal";
 import logo from "../assets/img/logo.png";
+import { useState } from "react";
 
 const Navbar = (props) => {
 	const { closeModal } = useModal();
+	const [navClass, setNavClass] = useState(null);
+	const [scrollPos, setScrollPos] = useState();
+
+	window.onscroll = () => {
+		let currentScrollPos = window.pageYOffset;
+		setScrollPos(window.pageYOffset);
+		if (currentScrollPos <= scrollPos) {
+			return setNavClass(null);
+		}
+		return setNavClass("hidden");
+	};
 
 	return (
-		<nav className={`${styles.navbar}`}>
+		<nav className={`${styles["navbar"]} ${styles[navClass]}`}>
 			<section>
 				<ul>
 					<ListItem onClick={closeModal}>
@@ -23,11 +35,11 @@ const Navbar = (props) => {
 						</Button>
 					</ListItem>
 					<ListItem onClick={closeModal}>
-						<Button>
-							<NavLink to={"/category"}>
-								<span>Crimson Rampage</span>
-							</NavLink>
-						</Button>
+						<NavLink to={"/category"}>
+							<Button>
+								<span>All Items</span>
+							</Button>
+						</NavLink>
 					</ListItem>
 				</ul>
 

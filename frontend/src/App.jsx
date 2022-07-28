@@ -3,13 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
+import BackgroundPiece from "./components/UI/BackgroundPiece";
+import CartSuccess from "./pages/CartSuccess";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
 //import usePersist from "./components/hooks/usePersist";
 import useLogin from "./components/hooks/useLogin";
 import useCookies from "./components/hooks/useCookies";
 import useCart from "./components/hooks/useCart";
-import CartSuccess from "./pages/CartSuccess";
 import { useEffect } from "react";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 	return (
 		<div className="container">
 			{modalVis && modal}
+			<BackgroundPiece />
 			<Navbar />
 			<Routes>
 				<Route path="/category" element={<ProductCategoryPage />} />

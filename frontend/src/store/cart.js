@@ -11,20 +11,24 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { cartContents: [], totalCost: 0, totalItems: 0 };
 
-//! DEPRECIATED
-// const convertToDollarAmount = (number) => {
-// 	const regExp = /\d+\.\d\d/;
-// 	const regExpForSingleCents = /\d+\.\d/;
-// 	let numberToString = number.toString();
-// 	if (!numberToString.match(regExp)) {
-// 		//checks to see if cents is a single numer like .1 and adds a 0 to the end making it .10 for cents
-// 		const checkForMissingCents = numberToString.match(regExpForSingleCents);
-// 		if (checkForMissingCents) numberToString = numberToString + "0";
-// 		if (!checkForMissingCents) numberToString = numberToString + ".00";
-// 	}
-// 	const numberToDollars = numberToString.match(regExp);
-// 	return numberToDollars[0];
-// };
+const convertToDollarAmount = (number) => {
+	//RegExp DETERMINE WEATHER NUMBER NEEDS TO BE MUTATED
+	const regExp = /\d+\.\d\d/;
+	const regExpForSingleCents = /\d+\.\d/;
+
+	// CONVERSION 1 ) CONVERTS NUMBER TO STRING FOR MUTATION WITH '0'
+	let numberToString = number.toString();
+
+	//CONVERSION 2 ) CHECKS THE STRING WITH THE STANDARD RegExp FOR CHECKING FOR CENTS
+	if (!numberToString.match(regExp)) {
+		//checks to see if cents is a single nubmer like .1 and adds a 0 to the end making it .10 for cents
+		const checkForMissingCents = numberToString.match(regExpForSingleCents);
+		if (checkForMissingCents) numberToString = numberToString + "0";
+		if (!checkForMissingCents) numberToString = numberToString + ".00";
+	}
+	const numberToDollars = numberToString.match(regExp);
+	return numberToDollars[0];
+};
 
 const cartSlice = createSlice({
 	name: "cart",
@@ -76,13 +80,14 @@ const cartSlice = createSlice({
 			state.cartContents = [...cartContents, item];
 			return;
 		},
+
 		incrimentItem(state, action) {
 			const { target } = action.payload;
 			const { cartContents } = state;
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count < 99) {
 					item.count = item.count + 1;
-					item.total = item.price * item.count;
+					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
 			return;
@@ -93,7 +98,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count > 0) {
 					item.count = item.count - 1;
-					item.total = item.price * item.count;
+					item.total = convertToDollarAmount(item.price * item.count);
 				}
 			});
 			return;
@@ -127,7 +132,8 @@ const cartSlice = createSlice({
 				.reduce((item1, item2) => {
 					return item1 + item2;
 				});
-			const trimmedTotal = total;
+			console.log(total);
+			const trimmedTotal = convertToDollarAmount(total);
 			state.totalCost = trimmedTotal;
 			return;
 		},

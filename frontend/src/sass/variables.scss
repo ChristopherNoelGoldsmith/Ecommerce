@@ -19,9 +19,10 @@ $card-bg: rgba(
 	$color: $secondary-font,
 	$alpha: 0.7,
 );
+//!DEPRECIATED - input-bg
 $input-bg: rgba(
-	$color: $primary-font,
-	$alpha: 0.85,
+	$color: black,
+	$alpha: 0,
 );
 
 $cart-bg: rgba(

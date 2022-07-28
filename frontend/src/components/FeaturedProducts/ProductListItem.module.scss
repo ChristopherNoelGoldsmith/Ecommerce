@@ -5,6 +5,7 @@
 	@include mixins.flex-row;
 	figure {
 		@include mixins.flex-column;
+		overflow: hidden;
 
 		.product-name {
 			@include mixins.product-label;

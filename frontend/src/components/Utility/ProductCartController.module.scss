@@ -14,17 +14,20 @@ form {
 		font-size: variables.$font-large;
 		padding: 5px;
 		background: variables.$input-bg;
+		color: variables.$primary-font;
 		min-height: 3rem;
 	}
 	.product-input {
-		background: variables.$input-bg;
-		min-width: 2rem;
-		max-width: 2.5rem;
+		background: rgba($color: red, $alpha: 0.8);
+		margin: 0 5px;
+		color: variables.$primary-font;
+		min-width: 3rem;
+		max-width: 3rem;
 		min-height: 3rem;
 		font-size: variables.$font-large;
 		text-align: center;
-		border: none;
-		border-left: 1px solid black;
+		border: 0.5px white solid;
+		border-radius: 5px;
 	}
 	.product-btns {
 		@include mixins.xs {
@@ -44,7 +47,7 @@ form {
 		}
 
 		.to-cart-btn {
-			background: rgba($color: variables.$cart-btn, $alpha: 0.8);
+			background: rgba($color: black, $alpha: 0.9);
 			color: variables.$primary-font;
 			text-shadow: 1px 1px black;
 			font-size: variables.$font-normal;

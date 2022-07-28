@@ -88,7 +88,6 @@ const useLogin = () => {
 
 	const persistUserOnLogin = (username) => {
 		if (!username || username === "null") return;
-		console.log(username);
 		return dispatch(loginActions.login({ username: username }));
 	};
 

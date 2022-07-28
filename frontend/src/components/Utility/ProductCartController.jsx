@@ -32,14 +32,14 @@ const ProductCartController = (props) => {
 			<label htmlFor="price">
 				$ <span>{props.productPrice}</span>
 			</label>
-			<input
-				type="none"
-				name={"count"}
-				className={`${styles["product-input"]}`}
-				readOnly
-				value={props.productAmount}
-			/>
 			<figure className={`${styles["product-btns"]}`}>
+				<input
+					type="none"
+					name={"count"}
+					className={`${styles["product-input"]}`}
+					readOnly
+					value={props.productAmount}
+				/>
 				<div className={`${styles["btn-container"]}`}>
 					<Button
 						type={"reset"}
