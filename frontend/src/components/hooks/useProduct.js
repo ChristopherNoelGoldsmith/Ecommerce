@@ -1,14 +1,6 @@
 import { useState } from "react";
 import ProductListItem from "../FeaturedProducts/ProductListItem";
-
-const convertPricetoDollarAmount = (price) => {
-	const string = `${price}`;
-	const start = string.length <= 2 ? "00" : string.slice(0, string.length - 2);
-	const end = string.slice(string.length - 2, string.length);
-	console.log(string, 1, start, 2, end);
-	const result = start + "." + end;
-	return result;
-};
+import { convertPricetoDollarAmount } from "../utilityScripts/priceUtil";
 
 const useProduct = () => {
 	const [products, setProducts] = useState();

@@ -6,29 +6,10 @@ it must be passed as {target: , count:}
 */
 
 import { createSlice } from "@reduxjs/toolkit";
-
+import { addDecimalToPrice } from "../components/utilityScripts/priceUtil";
 //Used to get rid of middleware error created by custome slice
 
 const initialState = { cartContents: [], totalCost: 0, totalItems: 0 };
-
-const convertToDollarAmount = (number) => {
-	//RegExp DETERMINE WEATHER NUMBER NEEDS TO BE MUTATED
-	const regExp = /\d+\.\d\d/;
-	const regExpForSingleCents = /\d+\.\d/;
-
-	// CONVERSION 1 ) CONVERTS NUMBER TO STRING FOR MUTATION WITH '0'
-	let numberToString = number.toString();
-
-	//CONVERSION 2 ) CHECKS THE STRING WITH THE STANDARD RegExp FOR CHECKING FOR CENTS
-	if (!numberToString.match(regExp)) {
-		//checks to see if cents is a single nubmer like .1 and adds a 0 to the end making it .10 for cents
-		const checkForMissingCents = numberToString.match(regExpForSingleCents);
-		if (checkForMissingCents) numberToString = numberToString + "0";
-		if (!checkForMissingCents) numberToString = numberToString + ".00";
-	}
-	const numberToDollars = numberToString.match(regExp);
-	return numberToDollars[0];
-};
 
 const cartSlice = createSlice({
 	name: "cart",
@@ -87,7 +68,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count < 99) {
 					item.count = item.count + 1;
-					item.total = convertToDollarAmount(item.price * item.count);
+					item.total = addDecimalToPrice(item.price * item.count);
 				}
 			});
 			return;
@@ -98,7 +79,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count > 0) {
 					item.count = item.count - 1;
-					item.total = convertToDollarAmount(item.price * item.count);
+					item.total = addDecimalToPrice(item.price * item.count);
 				}
 			});
 			return;
@@ -133,7 +114,7 @@ const cartSlice = createSlice({
 					return item1 + item2;
 				});
 			console.log(total);
-			const trimmedTotal = convertToDollarAmount(total);
+			const trimmedTotal = addDecimalToPrice(total);
 			state.totalCost = trimmedTotal;
 			return;
 		},

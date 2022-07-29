@@ -39,6 +39,7 @@ const ProductCartController = (props) => {
 					className={`${styles["product-input"]}`}
 					readOnly
 					value={props.productAmount}
+					added-to-cart={props.productAmount}
 				/>
 				<div className={`${styles["btn-container"]}`}>
 					<Button
