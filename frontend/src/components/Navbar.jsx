@@ -10,6 +10,8 @@ import { useState } from "react";
 
 const Navbar = (props) => {
 	const { closeModal } = useModal();
+	console.log("penis");
+
 	return (
 		<nav className={`${styles["navbar"]}`}>
 			<section>
