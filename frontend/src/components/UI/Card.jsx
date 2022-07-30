@@ -12,6 +12,7 @@ const Card = (props) => {
 			{...props}
 		>
 			<label htmlFor={props.htmlFor}>{props.label}</label>
+			<div className={`${styles["overlay"]}`}></div>
 			<div>{props.children}</div>
 		</section>
 	);

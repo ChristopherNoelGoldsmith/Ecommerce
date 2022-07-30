@@ -6,13 +6,16 @@
 	figure {
 		@include mixins.flex-column;
 		overflow: hidden;
-
 		.product-name {
 			@include mixins.product-label;
-			font-size: variables.$font-normal;
+			font-size: variables.$font-small;
+			@include mixins.sm {
+				font-size: variables.$font-normal;
+			}
 		}
 		.image-container {
 			@include mixins.flex-column;
+			overflow: hidden;
 
 			.product-image {
 				@include mixins.fade-in;

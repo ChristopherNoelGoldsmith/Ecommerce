@@ -17,6 +17,7 @@
 		label {
 			@include mixins.flex-row;
 			font-size: variables.$font-small;
+			color: variables.$primary-font;
 			@include mixins.md {
 				font-size: variables.$font-normal;
 			}

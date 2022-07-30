@@ -8,9 +8,11 @@
 }
 
 body {
+	margin: 10vh 0;
 	min-height: 100vh;
 }
 .container {
+	position: relative;
 	padding-top: 5%;
 }
 .container::after {

@@ -1,10 +1,11 @@
 //not finished
 import styles from "./ProductListItem.module.scss";
-import Card from "../UI/Card";
+import Card from "./Card";
 import ProductCartController from "../Utility/ProductCartController";
 import useModal from "../hooks/useModal";
 import useProductCounter from "../hooks/useProductCounter";
 import ProductDescription from "../modals/ProductDescription";
+import { trimName } from "../utilityScripts/priceUtil";
 
 const ProductListItem = (props) => {
 	const { createModal } = useModal();
@@ -14,16 +15,8 @@ const ProductListItem = (props) => {
 		resetProductHandler,
 		productAmount,
 	} = useProductCounter();
-	const productNameEdit = () => {
-		if (props.productName.length > 25) {
-			let trimmedName = props.productName.slice(0, 22);
-			trimmedName = trimmedName + "...";
-			return trimmedName;
-		}
-		return props.productName;
-	};
 
-	const productName = productNameEdit();
+	const productName = trimName(props);
 
 	// 	<ProductDescription
 	// 	extension={props.extension}

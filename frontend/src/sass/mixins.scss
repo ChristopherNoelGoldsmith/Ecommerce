@@ -23,7 +23,11 @@
 
 @mixin title-font {
 	color: variables.$primary-font;
-	font-size: variables.$font-xl;
+	font-size: variables.$font-large;
+	@include md {
+		font-size: variables.$font-xl;
+	}
+	text-align: center;
 	text-shadow: 2px 2px black;
 	font-weight: 600;
 }
@@ -74,6 +78,29 @@ $breakpoints: (
 	"lg": 960px,
 	"xl": 1200px,
 );
+
+//GRADIENTS
+@mixin radial-gradient {
+	background: rgb(255, 255, 255);
+	background: radial-gradient(
+		circle,
+		rgba(255, 255, 255, 1) 0%,
+		rgba(255, 255, 255, 0.7318277652858018) 45%,
+		rgba(255, 255, 255, 0) 100%
+	);
+}
+
+@mixin diagonal-background($bg, $opacity) {
+	background: $bg;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+	opacity: $opacity;
+	animation: bg-appear 1s ease-out;
+}
 
 //MEDIA QUERIES
 @mixin xs {

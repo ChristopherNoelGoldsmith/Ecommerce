@@ -1,8 +1,23 @@
 export const convertPricetoDollarAmount = (price) => {
 	const string = `${price}`;
+
+	//FOR PROPERLY FORMATTING PRICES THAT INCRIMENT IN THE CART AFTER THEY HAVE BEEN CONVERTED TO DECIMAL
+	if (string.match(/\./)) {
+		const splitString = string.split(".");
+
+		const [start, end] = splitString;
+
+		if (end.length < 2) return start + "." + end + "0";
+
+		return string;
+	}
+
+	//FOR EVEN DOLLAR AMOUNTS LIKE 7 DOLLARS AND 0 CENTS
+	if (string.length === 1) {
+		return string + ".00";
+	}
 	const start = string.length <= 2 ? "00" : string.slice(0, string.length - 2);
 	const end = string.slice(string.length - 2, string.length);
-	console.log(string, 1, start, 2, end);
 	const result = start + "." + end;
 	return result;
 };
@@ -24,4 +39,14 @@ export const addDecimalToPrice = (number) => {
 	}
 	const numberToDollars = numberToString.match(regExp);
 	return numberToDollars[0];
+};
+
+//TRIMS ANY NAME AFTER A CERTAIN NUMBER OF CHARACTERS
+export const trimName = (props, limit = 20) => {
+	if (props.productName.length > 25) {
+		let trimmedName = props.productName.slice(0, limit);
+		trimmedName = trimmedName + "...";
+		return trimmedName;
+	}
+	return props.productName;
 };

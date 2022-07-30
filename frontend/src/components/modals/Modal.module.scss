@@ -4,13 +4,16 @@
 	@include mixins.flex-column;
 	@include mixins.fade-in;
 	justify-content: flex-start;
-
+	margin-top: -10vh;
 	position: fixed;
 	width: 100vw;
 	min-height: 100vh;
 	height: 100%;
 	background: rgba($color: black, $alpha: 0.3);
 	z-index: 100;
+	button {
+		z-index: 1000;
+	}
 	section {
 		border-radius: 5px;
 		z-index: 1000;

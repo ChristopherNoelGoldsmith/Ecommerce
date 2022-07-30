@@ -41,20 +41,21 @@ const ProductCartController = (props) => {
 					value={props.productAmount}
 					added-to-cart={props.productAmount}
 				/>
+				<span></span>
 				<div className={`${styles["btn-container"]}`}>
 					<Button
 						type={"reset"}
 						className={`${styles["add-btn"]}`}
 						onClick={props.incrimentProductHandler}
 					>
-						+
+						<i className="fa-solid fa-caret-up"></i>
 					</Button>
 					<Button
 						type={"reset"}
 						className={`${styles["remove-btn"]}`}
 						onClick={props.decrimentProductHandler}
 					>
-						-
+						<i className="fa-solid fa-caret-down"></i>
 					</Button>
 				</div>
 				<Button className={`${styles["to-cart-btn"]}`} type={"submit"}>

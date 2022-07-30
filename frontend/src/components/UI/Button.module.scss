@@ -2,8 +2,12 @@
 @use "../../sass/variables.scss";
 
 button {
-	min-width: 3rem;
-	min-height: 3rem;
+	min-width: 2rem;
+	min-height: 2rem;
+	@include mixins.sm {
+		min-width: 3rem;
+		min-height: 3rem;
+	}
 	border: none;
 	background: transparent;
 	font-size: variables.$font-normal;
@@ -17,4 +21,5 @@ button {
 }
 button:hover {
 	@include mixins.hover;
+	@include mixins.radial-gradient;
 }

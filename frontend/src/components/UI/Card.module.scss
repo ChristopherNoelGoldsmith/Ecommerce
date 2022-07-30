@@ -2,9 +2,21 @@
 @use "../../sass/variables.scss";
 
 .card {
+	position: relative;
+
 	padding: 1rem;
 	background: variables.$card-bg;
 	margin: 1%;
 	border-radius: 5px;
 	overflow: hidden;
+	.overlay {
+		@include mixins.diagonal-background(indigo, 0.5);
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0.8;
+		z-index: -100;
+	}
 }

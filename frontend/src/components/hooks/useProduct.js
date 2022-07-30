@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProductListItem from "../FeaturedProducts/ProductListItem";
+import ProductListItem from "../UI/ProductListItem";
 import { convertPricetoDollarAmount } from "../utilityScripts/priceUtil";
 
 const useProduct = () => {

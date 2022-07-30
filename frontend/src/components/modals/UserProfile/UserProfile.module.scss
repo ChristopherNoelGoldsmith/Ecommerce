@@ -6,7 +6,6 @@
 	z-index: 1000;
 	min-height: 60vh;
 	min-width: 80vw;
-	background: variables.$card-bg;
 	color: variables.$primary-font;
 	form {
 		@include mixins.flex-column;
@@ -16,8 +15,20 @@
 		}
 	}
 	button {
+		position: relative;
 		color: variables.$primary-font;
+		background: rgba($color: slategrey, $alpha: 0.7);
 		padding: 1rem;
+	}
+	button::before {
+		content: "";
+		position: absolute;
+		@include mixins.radial-gradient;
+		opacity: 0.3;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
 	}
 	button:hover {
 		color: variables.$secondary-hover;

@@ -4,6 +4,7 @@
 .featured-product {
 	@include mixins.flex-column;
 	background: transparent;
+	overflow: hidden;
 	h2 {
 		@include mixins.title-font;
 		text-align: center;
@@ -11,7 +12,7 @@
 
 	ul {
 		@include mixins.flex-column;
-		@include mixins.md {
+		@include mixins.sm {
 			@include mixins.flex-row;
 		}
 		max-width: 100vw;

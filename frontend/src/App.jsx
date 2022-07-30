@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
-import BackgroundPiece from "./components/UI/BackgroundPiece";
 import CartSuccess from "./pages/CartSuccess";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
@@ -37,16 +36,17 @@ function App() {
 	}, [cookies]);
 
 	return (
-		<div className="container">
-			{modalVis && modal}
-			<BackgroundPiece />
+		<div>
 			<Navbar />
-			<Routes>
-				<Route path="/category" element={<ProductCategoryPage />} />
-				<Route path="/" element={<HomePage />} />
-				<Route path="/profile" element={<ProfilePage />} />
-				<Route path="/cart/success" element={<CartSuccess />} />
-			</Routes>
+			<div className="container">
+				{modalVis && modal}
+				<Routes>
+					<Route path="/category" element={<ProductCategoryPage />} />
+					<Route path="/" element={<HomePage />} />
+					<Route path="/profile" element={<ProfilePage />} />
+					<Route path="/cart/success" element={<CartSuccess />} />
+				</Routes>
+			</div>
 		</div>
 	);
 }

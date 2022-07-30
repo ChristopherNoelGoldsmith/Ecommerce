@@ -9,6 +9,7 @@ form {
 		@include mixins.flex-row;
 	}
 	padding: 1vh 0;
+	overflow: hidden;
 	label {
 		@include mixins.flex-row;
 		font-size: variables.$font-large;
@@ -18,16 +19,17 @@ form {
 		min-height: 3rem;
 	}
 	.product-input {
-		background: rgba($color: red, $alpha: 0.8);
+		background: transparent;
 		margin: 0 5px;
 		color: variables.$primary-font;
 		min-width: 3rem;
 		max-width: 3rem;
 		min-height: 3rem;
-		font-size: variables.$font-large;
+		font-size: variables.$font-large * 1.2;
 		text-align: center;
-		border: 0.5px white solid;
-		border-radius: 5px;
+		border: none;
+		//border: 0.5px white solid;
+		//border-radius: 5px;
 	}
 	.product-btns {
 		@include mixins.xs {
@@ -36,18 +38,18 @@ form {
 		.btn-container {
 			@include mixins.flex-column;
 			button {
-				min-height: 1.5rem;
+				min-height: 1rem;
 			}
 			.add-btn {
-				background: variables.$add-btn;
+				background: transparent;
 			}
 			.remove-btn {
-				background: variables.$remove-btn;
+				background: transparent;
 			}
 		}
 
 		.to-cart-btn {
-			background: rgba($color: black, $alpha: 0.9);
+			background: transparent;
 			color: variables.$primary-font;
 			text-shadow: 1px 1px black;
 			font-size: variables.$font-normal;

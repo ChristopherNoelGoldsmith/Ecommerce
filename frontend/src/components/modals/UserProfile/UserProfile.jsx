@@ -51,7 +51,7 @@ const UserProfile = () => {
 					onSubmit={updatePasswordHandler}
 					className={`${styles["change-password"]}`}
 				>
-					<h3>Change Your Passwrod</h3>
+					<h3>Change Your Password</h3>
 					<TextInput
 						value={inputState.password}
 						placeholder={"Current Password"}

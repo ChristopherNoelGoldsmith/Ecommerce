@@ -6,12 +6,9 @@ import CartButton from "./navButtons/CartButton";
 import ProfileButton from "./navButtons/ProfileButton";
 import useModal from "./hooks/useModal";
 import logo from "../assets/img/logo.png";
-import { useState } from "react";
 
 const Navbar = (props) => {
 	const { closeModal } = useModal();
-	console.log("penis");
-
 	return (
 		<nav className={`${styles["navbar"]}`}>
 			<section>
@@ -32,7 +29,7 @@ const Navbar = (props) => {
 					</ListItem>
 				</ul>
 
-				<ul className={`user-btn-container`}>
+				<ul className={`${styles["user-btn-container"]}`}>
 					<ListItem>
 						<ProfileButton />
 					</ListItem>
