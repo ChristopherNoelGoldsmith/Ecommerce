@@ -3,20 +3,21 @@
 
 .card {
 	position: relative;
-
 	padding: 1rem;
 	background: variables.$card-bg;
 	margin: 1%;
 	border-radius: 5px;
+	border: black 1px solid;
 	overflow: hidden;
+	box-shadow: 7px 7px 3.5px 3px black;
 	.overlay {
-		@include mixins.diagonal-background(indigo, 0.5);
+		@include mixins.radial-gradient;
 		position: absolute;
 		height: 100%;
 		width: 100%;
 		top: 0;
 		left: 0;
-		opacity: 0.8;
-		z-index: -100;
+		opacity: 0.15;
+		z-index: -1;
 	}
 }

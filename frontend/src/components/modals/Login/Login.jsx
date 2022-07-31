@@ -34,6 +34,19 @@ const Login = (props) => {
 		const modal = <Register />;
 		return createModal(modal, true);
 	};
+
+	const guestHandler = async () => {
+		const guestLogin = {
+			username: "guest",
+			password: "$Password@2",
+		};
+
+		const loginStatus = await loginOrRegister({
+			type: "login",
+			user: guestLogin,
+		});
+		if (loginStatus) return closeModal();
+	};
 	return (
 		<Card>
 			<section className={`${styles.login}`}>
@@ -55,7 +68,7 @@ const Login = (props) => {
 						<Button className={styles[styles["login-btn"]]} type={"submit"}>
 							LOGIN
 						</Button>
-
+						<Button onClick={guestHandler}>GUEST</Button>
 						<Button
 							id="register"
 							type={"button"}

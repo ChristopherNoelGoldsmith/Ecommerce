@@ -8,10 +8,10 @@ const CartListItem = (props) => {
 	return (
 		<li className={`${styles["cart-list-item"]}`} key={props.keys}>
 			<figure>
+				<img src={props.image} alt={props.name} />
 				<label htmlFor={props.name}>
 					<span>{props.name}</span>
 				</label>
-				<img src={props.image} alt={props.name} />
 			</figure>
 			<ProductCartController
 				item={props.item}

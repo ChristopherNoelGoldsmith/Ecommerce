@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useProductCounter = () => {
-	const [productAmount, setAmount] = useState(0);
+	const [productAmount, setAmount] = useState(1);
 
 	const incrimentProductHandler = () => {
 		if (productAmount >= 99) return;
@@ -14,7 +14,7 @@ const useProductCounter = () => {
 	};
 
 	const resetProductHandler = () => {
-		return setAmount((amount) => 0);
+		return setAmount((amount) => 1);
 	};
 
 	return {

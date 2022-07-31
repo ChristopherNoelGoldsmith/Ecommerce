@@ -4,6 +4,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	overflow: auto;
+	overflow-x: hidden;
 	text-decoration: none;
 }
 
@@ -33,11 +34,6 @@ body {
 	outline: 1px solid slategrey;
 	border-radius: 5px;
 }
-
-*::-webkit-scrollbar-button {
-	background-color: transparent;
-}
-
 *::-webkit-scrollbar-thumb {
 	background-color: ghostwhite;
 	outline: 1px solid slategrey;

@@ -5,9 +5,11 @@
 	@include mixins.fade-in;
 	@include mixins.flex-column;
 	justify-content: flex-start;
-	background: variables.$cart-bg;
 	min-width: 60vw;
 	width: 100%;
+	@include mixins.md {
+		width: 80%;
+	}
 	height: 90vh;
 	overflow-x: hidden;
 	@include mixins.lg {

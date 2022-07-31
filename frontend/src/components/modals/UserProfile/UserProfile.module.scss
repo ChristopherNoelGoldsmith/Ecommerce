@@ -17,14 +17,15 @@
 	button {
 		position: relative;
 		color: variables.$primary-font;
-		background: rgba($color: slategrey, $alpha: 0.7);
+		background: rgba($color: crimson, $alpha: 0.7);
+		border: solid 1px black;
 		padding: 1rem;
 	}
 	button::before {
 		content: "";
 		position: absolute;
 		@include mixins.radial-gradient;
-		opacity: 0.3;
+		opacity: 0.15;
 		top: 0;
 		left: 0;
 		height: 100%;

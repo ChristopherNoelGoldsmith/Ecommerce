@@ -8,8 +8,8 @@ const Card = (props) => {
 	return (
 		<section
 			onClick={(e) => e.stopPropagation()}
-			className={`${styles.card}`}
 			{...props}
+			className={`${styles.card} ${props.className}`}
 		>
 			<label htmlFor={props.htmlFor}>{props.label}</label>
 			<div className={`${styles["overlay"]}`}></div>
