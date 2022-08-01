@@ -25,6 +25,15 @@
 			}
 		}
 	}
+	.user-btn-container {
+		@include mixins.flex-row;
+		@include mixins.xs {
+			flex-direction: row-reverse;
+		}
+		@include mixins.md {
+			flex-direction: row;
+		}
+	}
 }
 .hidden {
 	opacity: 0;

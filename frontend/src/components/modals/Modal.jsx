@@ -1,5 +1,4 @@
 import styles from "./Modal.module.scss";
-
 /*
 WHEN USING THIS MODEL PASS A JSX OBJECT INTO IT AS A CHILD
 THEN IT WILL BNE DISPLAYED WHEN THE "useModal" HOOK IS USED

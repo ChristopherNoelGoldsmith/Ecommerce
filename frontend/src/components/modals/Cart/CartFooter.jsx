@@ -1,12 +1,12 @@
 import styles from "./CartFooter.module.scss";
 import Button from "../../UI/Button";
 import useCart from "../../hooks/useCart";
-
 const CartFooter = (props) => {
 	const { createCart } = useCart();
 
 	const checkout = async (event) => {
 		event.preventDefault();
+		//have message when not logged in
 		await createCart();
 	};
 

@@ -3,6 +3,13 @@
 
 .cart {
 	position: relative;
+	width: 3rem;
+	@include mixins.xs {
+		height: 4rem;
+	}
+	@include mixins.sm {
+		height: 3rem;
+	}
 }
 
 .cart::after {

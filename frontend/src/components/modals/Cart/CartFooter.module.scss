@@ -9,11 +9,12 @@
 	form {
 		@include mixins.flex-row;
 		label {
-			@include mixins.title-font;
+			@include mixins.title-font(0.85);
 			background: transparent;
 		}
 		.checkout {
 			@include mixins.flex-row;
+			position: relative;
 			overflow: hidden;
 			background: rgba($color: variables.$add-btn, $alpha: 0.8);
 			span {
@@ -23,7 +24,19 @@
 				font-size: variables.$font-large;
 				padding: 0.5rem;
 				color: variables.$primary-font;
+				overflow: hidden;
 			}
+		}
+
+		.checkout::after {
+			content: "";
+			position: absolute;
+			@include mixins.radial-gradient;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0.15;
 		}
 	}
 }

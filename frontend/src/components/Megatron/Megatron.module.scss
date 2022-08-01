@@ -6,13 +6,18 @@
 	width: 80%;
 	height: 80vh;
 	margin-bottom: 10vh;
+	overflow: hidden;
 	.image-container {
 		@include mixins.flex-column;
-		@include mixins.title-font;
+		@include mixins.title-font(1);
+		font-size: variables.$font-large;
+
 		@include mixins.fade-in;
 		width: 100%;
 		height: 100%;
 		background: transparent;
+		overflow: hidden;
+
 		span {
 			font-size: variables.$font-small;
 		}

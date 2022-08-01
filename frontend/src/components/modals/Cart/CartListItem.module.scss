@@ -10,13 +10,17 @@
 	background: rgba($color: #333, $alpha: 0.7);
 	box-shadow: 2px 2px 2px 2px black;
 	border-radius: 5px;
+	overflow: visible;
+
 	figure {
 		@include mixins.flex-row;
-		flex-direction: row-reverse;
+		position: relative;
 		height: 10vh;
+		overflow: visible;
 		label {
 			@include mixins.flex-row;
 			font-size: variables.$font-small;
+			color: variables.$primary-font;
 			@include mixins.md {
 				font-size: variables.$font-normal;
 			}
