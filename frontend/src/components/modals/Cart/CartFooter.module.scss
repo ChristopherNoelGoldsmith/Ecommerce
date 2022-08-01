@@ -9,7 +9,7 @@
 	form {
 		@include mixins.flex-row;
 		label {
-			@include mixins.title-font;
+			@include mixins.title-font(0.85);
 			background: transparent;
 		}
 		.checkout {

@@ -21,11 +21,11 @@
 }
 //font sizes
 
-@mixin title-font {
+@mixin title-font($size) {
 	color: variables.$primary-font;
-	font-size: variables.$font-large;
+	font-size: variables.$font-large * $size;
 	@include md {
-		font-size: variables.$font-xl;
+		font-size: variables.$font-large * $size * 2;
 	}
 	text-align: center;
 	text-shadow: 2px 2px black;
@@ -90,14 +90,26 @@ $breakpoints: (
 	);
 }
 
-@mixin diagonal-background($bg, $opacity) {
+@mixin diagonal-background($bg, $opacity, $length) {
 	background: $bg;
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+	clip-path: polygon(0 0, 100% 0, 100% $length, 0 15%);
+	opacity: $opacity;
+	animation: bg-appear 1s ease-out;
+}
+
+@mixin triangular-background($bg, $opacity, $length) {
+	background: $bg;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(50% $length, 0% 100%, 100% 100%);
 	opacity: $opacity;
 	animation: bg-appear 1s ease-out;
 }

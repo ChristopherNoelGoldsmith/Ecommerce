@@ -35,7 +35,7 @@
 }
 .item-description {
 	@include mixins.flex-row;
-	@include mixins.title-font;
+	@include mixins.title-font(1);
 	font-size: variables.$font-large;
 	text-align: center;
 	padding: 1rem;

@@ -9,7 +9,7 @@
 	overflow: hidden;
 	.image-container {
 		@include mixins.flex-column;
-		@include mixins.title-font;
+		@include mixins.title-font(1);
 		font-size: variables.$font-large;
 
 		@include mixins.fade-in;
