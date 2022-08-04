@@ -6,14 +6,28 @@ ITS TYPE OF FUNCTION
 import styles from "./ProductCartController.module.scss";
 import Button from "../UI/Button";
 import useCart from "../hooks/useCart";
+import useModal from "../hooks/useModal";
+import AddedToCart from "../modals/AddedToCart";
 
 const ProductCartController = (props) => {
 	const { addItem } = useCart();
+	const { createModal, closeModal } = useModal();
+
+	const addedToCartHandler = () => {
+		const JSX = <AddedToCart />;
+
+		createModal(JSX);
+		setTimeout(() => {
+			return closeModal();
+		}, 2500);
+
+		return;
+	};
+
 	const addItemHandler = (event) => {
 		event.preventDefault();
 		//targets first value of the event object which is the count input
 		const itemCountValue = event.target[0].value;
-		console.log(props.productId);
 		//converts props into format for the cartSlice in the store provided by the useCart hook.
 		const item = {
 			name: props.productName,
@@ -25,6 +39,7 @@ const ProductCartController = (props) => {
 		if (props.removeItem) return props.removeItem({ target: item });
 		addItem({ target: item, count: itemCountValue });
 		props.resetProductHandler();
+		addedToCartHandler();
 		return;
 	};
 	return (

@@ -5,6 +5,7 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	flex-wrap: wrap;
 }
 
 @mixin flex-column {
@@ -99,7 +100,6 @@ $breakpoints: (
 	height: 100%;
 	clip-path: polygon(0 0, 100% 0, 100% $length, 0 15%);
 	opacity: $opacity;
-	animation: bg-appear 1s ease-out;
 }
 
 @mixin triangular-background($bg, $opacity, $length) {
@@ -111,7 +111,6 @@ $breakpoints: (
 	height: 100%;
 	clip-path: polygon(50% $length, 0% 100%, 100% 100%);
 	opacity: $opacity;
-	animation: bg-appear 1s ease-out;
 }
 
 //MEDIA QUERIES
