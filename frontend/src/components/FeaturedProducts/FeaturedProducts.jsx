@@ -1,6 +1,5 @@
 import styles from "./FeaturedProducts.module.scss";
 import useProduct from "../hooks/useProduct";
-import Card from "../UI/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import LoadingSpinner from "../UI/LoadingSpinner";

@@ -1,0 +1,22 @@
+@use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
+
+.added {
+	* {
+		overflow: hidden;
+	}
+	@include mixins.flex-column;
+	width: 100vw;
+	height: 100vh;
+
+	.animations {
+		position: relative;
+		@include mixins.flex-column;
+		i {
+			color: cyan;
+			font-size: 4rem;
+			animation: bob 1s ease;
+			padding: 2rem;
+		}
+	}
+}

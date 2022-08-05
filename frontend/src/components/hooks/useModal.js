@@ -26,11 +26,33 @@ const useModal = () => {
 		return dispatch(modalActions.closeModal());
 	};
 
+	//ADD JSX AS THE PERAMETER AND IT WILL LOAD A MO
+	const modalWithCondition = async (jsx, condition) => {
+		closeModal();
+		createModal(jsx);
+
+		if (condition.timeout) {
+			setTimeout(() => {
+				return closeModal();
+			}, condition.timeout);
+
+			return;
+		}
+
+		if (condition.callback) {
+			const callbackCall = await condition.callback();
+			if (callbackCall.status === "ERROR")
+				alert("There was an issue with your connection, please try again!");
+			return modalWithCondition(jsx, { timeout: 2000 });
+		}
+	};
+
 	return {
 		modal: modalContent,
 		modalVis: modalVis,
 		closeModal: closeModal,
 		createModal: createModal,
+		modalWithCondition: modalWithCondition,
 	};
 };
 
