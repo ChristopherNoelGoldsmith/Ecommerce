@@ -14,6 +14,7 @@
 	overflow: hidden;
 	border-radius: 10px;
 	.background-piece {
+		@include mixins.fade-in;
 		@include mixins.diagonal-background(
 			url("../../assets/img/stockimage1.jpg"),
 			1,
@@ -60,7 +61,7 @@
 		}
 		position: relative;
 		box-shadow: 10px 10px 5px 5px rgba($color: black, $alpha: 0.7);
-		background: cyan;
+		background: rgba($color: cyan, $alpha: 0.7);
 		padding: 1rem;
 		border-radius: 10px;
 		z-index: 10;

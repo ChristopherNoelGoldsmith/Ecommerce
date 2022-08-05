@@ -1,6 +1,6 @@
 @use "../../sass/mixins.scss";
 
-.module {
+.modal {
 	@include mixins.flex-column;
 	@include mixins.fade-in;
 	justify-content: flex-start;
@@ -11,8 +11,23 @@
 	height: 100%;
 	background: rgba($color: black, $alpha: 0.3);
 	z-index: 100;
-	button {
-		z-index: 1000;
+	.modal-container {
+		@include mixins.flex-column;
+		position: relative;
+		.close-btn {
+			min-height: 1.5rem;
+			min-width: 1.5rem;
+			font-size: 0.8rem;
+			position: absolute;
+			top: 0;
+			right: 0;
+			color: ivory;
+			z-index: 10000;
+			background: rgba($color: black, $alpha: 0.3);
+			border: 2px ivory solid;
+			border-radius: 50%;
+			margin: 1rem;
+		}
 	}
 	section {
 		border-radius: 5px;

@@ -91,7 +91,8 @@ const useCart = () => {
 				sessionId: data,
 			});
 		} catch (error) {
-			console.log(error);
+			//console.log(error);
+			return { status: "ERROR", message: error };
 		}
 	};
 

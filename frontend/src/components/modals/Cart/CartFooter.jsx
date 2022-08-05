@@ -1,13 +1,23 @@
 import styles from "./CartFooter.module.scss";
 import Button from "../../UI/Button";
 import useCart from "../../hooks/useCart";
+import useModal from "../../hooks/useModal";
+import AddedToCart from "../AddedToCart";
+
 const CartFooter = (props) => {
 	const { createCart } = useCart();
+	const { modalWithCondition } = useModal();
+
+	const addedToCartHandler = async (fn) => {
+		const jsx = <AddedToCart />;
+		await modalWithCondition(jsx, { callback: fn });
+		return;
+	};
 
 	const checkout = async (event) => {
 		event.preventDefault();
 		//have message when not logged in
-		await createCart();
+		await addedToCartHandler(createCart);
 	};
 
 	return (

@@ -11,16 +11,11 @@ import AddedToCart from "../modals/AddedToCart";
 
 const ProductCartController = (props) => {
 	const { addItem } = useCart();
-	const { createModal, closeModal } = useModal();
+	const { modalWithCondition } = useModal();
 
-	const addedToCartHandler = () => {
+	const addedToCartHandler = (fn) => {
 		const JSX = <AddedToCart />;
-
-		createModal(JSX);
-		setTimeout(() => {
-			return closeModal();
-		}, 2500);
-
+		modalWithCondition(JSX, { timeout: 1500 });
 		return;
 	};
 
