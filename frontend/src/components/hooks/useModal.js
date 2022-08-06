@@ -8,10 +8,14 @@ const useModal = () => {
 	const modalVis = modal.vis;
 	const modalContent = modal.content;
 
+	//!
 	//TOGGLES MODULE VISABILITY.
+	//TODO: NEEDS DEPRECIATEION
+
 	const toggleModalVis = () => {
 		return dispatch(modalActions.toggleVis());
 	};
+	//!
 
 	//INSERT JSX IN THE "content" PARAM AND IT WILL APPEAR IN THE MODAL.
 	//SET PERSIST TO TRUE TO REPLACE THE CURRENT MODAL
@@ -26,7 +30,15 @@ const useModal = () => {
 		return dispatch(modalActions.closeModal());
 	};
 
-	//ADD JSX AS THE PERAMETER AND IT WILL LOAD A MO
+	/*
+	CREATES A MODAL WHICH WILL CLOS ON A THAT WILL CLOSE UPON A CONDITION
+
+	? jsx: JSX IS PASSED IS THE FIRST PARAM.  IT IS WHAT WILL BE IN THE MODAL
+
+	? condition: PASS AN OBJECT WITH THE "timeout" OR "callback" KEY. 
+	? * timeout: ADD THE AMOUNT OF TIME BEFORE YOU WONT THE WINDOW TO CLOSE
+	? * callback: INTENDED FOR ASYNC FUNCTIONS. SUCH AS A LOADING SCRREN THAT WILL POPULATE AND CLOSE WHEN LOADED.
+	*/
 	const modalWithCondition = async (jsx, condition) => {
 		closeModal();
 		createModal(jsx);
@@ -40,9 +52,14 @@ const useModal = () => {
 		}
 
 		if (condition.callback) {
+			// ASYNC 1 ) CALLBACK IS PASSED AND CALLED
 			const callbackCall = await condition.callback();
-			if (callbackCall.status === "ERROR")
+
+			// ASYNC 2 ) THROWS AN ALERT IF CALLBACK RETURNS AN ERROR OR RETURNS FALSE
+			if (callbackCall.status === "ERROR" || !callbackCall)
 				alert("There was an issue with your connection, please try again!");
+
+			// ASYNC 3 ) SETS MODAL TO CLOSE AFTER 2 SECONDS
 			return modalWithCondition(jsx, { timeout: 2000 });
 		}
 	};

@@ -70,6 +70,9 @@ const useLogin = () => {
 			newPasswordConfirm: newPasswordConfirm,
 		};
 		try {
+			if (cookies.user === "guest")
+				return alert("Guest password cannot be changed!");
+
 			const response = await fetch(`${mount}/users/update-password`, {
 				method: "PATCH",
 				headers: {
@@ -78,7 +81,6 @@ const useLogin = () => {
 				},
 				body: JSON.stringify(userData),
 			}).then((res) => res.json());
-			console.log(response);
 			if (response) alert("PASSWORD CHANGED");
 			return response;
 		} catch (err) {
@@ -86,6 +88,8 @@ const useLogin = () => {
 		}
 	};
 
+	//SETS USER STATE TO LOGGED IN WITH NAME
+	//! DOES NOT ACCOUNT FOR JWT TOKEN, SO IT DOES NOT GRANT ACCESS TO ANYTHING
 	const persistUserOnLogin = (username) => {
 		if (!username || username === "null") return;
 		return dispatch(loginActions.login({ username: username }));

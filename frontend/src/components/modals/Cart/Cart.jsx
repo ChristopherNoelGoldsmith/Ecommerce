@@ -46,7 +46,6 @@ const createProductBuyList = (cartContents, onClickEvents) => {
 				removeItem={removeItem}
 			/>
 		);
-		//add the increase decrease buttons n shyt to this
 	});
 };
 
