@@ -1,9 +1,14 @@
 import styles from "./Modal.module.scss";
 import Button from "../UI/Button";
 /*
+////////////////////////////////////////////////////////////
 WHEN USING THIS MODEL PASS A JSX OBJECT INTO IT AS A CHILD
-THEN IT WILL BNE DISPLAYED WHEN THE "useModal" HOOK IS USED
-TO MAKE THE MODAL 
+THEN IT WILL BE DISPLAYED WHEN THE "createModal" METHOD OF
+THE 'useModal" HOOK IS USED
+
+THE BUTTON IN THE MODAL CONTAINER IS THE CLOSE BUTTON IN THE
+TOP RIGHT CORNER OF EVERY MODAL
+///////////////////////////////////////////////////////////
 */
 
 const Modal = (props) => {
