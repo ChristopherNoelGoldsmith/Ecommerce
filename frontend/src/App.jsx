@@ -1,16 +1,17 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { useEffect } from "react";
+
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import CartSuccess from "./pages/CartSuccess";
 import ProductCategoryPage from "./pages/ProductCategoryPage";
 import useModal from "./components/hooks/useModal";
-//import usePersist from "./components/hooks/usePersist";
 import useLogin from "./components/hooks/useLogin";
 import useCookies from "./components/hooks/useCookies";
 import useCart from "./components/hooks/useCart";
-import { useEffect } from "react";
 
 function App() {
 	const { modal, modalVis } = useModal();
@@ -46,6 +47,16 @@ function App() {
 					<Route path="/profile" element={<ProfilePage />} />
 					<Route path="/cart/success" element={<CartSuccess />} />
 				</Routes>
+
+				<Helmet>
+					<meta charSet="utf-8" />
+					<title>ALLMIGHTY CCG</title>
+					<link
+						rel="canonical"
+						href="
+						https://allmightyccg.netlify.app/"
+					/>
+				</Helmet>
 			</div>
 		</div>
 	);
