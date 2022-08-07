@@ -1,10 +1,18 @@
 import Card from "./Card";
 import styles from "./ProductDescription.module.scss";
 import ProductCartController from "../Utility/ProductCartController";
+import useProductCounter from "../hooks/useProductCounter";
 
 const ProductDescription = (props) => {
-	const productCartController = props.createProductCartController();
 	//TODO: decouple product desc from list item completely
+
+	const {
+		incrimentProductHandler,
+		decrimentProductHandler,
+		resetProductHandler,
+		productAmount,
+	} = useProductCounter();
+	console.log(props);
 	return (
 		<Card>
 			<section className={styles["item-description"]}>
@@ -21,7 +29,16 @@ const ProductDescription = (props) => {
 					<p>{props.text}</p>
 
 					<div className={styles["cart-controller"]}>
-						{productCartController}
+						<ProductCartController
+							productId={props.productId}
+							productName={props.productName}
+							productPrice={props.productPrice}
+							productAmount={productAmount}
+							icon={<i className="fa-solid fa-cart-plus"></i>}
+							decrimentProductHandler={decrimentProductHandler}
+							incrimentProductHandler={incrimentProductHandler}
+							resetProductHandler={resetProductHandler}
+						/>
 					</div>
 				</section>
 			</section>

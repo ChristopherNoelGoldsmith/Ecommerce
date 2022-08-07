@@ -18,32 +18,14 @@ const ProductListItem = (props) => {
 
 	const productName = trimName(props);
 
-	const createProductCartController = () => {
-		return (
-			<ProductCartController
+	const imageModalHanlder = () => {
+		return createModal(
+			<ProductDescription
 				productId={props.productId}
 				productName={props.productName}
 				productPrice={props.productPrice}
-				productAmount={productAmount}
-				productImage={props.src}
-				icon={<i className="fa-solid fa-cart-plus"></i>}
-				decrimentProductHandler={decrimentProductHandler}
-				incrimentProductHandler={incrimentProductHandler}
-				resetProductHandler={resetProductHandler}
-			/>
-		);
-	};
-
-	const productCartController = createProductCartController();
-
-	const imageModalHanlder = () => {
-		console.log(props);
-		return createModal(
-			<ProductDescription
-				text={props.text}
-				productName={props.productName}
 				src={props.src}
-				createProductCartController={createProductCartController}
+				text={props.text}
 			/>
 		);
 	};
@@ -62,7 +44,19 @@ const ProductListItem = (props) => {
 							alt={props.productName}
 						/>
 					</div>
-					<div className="product-details">{productCartController}</div>
+					<div className="product-details">
+						<ProductCartController
+							productId={props.productId}
+							productName={props.productName}
+							productPrice={props.productPrice}
+							productAmount={productAmount}
+							productImage={props.src}
+							icon={<i className="fa-solid fa-cart-plus"></i>}
+							decrimentProductHandler={decrimentProductHandler}
+							incrimentProductHandler={incrimentProductHandler}
+							resetProductHandler={resetProductHandler}
+						/>
+					</div>
 				</figure>
 			</Card>
 		</li>
