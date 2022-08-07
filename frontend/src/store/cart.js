@@ -1,8 +1,6 @@
 /*
-
 When passing any data through the cartActions
 it must be passed as {target: , count:}
-
 */
 
 import { createSlice } from "@reduxjs/toolkit";

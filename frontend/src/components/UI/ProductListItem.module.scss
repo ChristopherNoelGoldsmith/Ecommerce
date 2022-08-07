@@ -33,18 +33,3 @@
 		}
 	}
 }
-.item-description {
-	@include mixins.flex-row;
-	@include mixins.title-font(0.3);
-	font-size: variables.$font-large;
-	text-align: center;
-	padding: 1rem;
-	border-radius: 5px;
-	background: rgba($color: black, $alpha: 0.9);
-	h3 {
-		padding: 1rem;
-	}
-	ul {
-		width: 40%;
-	}
-}
