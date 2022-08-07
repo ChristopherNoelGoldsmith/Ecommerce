@@ -1,0 +1,35 @@
+@use "../../sass/mixins.scss";
+@use "../../sass/variables.scss";
+
+.item-description {
+	@include mixins.flex-row;
+	@include mixins.title-font(0.3);
+	font-size: variables.$font-large;
+	text-align: center;
+	padding: 1rem;
+	border-radius: 5px;
+	padding: 0;
+	figure {
+		@include mixins.flex-column;
+		width: 45%;
+		label {
+			padding: 1rem;
+		}
+	}
+	section {
+		@include mixins.flex-column;
+		width: 45%;
+		p {
+			font-size: 1.1rem;
+			background: #333;
+			border-radius: 5px;
+			box-shadow: 2px 2px 1px 1px black;
+			padding: 2rem;
+		}
+
+		.cart-controller {
+			@include mixins.flex-row;
+			width: 100%;
+		}
+	}
+}

@@ -4,7 +4,7 @@ import Card from "./Card";
 import ProductCartController from "../Utility/ProductCartController";
 import useModal from "../hooks/useModal";
 import useProductCounter from "../hooks/useProductCounter";
-import ProductDescription from "../modals/ProductDescription";
+import ProductDescription from "./ProductDescription";
 import { trimName } from "../utilityScripts/priceUtil";
 
 const ProductListItem = (props) => {
@@ -18,25 +18,34 @@ const ProductListItem = (props) => {
 
 	const productName = trimName(props);
 
-	// 	<ProductDescription
-	// 	extension={props.extension}
-	// 	name={props.productName}
-	// 	text={props.text}
-	// />
+	const createProductCartController = () => {
+		return (
+			<ProductCartController
+				productId={props.productId}
+				productName={props.productName}
+				productPrice={props.productPrice}
+				productAmount={productAmount}
+				productImage={props.src}
+				icon={<i className="fa-solid fa-cart-plus"></i>}
+				decrimentProductHandler={decrimentProductHandler}
+				incrimentProductHandler={incrimentProductHandler}
+				resetProductHandler={resetProductHandler}
+			/>
+		);
+	};
+
+	const productCartController = createProductCartController();
 
 	const imageModalHanlder = () => {
-		const productImage = (
-			<Card className={styles["item-description"]}>
-				<h3>{props.productName}</h3>
-				<img
-					className={`${styles["product-image"]}`}
-					src={props.src}
-					alt={props.productName}
-				/>
-			</Card>
+		console.log(props);
+		return createModal(
+			<ProductDescription
+				text={props.text}
+				productName={props.productName}
+				src={props.src}
+				createProductCartController={createProductCartController}
+			/>
 		);
-
-		return createModal(productImage);
 	};
 	return (
 		<li className={`${styles["product-list-item"]}`}>
@@ -53,19 +62,7 @@ const ProductListItem = (props) => {
 							alt={props.productName}
 						/>
 					</div>
-					<div className="product-details">
-						<ProductCartController
-							productId={props.productId}
-							productName={props.productName}
-							productPrice={props.productPrice}
-							productAmount={productAmount}
-							productImage={props.src}
-							icon={<i className="fa-solid fa-cart-plus"></i>}
-							decrimentProductHandler={decrimentProductHandler}
-							incrimentProductHandler={incrimentProductHandler}
-							resetProductHandler={resetProductHandler}
-						/>
-					</div>
+					<div className="product-details">{productCartController}</div>
 				</figure>
 			</Card>
 		</li>
