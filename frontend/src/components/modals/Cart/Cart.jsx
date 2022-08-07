@@ -54,7 +54,6 @@ const Cart = () => {
 	const { cartContents, totalCost } = cart;
 	const onClickEvents = { removeItem, incrimentItem, decrimentItem };
 	const productBuyList = createProductBuyList(cartContents, onClickEvents);
-
 	return (
 		<Card className={`${styles.cart}`}>
 			<CartHeader />

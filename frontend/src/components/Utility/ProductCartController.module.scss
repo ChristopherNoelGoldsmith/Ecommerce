@@ -28,8 +28,6 @@ form {
 		font-size: variables.$font-large * 1.2;
 		text-align: center;
 		border: none;
-		//border: 0.5px white solid;
-		//border-radius: 5px;
 	}
 	.product-btns {
 		@include mixins.xs {

@@ -21,6 +21,7 @@ const ProductCartController = (props) => {
 
 	const addItemHandler = (event) => {
 		event.preventDefault();
+		console.log(props);
 		//targets first value of the event object which is the count input
 		const itemCountValue = event.target[0].value;
 		//converts props into format for the cartSlice in the store provided by the useCart hook.

@@ -26,10 +26,18 @@
 			box-shadow: 2px 2px 1px 1px black;
 			padding: 2rem;
 		}
-
 		.cart-controller {
-			@include mixins.flex-row;
 			width: 100%;
+			form {
+				input {
+					padding: 0;
+				}
+				@include mixins.flex-row;
+				figure {
+					@include mixins.flex-row;
+					justify-content: flex-start;
+				}
+			}
 		}
 	}
 }
