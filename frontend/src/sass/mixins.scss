@@ -91,7 +91,7 @@ $breakpoints: (
 	);
 }
 
-@mixin diagonal-background($bg, $opacity, $length) {
+@mixin diagonal-background($bg, $opacity, $length: 100%) {
 	background: $bg;
 	position: absolute;
 	left: 0;

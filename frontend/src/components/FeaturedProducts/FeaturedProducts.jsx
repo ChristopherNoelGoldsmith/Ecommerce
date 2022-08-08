@@ -2,6 +2,8 @@ import styles from "./FeaturedProducts.module.scss";
 import useProduct from "../hooks/useProduct";
 import { useEffect } from "react";
 import { useState } from "react";
+import Button from "../UI/Button";
+import { Link } from "react-router-dom";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
 const DUMMY_TEXT =
@@ -23,15 +25,17 @@ const FeaturedProducts = (props) => {
 		fetchData();
 	}, []);
 	return (
-		<section noCardStyle={true} className={`${styles["information"]}`}>
+		<section className={`${styles["information"]}`}>
 			<section className={`${styles["about-container"]}`}>
 				<h3>About Us</h3>
 				<p>{DUMMY_TEXT}</p>
 			</section>
 			<section className={`${styles["featured-container"]}`}>
 				<div className={`${styles["background-piece-featured"]}`}></div>
-				<h2>Featured!</h2>
 				<ul>{featured}</ul>
+				<Button className={styles["shop-btn"]}>
+					<Link to={"/category"}>SHOP</Link>
+				</Button>
 			</section>
 			<div className={`${styles["background-piece"]}`}></div>
 			<div className={`${styles["background-piece2"]}`}></div>

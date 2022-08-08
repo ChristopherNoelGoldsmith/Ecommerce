@@ -9,10 +9,9 @@
 	position: relative;
 	justify-content: space-around;
 	background: rgba($color: black, $alpha: 0.8);
-	width: 95vw;
+	width: 100%;
 	padding: 3%;
 	overflow: hidden;
-	border-radius: 10px;
 	.background-piece {
 		@include mixins.fade-in;
 		@include mixins.diagonal-background(
@@ -20,6 +19,8 @@
 			1,
 			75%
 		);
+		background-repeat: no-repeat;
+		background-size: cover;
 		position: absolute;
 		z-index: 0;
 	}
@@ -53,6 +54,7 @@
 		}
 	}
 	.featured-container {
+		@include mixins.flex-column;
 		width: 90%;
 		height: 45%;
 		@include mixins.lg {
@@ -60,13 +62,10 @@
 			height: 90%;
 		}
 		position: relative;
-		box-shadow: 10px 10px 5px 5px rgba($color: black, $alpha: 0.7);
-		background: rgba($color: cyan, $alpha: 0.7);
 		padding: 1rem;
 		border-radius: 10px;
 		z-index: 10;
 		.background-piece-featured {
-			@include mixins.diagonal-background(black, 1, 30%);
 			width: 100%;
 			height: 100%;
 			position: absolute;
@@ -101,6 +100,17 @@
 			max-width: 100vw;
 			li > * {
 				background: variables.$card-bg;
+			}
+		}
+		.shop-btn {
+			font-weight: 700;
+			padding: 0 1rem;
+			background: rgba($color: variables.$primary-font, $alpha: 0.7);
+			box-shadow: 2px 2px 1px 1px rgba($color: black, $alpha: 0.7);
+			border: 1px solid black;
+			color: variables.$secondary-font;
+			* {
+				color: black;
 			}
 		}
 	}

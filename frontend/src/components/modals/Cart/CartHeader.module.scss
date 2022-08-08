@@ -5,6 +5,9 @@
 	width: 100%;
 	text-align: center;
 	padding: 1rem;
+	h2 {
+		@include mixins.title-font(0.4);
+	}
 	img {
 		height: 10vh;
 	}

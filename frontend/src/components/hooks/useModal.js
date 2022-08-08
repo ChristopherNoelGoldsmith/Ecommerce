@@ -52,9 +52,21 @@ const useModal = () => {
 		}
 
 		if (condition.callback) {
-			// ASYNC 1 ) CALLBACK IS PASSED AND CALLED
-			const callbackCall = await condition.callback();
+			const callOver = async (numOfCalls = 0) => {
+				// ASYNC 1 ) CALLBACK IS PASSED AND CALLED
+				const callbackCall = await condition.callback();
+				console.log(numOfCalls);
+				// CATCH ) IF THE CONNECTION WAS UNCESSFUL MORE THEN 2 TIMES AN ALERT IS SHOWN
+				if (numOfCalls >= 2) return callbackCall;
+				console.log("poop");
+				if (callbackCall.status === "ERROR" || !callbackCall) {
+					return callOver(numOfCalls++);
+				}
 
+				return callbackCall;
+			};
+
+			const callbackCall = await callOver();
 			// ASYNC 2 ) THROWS AN ALERT IF CALLBACK RETURNS AN ERROR OR RETURNS FALSE
 			if (callbackCall.status === "ERROR" || !callbackCall)
 				alert("There was an issue with your connection, please try again!");

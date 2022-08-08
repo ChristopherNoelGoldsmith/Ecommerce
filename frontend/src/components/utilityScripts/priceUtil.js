@@ -1,3 +1,5 @@
+//! BUG TO BE FIXED.  PRICES STARTING WITH 00. SUCH AS 00.79 TRANSLATE TO 79.00 WHICH ADDED TO CART
+
 export const convertPricetoDollarAmount = (price) => {
 	const string = `${price}`;
 
@@ -6,7 +8,7 @@ export const convertPricetoDollarAmount = (price) => {
 		const splitString = string.split(".");
 
 		const [start, end] = splitString;
-
+		if (start === "00" || end === "00") return;
 		if (end.length < 2) return start + "." + end + "0";
 
 		return string;
