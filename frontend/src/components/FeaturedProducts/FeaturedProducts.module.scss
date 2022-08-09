@@ -109,6 +109,7 @@
 			box-shadow: 2px 2px 1px 1px rgba($color: black, $alpha: 0.7);
 			border: 1px solid black;
 			color: variables.$secondary-font;
+			z-index: 1000;
 			* {
 				color: black;
 			}

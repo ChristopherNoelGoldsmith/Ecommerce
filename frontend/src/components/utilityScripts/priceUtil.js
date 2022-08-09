@@ -1,8 +1,5 @@
-//! BUG TO BE FIXED.  PRICES STARTING WITH 00. SUCH AS 00.79 TRANSLATE TO 79.00 WHICH ADDED TO CART
-
 export const convertPricetoDollarAmount = (price) => {
 	const string = `${price}`;
-
 	//FOR PROPERLY FORMATTING PRICES THAT INCRIMENT IN THE CART AFTER THEY HAVE BEEN CONVERTED TO DECIMAL
 	if (string.match(/\./)) {
 		const splitString = string.split(".");
