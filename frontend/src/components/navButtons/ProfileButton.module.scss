@@ -3,8 +3,13 @@
 
 .profile-btn {
 	position: relative;
-	overflow: hidden;
-	padding: 1rem;
+	width: 3rem;
+	@include mixins.xs {
+		height: 4rem;
+	}
+	@include mixins.sm {
+		height: 3rem;
+	}
 }
 .profile-btn::after {
 	content: attr(username);

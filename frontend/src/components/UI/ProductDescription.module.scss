@@ -12,12 +12,15 @@
 	padding: 1rem;
 	border-radius: 5px;
 	padding: 0;
+	height: 90vh;
 	figure {
 		@include mixins.flex-column;
+		max-height: 70%;
 		@include mixins.md {
 			width: 45%;
 		}
 		label {
+			overflow: hidden;
 			padding: 1rem;
 		}
 	}
@@ -35,6 +38,7 @@
 			padding: 2rem;
 		}
 		.cart-controller {
+			overflow: visible;
 			width: 100%;
 			form {
 				input {

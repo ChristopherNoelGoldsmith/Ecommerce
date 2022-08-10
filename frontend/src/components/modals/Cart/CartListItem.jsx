@@ -1,10 +1,7 @@
 import styles from "./CartListItem.module.scss";
 import ProductCartController from "../../Utility/ProductCartController";
-import { convertPricetoDollarAmount } from "../../utilityScripts/priceUtil";
-//DUMMY DATA
 
 const CartListItem = (props) => {
-	const formattedPrice = convertPricetoDollarAmount(props.total * 1);
 	return (
 		<li className={`${styles["cart-list-item"]}`} key={props.keys}>
 			<figure>
@@ -18,7 +15,7 @@ const CartListItem = (props) => {
 				productName={props.name}
 				image={props.image}
 				productAmount={props.productAmount}
-				productPrice={formattedPrice}
+				productPrice={props.total}
 				icon={<i class="fa-solid fa-xmark"></i>}
 				incrimentProductHandler={props.incrimentProductHandler}
 				decrimentProductHandler={props.decrimentProductHandler}

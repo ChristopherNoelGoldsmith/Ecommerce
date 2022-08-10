@@ -3,10 +3,14 @@ import Button from "../../UI/Button";
 import useCart from "../../hooks/useCart";
 import useModal from "../../hooks/useModal";
 import AddedToCart from "../AddedToCart";
+import { convertPricetoDollarAmount } from "../../utilityScripts/priceUtil";
 
 const CartFooter = (props) => {
 	const { createCart } = useCart();
 	const { modalWithCondition } = useModal();
+
+	// MIDDLEWARE 1) CONVERTS CENTS TO DOLLAR AMOUNT ON THE USERS SIDE
+	const formattedPrice = convertPricetoDollarAmount(props.totalCost);
 
 	const addedToCartHandler = async (fn) => {
 		const jsx = <AddedToCart />;
@@ -24,7 +28,7 @@ const CartFooter = (props) => {
 		<section className={`${styles["cart-footer"]}`}>
 			<form onSubmit={checkout}>
 				<label htmlFor="checkout">
-					<span>${props.totalCost}</span>
+					<span>${formattedPrice}</span>
 				</label>
 				<span id="total-cost">{props.total}</span>
 				<Button id="checkout" className={`${styles.checkout}`} type="submit">

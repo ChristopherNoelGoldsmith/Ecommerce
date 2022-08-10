@@ -4,7 +4,6 @@ it must be passed as {target: , count:}
 */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { addDecimalToPrice } from "../components/utilityScripts/priceUtil";
 //Used to get rid of middleware error created by custome slice
 
 const initialState = { cartContents: [], totalCost: 0, totalItems: 0 };
@@ -32,7 +31,6 @@ const cartSlice = createSlice({
 						itemCount = item.count + itemCount;
 						const total = target.price * itemCount;
 						totalPrice = total;
-						target.price = target.price;
 						return {
 							name: target.name,
 							price: target.price,
@@ -66,7 +64,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count < 99) {
 					item.count = item.count + 1;
-					item.total = addDecimalToPrice(item.price * item.count);
+					item.total = item.price * item.count;
 				}
 			});
 			return;
@@ -77,7 +75,7 @@ const cartSlice = createSlice({
 			cartContents.forEach((item) => {
 				if (item.name === target.name && item.count > 0) {
 					item.count = item.count - 1;
-					item.total = addDecimalToPrice(item.price * item.count);
+					item.total = item.price * item.count;
 				}
 			});
 			return;
@@ -107,13 +105,15 @@ const cartSlice = createSlice({
 			}
 
 			const total = cartContents
-				.map((item) => item.total * 1)
+				.map((item) => {
+					console.log(item.price);
+
+					return item.total * 1;
+				})
 				.reduce((item1, item2) => {
 					return item1 + item2;
 				});
-			console.log(total);
-			const trimmedTotal = addDecimalToPrice(total);
-			state.totalCost = trimmedTotal;
+			state.totalCost = total;
 			return;
 		},
 		getTotalNumberOfItems(state) {

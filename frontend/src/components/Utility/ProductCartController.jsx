@@ -8,12 +8,16 @@ import Button from "../UI/Button";
 import useCart from "../hooks/useCart";
 import useModal from "../hooks/useModal";
 import AddedToCart from "../modals/AddedToCart";
+import { convertPricetoDollarAmount } from "../utilityScripts/priceUtil";
 
 const ProductCartController = (props) => {
 	const { addItem } = useCart();
 	const { modalWithCondition } = useModal();
 
-	const addedToCartHandler = (fn) => {
+	// MIDDLEWARE 1) CONVERTS CENTS TO DOLLAR AMOUNT ON THE USERS SIDE
+	const formattedPrice = convertPricetoDollarAmount(props.productPrice);
+
+	const addedToCartHandler = () => {
 		const JSX = <AddedToCart />;
 		modalWithCondition(JSX, { timeout: 1500 });
 		return;
@@ -21,7 +25,6 @@ const ProductCartController = (props) => {
 
 	const addItemHandler = (event) => {
 		event.preventDefault();
-		console.log(props);
 		//targets first value of the event object which is the count input
 		const itemCountValue = event.target[0].value;
 		//converts props into format for the cartSlice in the store provided by the useCart hook.
@@ -41,7 +44,7 @@ const ProductCartController = (props) => {
 	return (
 		<form onSubmit={addItemHandler}>
 			<label htmlFor="price">
-				$ <span>{props.productPrice}</span>
+				$ <span>{formattedPrice}</span>
 			</label>
 			<figure className={`${styles["product-btns"]}`}>
 				<input
