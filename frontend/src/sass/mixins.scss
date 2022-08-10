@@ -43,12 +43,26 @@
 }
 
 //backgrounds
-@mixin background-type($cut) {
+@mixin bg-overlay($bg, $opacity: 1, $cut: null) {
 	::after {
 		content: "";
+		@if ($cut == diagonal) {
+			@include diagonal-background($bg, $opacity);
+		}
+		@if ($cut == radial-grandient) {
+			@include radial-gradient;
+		}
+		@if ($cut == triangle) {
+			@include triangular-background($bg, $opacity);
+		}
+		position: absolute;
+		background: $bg;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
 	}
 }
-
 // hovers
 
 @mixin hover {
@@ -118,7 +132,7 @@ $breakpoints: (
 	opacity: $opacity;
 }
 
-@mixin triangular-background($bg, $opacity, $length) {
+@mixin triangular-background($bg, $opacity, $length: 100%) {
 	background: $bg;
 	position: absolute;
 	left: 0;

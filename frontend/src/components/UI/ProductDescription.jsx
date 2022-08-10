@@ -12,7 +12,6 @@ const ProductDescription = (props) => {
 		resetProductHandler,
 		productAmount,
 	} = useProductCounter();
-	console.log(props);
 	return (
 		<Card>
 			<section className={styles["item-description"]}>
